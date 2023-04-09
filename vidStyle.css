@@ -1,0 +1,384 @@
+html {
+  scroll-behavior: smooth;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.scrbar::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  --fs: 2px;
+  --fs-body: 1rem;
+  --fs-titMenu: clamp(0.9rem, 2.5vw, 2rem);
+  --fs-titre: clamp(1.1rem, 1.3vw, 1.4rem);
+  --fs-drop: clamp(0.8rem, 1.3vw, 1.3rem);
+  --fs-tiBlog: clamp(0.9rem, 1vw, 1.3rem);
+  --decDrop: 6rem;
+  --hautMenu: calc(var(--fs-titMenu) + 2.4rem);
+  --decalHaut-titre: calc(1.2rem + var(--fs-titMenu));
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: var(--fs-body);
+}
+.page {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "menu"
+    "main";
+  background-repeat: no-repeat;
+}
+#zagVideos {
+  position: fixed;
+  bottom: 10%;
+  align-self: center;
+  font-size: 3rem;
+  color: hsl(0, 100%, 50%);
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7);
+}
+/* menu des onglets haut de page */
+.menu {
+  position: relative;
+  max-width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1rem 0;
+  height: var(--hautMenu);
+  background-color: white;
+  box-shadow: 0 3px 3px rgba(183, 182, 182, 0.472);
+}
+.barBox {
+  display: flex;
+  position: absolute;
+  align-items: flex-end;
+  bottom: 2px;
+  left: 3rem;
+  width: 60%;
+  gap: 3px;
+}
+.ytItem {
+  width: 100%;
+  height: 3px;
+  font-size: var(--fs);
+  text-align: center;
+  cursor: pointer;
+  color: transparent;
+  list-style: none;
+}
+
+.ytItem.dia {
+  background-color: hsla(0, 100%, 75%, 0.6);
+}
+
+.ytItem.vid {
+  background-color: hsla(240, 100%, 75%, 0.6);
+}
+.ytItem:hover {
+  font-size: 0.9rem;
+  border-radius: 3px;
+  height: min-content;
+  color: black;
+  mix-blend-mode: darken;
+  white-space: nowrap;
+}
+.vid.peint {
+  background-color: blue;
+  color: white;
+}
+.dia.peint {
+  background-color: rgb(255, 0, 0);
+  color: white;
+}
+.btn-top {
+  height: fit-content;
+  border: none;
+  outline: none;
+  align-items: center;
+}
+.titMenu {
+  position: relative;
+  text-align: center;
+  display: inline;
+  font-size: var(--fs-titMenu);
+  cursor: pointer;
+}
+.titMenu::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: blue;
+  scale: 0;
+  transition: scale 0.2s ease-in-out;
+}
+.activeMenu::before {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  background-color: blue;
+}
+.titMenu:hover::after {
+  scale: 1;
+}
+/* containers dropdown pour les sous menus */
+.dropdown {
+  position: absolute;
+  border-radius: 5px;
+  overflow: auto;
+  z-index: 1;
+  top: calc(var(--hautMenu) + 2px);
+  cursor: default;
+  font-size: var(--fs-drop);
+  background-color: rgb(238, 235, 227, 0.8);
+  max-height: calc(100vh - var(--hautMenu) - 15px);
+  z-index: 2;
+}
+.decal {
+  left: 1rem;
+  width: calc(100vw - 2rem);
+}
+.bloc-links {
+  transition: height 0.3s ease-in-out;
+  height: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+}
+.bloc-links li {
+  padding: 2px 5px;
+  list-style-type: none;
+  /* display: block; */
+  width: auto;
+}
+.bloc-links li:hover {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}
+/*  sous menus des dropdown */
+.sousMenuAnn {
+  display: grid;
+  grid-template-areas:
+    "a1 a1"
+    "ba ba";
+  padding: 1rem;
+}
+.sousMenuBlog {
+  padding: 0.5rem;
+}
+/* mise en forme des videos */
+.videos {
+  display: none;
+  grid-area: video;
+}
+.enveloppe {
+  grid-area: main;
+  padding: 5px 0;
+  overflow: hidden;
+  max-height: calc(100vh - var(--hautMenu));
+  background: url("./images/Mimosa2.jpg") left/cover;
+  display: flex;
+  flex-direction: column;
+}
+.ecranVideos {
+  overflow: auto;
+  height: 100%;
+  text-align: center;
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: var(--fs-titre);
+  scroll-behavior: smooth;
+  z-index: 1;
+}
+.vidTitre {
+  text-align: center;
+  color: white;
+  font-size: var(--fs-titre);
+  display: block;
+}
+.diapo {
+  text-shadow: 2px 2px 1px red;
+}
+.video {
+  text-shadow: 2px 2px 1px blue;
+}
+.lect {
+  scroll-snap-align: start;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.479);
+  margin: 0 auto 5px;
+  z-index: 1;
+}
+/* fleche de retour pour bas de page */
+.retour {
+  border: none;
+  display: block;
+  background-color: transparent;
+  margin-left: 0.5rem;
+  border-radius: 50%;
+  box-shadow: 3px 3px 4px hsla(0, 0%, 50%, 0.614);
+  opacity: 0;
+  visibility: hidden;
+}
+#imgRetour {
+  height: calc(var(--fs-titMenu) * 1.2);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 3px solid transparent;
+}
+button:hover {
+  cursor: pointer;
+  box-shadow: 3px 3px 4px black;
+}
+/* centrer verticalement les continents de Voyage*/
+.show {
+  opacity: 1;
+  visibility: visible;
+}
+.sousMenuVoy > ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.checkB {
+  display: flex;
+  justify-content: space-around;
+}
+.a1 {
+  grid-area: a1;
+  text-align: center;
+}
+.ba {
+  grid-area: ba;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+/* les lignes a et b sont centrées, les autres non */
+
+/* border les sous menus */
+.sousMenuAnn :is(ul, .checkB) {
+  border: 1px dotted rgba(128, 128, 128, 0.8);
+}
+label {
+  color: rgba(128, 128, 128, 0.8);
+}
+label:hover {
+  cursor: pointer;
+  text-shadow: 1px 1px white;
+}
+input {
+  display: none;
+}
+input:checked + .vidLabel {
+  color: hsl(240, 100%, 56%);
+}
+input:checked + .diaLabel {
+  color: hsl(0, 100%, 56%);
+}
+/* titres */
+.titre {
+  right: 0.5rem;
+  top: 1rem;
+  text-align: center;
+  font-size: var(--fs-titMenu);
+  color: blue;
+}
+/* mise en forme des icones Blog */
+
+.envIcon {
+  display: grid;
+  gap: 0.2rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+.bloc_img {
+  display: grid;
+  padding: 0.2rem;
+  text-decoration: none;
+  aspect-ratio: 1/1;
+  font-size: var(--fs-tiBlog);
+  text-shadow: 1px 1px 2px black;
+  color: gold;
+}
+.texte,
+.blogs,
+.ti_blog,
+.vid_list {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+.blogs {
+  width: 100%;
+  border-radius: 10%;
+  aspect-ratio: 1 / 1;
+}
+.ti_blog {
+  padding-top: 1rem;
+  text-align: center;
+}
+.texte {
+  border-radius: 10%;
+  padding: 5px;
+  opacity: 0;
+  align-self: end;
+}
+.groupe {
+  text-align: center;
+}
+
+.bloc_img:hover .blogs {
+  box-shadow: 5px 5px 5px grey;
+}
+.bloc_img:hover .blogs.vid {
+  box-shadow: 5px 5px 5px hsl(240, 100%, 70%);
+}
+.bloc_img:hover .blogs.dia {
+  box-shadow: 5px 5px 5px hsl(0, 100%, 70%);
+}
+.bloc_img:hover .ti_blog {
+  font-size: calc(var(--fs-tiBlog) * 1.5);
+  cursor: pointer;
+  z-index: 2;
+}
+.bloc_img:hover .texte {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+  background-color: hsl(50, 0%, 50%, 0.3);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* pour les petits ecrans passer le titre en dessous */
+@media screen and (max-width: 700px) {
+  .titre {
+    position: absolute;
+    top: var(--decalHaut-titre);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .envIcon {
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  }
+  .texte {
+    font-size: calc(var(--fs-titMenu) / 1.2);
+  }
+  .decalR {
+    right: 5px;
+  }
+  .blogs.vid {
+    box-shadow: 3px 3px 3px hsl(240, 100%, 70%);
+  }
+  .blogs.dia {
+    box-shadow: 3px 3px 3px hsl(0, 100%, 70%);
+  }
+}

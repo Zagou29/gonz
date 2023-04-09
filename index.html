@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noimageindex">
+  <meta name="googlebot" content="noindex">
+  <meta name="description" content="Toutes les videos de Zagou">
+  <title>Videos et Diapos de la famille Zag et des Voyages</title>
+  <link rel="shortcut icon" href="./images/Zag2.png" type="image/x-icon">
+  <link rel="stylesheet" href="./vidStyle.css">
+  <script type="module" src="./vidScript.js"></script>
+  <!-- <script type="module" src="/xfonctions/recupVideos.js" defer></script>  -->
+</head>
+
+<body class="page">
+  <nav class="menu">
+    <div class="btn-top fa">
+      <span class="titMenu" data- menu="fam">Famille</span>
+      <div class="dropdown decal">
+        <div class="bloc-links">
+          <div class="sousMenuBlog">
+            <div class="envIcon menu_famille">
+              <!-- boite de chargement des boxes menu -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-top vo">
+      <span class="titMenu" data-menu="voy">Voyages</span>
+      <div class="dropdown decal">
+        <div class="bloc-links">
+          <div class="sousMenuBlog">
+            <div class="envIcon menu_voyage">
+              <!-- boite de chargement des boxes menu -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-top pl">
+      <span class="titMenu" data-menu="pll">Playlists</span>
+      <div class="dropdown decal">
+        <div class="bloc-links">
+          <div class="sousMenuBlog">
+            <div class="envIcon menu_playlist">
+              <!-- boite de chargement des boxes menu -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-top an">
+      <span class="titMenu" data-menu="ann">Annees</span>
+      <div class="dropdown decalR">
+        <div class="bloc-links">
+          <div class="sousMenuAnn">
+            <div class="a1 checkB">
+              <input type="checkbox" id="avideo" name="Videos" value=".vid" checked>
+              <label class="vidLabel" for="avideo">Videos</label>
+              <input type="checkbox" id="adiapo" name="diapos" value=".dia" checked>
+              <label class="diaLabel" for="adiapo">Diapos</label>
+            </div>
+            <ul class="ba years">
+              <!-- boite pour les li Années -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-top ph">
+      <span class="titMenu ">Photos</span>
+      <div class="dropdown decal">
+        <div class="bloc-links">
+          <div class="sousMenuBlog">
+            <div class="envIcon ePhotos">
+              <!-- boite flexible pour chaque blog-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-top bl">
+      <span class="titMenu">Blogs</span>
+      <div class="dropdown decal">
+        <div class="bloc-links">
+          <div class="sousMenuBlog">
+            <div class="envIcon eBlogs">
+              <!-- boite flexible pour chaque blog-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- boutonHome et titre des selections -->
+    <button class="retour" aria-label="retour">
+      <img id="imgRetour" loading="lazy" src="./images/retour.png" alt="back to top">
+    </button>
+    <span class="titre"> </span>
+  </nav>
+  <main class="enveloppe">
+    <h1 id="zagVideos">ZagVideos</h1>
+    <div class="ecranVideos"></div>
+  </main>
+  <!-- template pour les videos YT -->
+  <template id="ytFrame">
+    <span class="vidTitre"></span>
+    <iframe title="" width="100%" height="100%" class="lect" data-num="" loading="lazy"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""
+      sandbox=" allow-scripts  allow-same-origin " src="">
+    </iframe>
+  </template>
+  <!-- template des blocs menu photo -->
+  <template id="ph">
+    <div class="bloc_img">
+      <img class="blogs" loading="lazy" src="" alt="">
+      <span class="ti_blog" data-ph="">spText</span>
+      <p class="texte">divText</p>
+    </div>
+  </template>
+  <!-- template des blocs menu blogs -->
+  <template id="bl">
+    <a class="bloc_img" href="" target="_blank" rel="noopener">
+      <img class="blogs" loading="lazy" src="" alt="">
+      <span class="ti_blog">spText</span>
+      <p class="texte">divText</p>
+    </a>
+  </template>
+  <!-- template des blocs menu fam voy pll -->
+  <template id="menuBlocs">
+    <div class="bloc_img">
+      <img class="blogs " loading="lazy" src="" alt="">
+      <span class="ti_blog" data-select=""></span>
+      <ul class="vid_list texte">
+        <p class ="groupe"></p>
+        <!-- listes des videos detail -->
+      </ul>
+    </div>
+  </template>
+  <template id="videoListe">
+    <li class="detail"></li>
+  </template>
+  <!-- template du container des barres -->
+  <template id="barContainer">
+    <ul class="barBox"></ul>
+  </template>
+  <!-- template des item liens barres  -->
+  <template id="itemYT">
+    <li class="ytItem"></li>
+  </template>
+  <!-- template des item liens annees -->
+  <template id="itemAn">
+    <li data-year="" data-select=""></li>
+  </template>
+</body>
+
+</html>
