@@ -136,13 +136,12 @@ body {
   position: absolute;
   border-radius: 5px;
   overflow: auto;
-  z-index: 1;
   top: calc(var(--hautMenu) + 2px);
   cursor: default;
   font-size: var(--fs-drop);
   background-color: rgb(238, 235, 227, 0.8);
   max-height: calc(100vh - var(--hautMenu) - 15px);
-  z-index: 2;
+  z-index: 2; 
 }
 .decal {
   left: 1rem;
@@ -191,6 +190,7 @@ body {
   background: url("./images/Mimosa2.jpg") left/cover;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 .ecranVideos {
   overflow: auto;
@@ -356,6 +356,14 @@ input:checked + .diaLabel {
   background-color: hsl(50, 0%, 50%, 0.3);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
+}
+.copy{
+  position: absolute;
+  bottom:0.5rem;
+  left:1rem;
+  background-color: transparent;
+  filter:invert(25%);
+  
 }
 
 /* pour les petits ecrans passer le titre en dessous */
