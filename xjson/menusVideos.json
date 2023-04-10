@@ -233,7 +233,7 @@
     {
         "clas": ".vid.pll.fami.fami",
         "menu": ".pll",
-        "groupe": "Zag et Margot",
+        "groupe": "Zag & Margot",
         "src": "./box_img/famille-01.jpg",
         "detail": "Famille"
     },
@@ -261,7 +261,7 @@
     {
         "clas": ".dia.pll.fami.fami",
         "menu": ".pll",
-        "groupe": "Famille",
+        "groupe": "Zag & Margot",
         "src": "./box_img/famille-03 .jpg",
         "detail": "Famille"
     },
