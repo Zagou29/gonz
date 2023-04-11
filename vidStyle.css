@@ -29,7 +29,7 @@ body {
 .page {
   display: grid;
   height: 100vh;
-  height: 100svh;
+
   grid-template-rows: auto 1fr;
   grid-template-areas:
     "menu"
@@ -369,6 +369,7 @@ input:checked + .diaLabel {
 
 /* pour les petits ecrans passer le titre en dessous */
 @media screen and (max-width: 700px) {
+  .page{height:100dvh}
   .titre {
     position: absolute;
     top: var(--decalHaut-titre);

@@ -153,7 +153,6 @@ body {
 }
 .image_mod > .show {
   height: 100vh;
-  height: 100svh;
   object-fit: contain;
   object-position: center;
   scroll-snap-align: start;
