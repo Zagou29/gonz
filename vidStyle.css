@@ -369,7 +369,7 @@ input:checked + .diaLabel {
 
 /* pour les petits ecrans passer le titre en dessous */
 @media screen and (max-width: 700px) {
-  .page{height:100svh}
+  
   .titre {
     position: absolute;
     top: var(--decalHaut-titre);
