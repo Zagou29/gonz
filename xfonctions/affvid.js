@@ -22,6 +22,7 @@ export class Affvid {
   #ul_Years;
   #an_Select;
   #li_Annee;
+  #an;
   /**
    * tableau des videos objets
    * @param {vidlist[]} vidlist
@@ -36,25 +37,14 @@ export class Affvid {
   affVideos(element, classe, an) {
     this.#container = element;
     this.#classe = classe;
+    this.#an=an
     this.#listElement = new DocumentFragment();
     /* préparer vidSelect selon la classe ou l'année */
-    if (an) {
-      if (this.#classe.length > 4) {
-        this.#classe = this.#classe.slice(0, 4);
-      } else {
-        this.#classe = "";
-      }
-      /* si this.#clas="", le filtre prend tout */
-      /* ne prend pas les playlist */
-      this.#vidSelect = this.#vidlist
-      .filter((obj) => obj.annee === an)
-      .filter((obj) => obj.clas.includes(this.#classe))
-        .filter((obj) => obj.id.length < 12);
-    } else {
-      this.#vidSelect = this.#vidlist.filter((obj) =>
-      obj.clas.includes(this.#classe)
-      );
-    }
+    this.#vidSelect = this.#an
+      ? this.#vidlist
+          .filter((obj) => obj.annee === an)
+          .filter((obj) => obj.id.length < 12)
+      : this.#vidlist.filter((obj) => obj.clas.includes(this.#classe));
     /* trier les videos entre .vid et .dia */
     this.#liste = [
       ...this.#vidSelect.filter((item) => item.clas.includes(".vid")),
@@ -64,10 +54,10 @@ export class Affvid {
       const video = new VidItem(obj);
       video.retourItem
         .querySelector(".lect")
-        .setAttribute("width", this.#setDim(element, obj)[0]);
+        .setAttribute("width", this.#setDim(this.#container, obj)[0]);
       video.retourItem
         .querySelector(".lect")
-        .setAttribute("height", this.#setDim(element, obj)[1]);
+        .setAttribute("height", this.#setDim(this.#container, obj)[1]);
       video.retourItem.querySelector(".lect").dataset.num = index;
       this.#listElement.append(video.retourItem);
     });
@@ -172,7 +162,7 @@ class AnnItem {
     this.#annElement = cloneTemplate("itemAn").firstElementChild;
     this.#annElement.textContent = this.#vidObj;
     this.#annElement.dataset.year = this.#vidObj;
-    this.#annElement.dataset.select=".ann"
+    this.#annElement.dataset.select = ".ann";
   }
 
   get retourAnnItem() {
