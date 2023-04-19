@@ -40,12 +40,24 @@ export class Affvid {
     this.#an=an
     this.#listElement = new DocumentFragment();
     /* préparer vidSelect selon la classe ou l'année */
-    this.#vidSelect = this.#an
-      ? this.#vidlist
-          .filter((obj) => obj.annee === an)
-          .filter((obj) => obj.id.length < 12)
-      : this.#vidlist.filter((obj) => obj.clas.includes(this.#classe));
-    /* trier les videos entre .vid et .dia */
+    if (this.#an) {
+      /* si on selectionne video ou diapo */
+      if (this.#classe.length > 4) {
+        this.#classe = this.#classe.slice(0, 4);
+      } else {
+        this.#classe = "";
+      }
+      /* si this.#clas="", le filtre prend tout */
+      /* ne prend pas les playlist */
+      this.#vidSelect = this.#vidlist
+        .filter((obj) => obj.annee === an)
+        .filter((obj) => obj.clas.includes(this.#classe))
+        .filter((obj) => obj.id.length < 12);
+    } else {
+      this.#vidSelect = this.#vidlist.filter((obj) =>
+        obj.clas.includes(this.#classe)
+      );
+    }
     this.#liste = [
       ...this.#vidSelect.filter((item) => item.clas.includes(".vid")),
       ...this.#vidSelect.filter((item) => item.clas.includes(".dia")),
