@@ -603,6 +603,13 @@
   },
   {
     "ec": "16",
+    "id": "ujMYt5Adfsg",
+    "clas": ".vid.voy.euro.sca",
+    "annee": "2023",
+    "text": "2023 Suède"
+  },
+  {
+    "ec": "16",
     "id": "Q16FcXE_iYY",
     "clas": ".vid.voy.iles.fra",
     "annee": "2014",
@@ -1335,6 +1342,13 @@
     "clas": ".vid.pll.voya.voeu",
     "annee": "2019",
     "text": "2019 Irlande"
+  },
+  {
+    "ec": "16",
+    "id": "PLqkgFQr1NwGwaTGY5fFkwCGIZ2rrsOmV4",
+    "clas": ".vid.pll.voya.voeu",
+    "annee": "2023",
+    "text": "2023 Scandinavie"
   },
   {
     "ec": "16",

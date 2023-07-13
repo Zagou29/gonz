@@ -140,6 +140,13 @@
         "detail": "Irlande"
     },
     {
+        "clas": ".vid.voy.euro.sca",
+        "menu": "Voyages",
+        "groupe": "Europe",
+        "src": "./box_img/Scandinavie.jpg",
+        "detail": "Scandinavie"
+    },
+    {
         "clas": ".vid.voy.iles.imd",
         "menu": "Voyages",
         "groupe": "Les Iles",
