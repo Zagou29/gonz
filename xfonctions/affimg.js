@@ -3,13 +3,15 @@ import { cloneTemplate } from "./dom.js";
 export class Affimg {
   #listimg; //liste des objets img venat de JSON
   #opt; // option 'photo' ou non
+  #asp; //show ou show_mod
   #elt_images; //fragment où charger les img
   #elt_dates; //element ou charger les liensdates
   #ancre_imgs; //Boite où charger les images
   #ancres_dates; //Boite où charger les Li dates
-  constructor(listimg, opt) {
+  constructor(listimg, opt, asp) {
     this.#listimg = listimg;
     this.#opt = opt;
+    this.#asp = asp;
     /* construire this.#elt_images */
     this.#elt_images = new DocumentFragment();
     let n = 0;
@@ -25,7 +27,7 @@ export class Affimg {
           obj.num = n;
           obj.seuil = "";
         }
-        const image = new AffItem(obj);
+        const image = new AffItem(obj, this.#asp);
         this.#elt_images.append(image.retourImage);
         seuil = obj.an;
       });
@@ -33,7 +35,7 @@ export class Affimg {
       this.#listimg.forEach((obj, index) => {
         obj.an !== seuil ? (obj.seuil = obj.an) : (obj.seuil = "");
         obj.num = index;
-        const image = new AffItem(obj);
+        const image = new AffItem(obj, asp);
         this.#elt_images.append(image.retourImage);
         seuil = obj.an;
       });
@@ -68,12 +70,14 @@ export class Affimg {
 class AffItem {
   #imgobj;
   #el_image;
-  constructor(imgobj) {
+  #asp;
+  constructor(imgobj, asp) {
     this.#imgobj = imgobj;
+    this.#asp = asp;
     this.#el_image = cloneTemplate("photos").firstElementChild;
     this.#el_image.setAttribute("src", this.#imgobj.src);
     this.#el_image.setAttribute("alt", this.#imgobj.an);
-    this.#el_image.setAttribute("class", "show");
+    this.#el_image.setAttribute("class", this.#asp);
     this.#el_image.dataset.an = this.#imgobj.an;
     this.#el_image.dataset.num = this.#imgobj.num;
     if (this.#imgobj.seuil !== "")

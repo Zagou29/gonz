@@ -9,7 +9,12 @@ if (ordi_OS().win) document.querySelector(".image").classList.add("scrbar");
 /*  prendre en charge les boxes de VidCript et le sens des dates */
 const val_trans = localStorage.getItem("data"); /* classList venant de Index */
 let sens_date = localStorage.getItem("sens_dates"); /* sens dates */
+let asp = localStorage.getItem("asp_images"); /* sens dates */
+
+
 const hamb = document.querySelector(".hamburger"); /* le bouton de menu droit */
+const showMod =
+  document.querySelector(".ratio"); /* bouton de chgt ratio image */
 const val = document.querySelector(".transval"); /* titre de l'ecran */
 const aff_an = document.querySelector(".annee"); /* affichage annees */
 const fix_fond = document.querySelector(".envel"); /* enveloppe principale */
@@ -69,7 +74,7 @@ try {
       ? listImages.filter((obj) => obj.class === val_trans)
       : listImages;
   /** charger dans la classe, créer les liens img et les liens dates */
-  const images = new Affimg(listchoisie, val_trans);
+  const images = new Affimg(listchoisie, val_trans, asp);
   images.creeimages(boiteImg);
   images.creedates(cont);
 } catch (e) {
@@ -105,7 +110,6 @@ const scrollImg = (e) => {
 };
 const posit_annee = () => {
   cont.addEventListener("click", scrollImg);
- 
 };
 /* on/off icone diapos (bleu) */
 const diapOnOff = (sens) => {
@@ -113,6 +117,7 @@ const diapOnOff = (sens) => {
     ? diap.classList.add("diapo_on")
     : diap.classList.remove("diapo_on");
 };
+
 /* On/off de la musique et afficher les icones sons */
 const play_pause = (sens) => {
   if (sens === 1) {
@@ -231,27 +236,33 @@ const av_ar = (image, fl) => {
           menu.classList.toggle("open");
           break;
         }
-        /* fleche gauche*/
         case 1: {
+          asp = asp === "show" ? "show show_mod" : "show";
+          localStorage.setItem("asp_images", asp);
+          window.location.href = "./photos.html";
+          break;
+        }
+        /* fleche gauche*/
+        case 2: {
           clear_music();
           dep_hor(image, -1);
           break;
         }
         /* fleche droite */
-        case 2: {
+        case 3: {
           clear_music();
           dep_hor(image, 1);
           // boiteImg.scrollTo({left: boiteImg.scrollLeft + boiteImg.offsetWidth,});
           break;
         }
         /* retour*/
-        case 3: {
+        case 4: {
           localStorage.clear();
           window.location = "./index.html";
           break;
         }
         /** inverser le sens des images */
-        case 4: {
+        case 5: {
           localStorage.setItem("sens_dates", sens_date === "1" ? "-1" : "1");
           window.location.href = "./photos.html";
           break;
@@ -357,6 +368,7 @@ const zoom = (e) => {
   diap.classList.toggle("show_grid");
   /* effacer hamb &, retour & inverser*/
   hamb.classList.toggle("invis");
+  showMod.classList.toggle("invis")
   fl_foot.forEach((fl) => fl.classList.toggle("eff_fl"));
   /* ------ gestion du cas ou l'ecran est en class "".image_mod" */
   if (zoome) {
@@ -399,7 +411,7 @@ const rnd = (max) => Math.floor(Math.random() * max) + 1;
 let delai = 1500; /* durée base des diapos */
 let sensSon = 1; /* son "on" au départ des diapos*/
 let zoome = false; /* mode 'image' au départ */
-let yimg = 0;/* position depart des images */
+let yimg = 0; /* position depart des images */
 // let pos = false;
 let audio = new Audio(`./audio/audio_${rnd(5)}.mp3`); /* audio */
 let nId; /* initialiser le setInterval pour deplac horiz du diaporama */
@@ -475,4 +487,4 @@ av_ar(boiteImg, ret_fl);
 boiteImg.addEventListener("scroll", showStop);
 /* ecouter les icones diapo et son */
 diaporama(boiteImg, diap);
-document.querySelector(".duree").textContent = `${delai / 1000} sec`
+document.querySelector(".duree").textContent = `${delai / 1000} sec`;

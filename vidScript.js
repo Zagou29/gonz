@@ -181,6 +181,8 @@ function trans(e) {
   if (!e.target.dataset.ph) return;
   localStorage.setItem("data", e.target.dataset.ph);
   localStorage.setItem("sens_dates", "-1");
+  localStorage.setItem("asp_images", "show");
+
   window.location.href = "./photos.html";
 }
 /* ferme les menus au listener sur ecvideos */
