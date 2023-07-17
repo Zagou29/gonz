@@ -11,7 +11,6 @@ const val_trans = localStorage.getItem("data"); /* classList venant de Index */
 let sens_date = localStorage.getItem("sens_dates"); /* sens dates */
 let asp = localStorage.getItem("asp_images"); /* sens dates */
 
-
 const hamb = document.querySelector(".hamburger"); /* le bouton de menu droit */
 const showMod =
   document.querySelector(".ratio"); /* bouton de chgt ratio image */
@@ -111,12 +110,6 @@ const scrollImg = (e) => {
 const posit_annee = () => {
   cont.addEventListener("click", scrollImg);
 };
-/* on/off icone diapos (bleu) */
-const diapOnOff = (sens) => {
-  sens === 1
-    ? diap.classList.add("diapo_on")
-    : diap.classList.remove("diapo_on");
-};
 
 /* On/off de la musique et afficher les icones sons */
 const play_pause = (sens) => {
@@ -139,27 +132,23 @@ const clear_music = () => {
   audio.pause();
   diap.querySelector(".mute").classList.add("eff_fl");
   diap.querySelector(".son").classList.remove("eff_fl");
-  diapOnOff(0);
+  diap.classList.remove("diapo_on");
 };
 /* toggle lancer / arreter diapos et icone diapo*/
 const toggleDiapo = (image) => {
+  diap.classList.toggle("diapo_on");
   if (!nId && zoome) {
     nId = setInterval(() => {
       dep_hor(image, 1);
     }, delai);
     audio.play();
-    diapOnOff(1);
   } else {
     clear_music();
-    diapOnOff(0);
   }
 };
 /* si toggle son on/off avec icone */
 const toggleSon = (sens) => {
-  if (zoome) {
-    if (sens === 1) return play_pause(0);
-    else return play_pause(1);
-  }
+  zoome ? (sens === 1 ? play_pause(0) : play_pause(1)) : null;
 };
 /* si condition= true on est au debut ou à la fin */
 const toggleStop = (condition, el_stop, el_fl) => {
@@ -368,7 +357,7 @@ const zoom = (e) => {
   diap.classList.toggle("show_grid");
   /* effacer hamb &, retour & inverser*/
   hamb.classList.toggle("invis");
-  showMod.classList.toggle("invis")
+  showMod.classList.toggle("invis");
   fl_foot.forEach((fl) => fl.classList.toggle("eff_fl"));
   /* ------ gestion du cas ou l'ecran est en class "".image_mod" */
   if (zoome) {
@@ -377,6 +366,7 @@ const zoom = (e) => {
     /* refermer hamb et menu de gauche */
     hamb.classList.remove("open");
     menu.classList.remove("open");
+    diap.classList.remove("diapo_on");
     /* montrer la fleche f pour fullscreen , puis effacer en 4s*/
     full.classList.add("showfl");
     setTimeout(alert, 4000);
@@ -431,11 +421,7 @@ list_img.forEach((img) => guette.observe(img));
 /* affichage de la colonne timer au scroll------------------------ */
 let lastscroll = 0;
 window.addEventListener("scroll", () => {
-  // if (pos) {
-  //   pos = false;
-  //   return;
-  // }
-  const currentscroll = window.pageYOffset;
+  const currentscroll = window.scrollY;
   if (lastscroll - currentscroll > 1 || lastscroll - currentscroll < -1) {
     cont.classList.add("show_box");
     /* quand le curseur est tout en haut ou en bas*/
