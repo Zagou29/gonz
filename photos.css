@@ -169,7 +169,7 @@ body {
   object-fit: cover;
   aspect-ratio: 4/3;
   cursor: pointer;
-  outline:1px solid black;
+  outline: 1px solid black;
 }
 .show_mod {
   object-fit: contain;
@@ -355,8 +355,5 @@ body {
   .image {
     cursor: grab;
     pointer-events: none;
-  }
-  .show_mod{
-    aspect-ratio:unset;
   }
 }
