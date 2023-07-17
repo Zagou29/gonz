@@ -148,7 +148,9 @@ const toggleDiapo = (image) => {
 };
 /* si toggle son on/off avec icone */
 const toggleSon = (sens) => {
-  zoome ? (sens === 1 ? play_pause(0) : play_pause(1)) : null;
+  if (zoome) {
+    return sens === 1 ? play_pause(0) : play_pause(1);
+  }
 };
 /* si condition= true on est au debut ou à la fin */
 const toggleStop = (condition, el_stop, el_fl) => {
