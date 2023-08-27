@@ -35,7 +35,7 @@ export class Affimg {
       this.#listimg.forEach((obj, index) => {
         obj.an !== seuil ? (obj.seuil = obj.an) : (obj.seuil = "");
         obj.num = index;
-        const image = new AffItem(obj, asp);
+        const image = new AffItem(obj, this.#asp);
         this.#elt_images.append(image.retourImage);
         seuil = obj.an;
       });
