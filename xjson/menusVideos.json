@@ -46,14 +46,21 @@
         "menu": "Famille",
         "groupe": "Margot",
         "src": "./box_img/img-2013.jpg",
-        "detail": "2008 à 2014"
+        "detail": "2008 à 2012"
     },
     {
-        "clas": ".vid.fam.marg.b15",
+        "clas": ".vid.fam.marg.b13",
         "menu": "Famille",
         "groupe": "Margot",
         "src": "./box_img/img-2019.jpg",
-        "detail": "2015 à 2022"
+        "detail": "2013 à 2020"
+    },
+    {
+        "clas": ".vid.fam.marg.b21",
+        "menu": "Famille",
+        "groupe": "Margot",
+        "src": "./box_img/img-2021.jpg",
+        "detail": "2021 à 2023"
     },
     {
         "clas": ".dia.fam.avan.a17",
@@ -81,7 +88,7 @@
         "menu": "Famille",
         "groupe": "Ados",
         "src": "./box_img/img-2016.jpg",
-        "detail": "2000 à 2022"
+        "detail": "2000 à 2023"
     },
     {
         "clas": ".vid.voy.amer.usa",
