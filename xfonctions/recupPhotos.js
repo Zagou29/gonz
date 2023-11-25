@@ -15,4 +15,4 @@ listImages.forEach((img) => {
     numb: jsonObj.numb,
   });
 });
-console.log(JSON.stringify(jsonFile));
+console.log(jsonFile);
