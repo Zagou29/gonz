@@ -134,16 +134,21 @@ const clear_music = () => {
   diap.querySelector(".son").classList.remove("eff_fl");
   diap.classList.remove("diapo_on");
 };
-/* toggle lancer / arreter diapos et icone diapo*/
+/* toggle lancer / arreter diapos et icone diapo si l'image n'est pas la dernière*/
 const toggleDiapo = (image) => {
-  diap.classList.toggle("diapo_on");
-  if (!nId && zoome) {
-    nId = setInterval(() => {
-      dep_hor(image, 1);
-    }, delai);
-    audio.play();
-  } else {
-    clear_music();
+  if (
+    list_img.length - 1 >
+    -list_img[0].getBoundingClientRect().x / image.offsetWidth
+  ) {
+    diap.classList.toggle("diapo_on");
+    if (!nId && zoome) {
+      nId = setInterval(() => {
+        dep_hor(image, 1);
+      }, delai);
+      audio.play();
+    } else {
+      clear_music();
+    }
   }
 };
 /* si toggle son on/off avec icone */
@@ -173,7 +178,7 @@ const showStop = () => {
 /* deplacement relatif horiz ou vertical des images */
 const dep_hor = (box, sens) => {
   box.scrollBy({
-    left: list_img[0].getBoundingClientRect().width * sens,
+    left: box.offsetWidth * sens,
     behavior: "instant",
   });
   k++;
@@ -338,8 +343,8 @@ const alert = () => full.classList.remove("showfl");
 
 /* quand on arrive sur l'ecran Photo, */
 const zoom = (e) => {
-  /** si on clique sur une des icones fleches, sort de cet ecouteur */
-  if (e.target.matches(".bloc")) return;
+  /** si on clique sur une des icones fleches, ou image vide sort de cet ecouteur */
+  if (e.target.matches(".bloc")|| e.target.matches(".image")) return;
   zoome = zoome === true ? false : true;
   /* sortir de fullscreen et arreter la musique*/
   stop_fullScreen();
