@@ -4,7 +4,7 @@
     "ph": "photo",
     "href": "",
     "src": "./images/pelemele.jpg",
-    "spText": "1900-2022",
+    "spText": "1900-2023",
     "divText": "Toutes les photos de la famille de 1900 à ce jour"
   },
   {
@@ -126,6 +126,14 @@
     "src": "./images/a2022.jpg",
     "spText": "2020-2022",
     "divText": "Le Covid arrive,\n                  \n                  nos parents s'en vont."
+  },
+  {
+    "menu": "ph",
+    "ph": "a2324",
+    "href": "",
+    "src": "./images/a2324.jpg",
+    "spText": "2023-2024",
+    "divText": "La vide repart sans nos parents"
   },
   {
     "menu": "bl",
