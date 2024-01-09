@@ -256,14 +256,14 @@
         "menu": "Playlist",
         "groupe": "Amerique Asie",
         "src": "./box_img/amerasie-01.jpg",
-        "detail": "Voyages"
+        "detail": "Voyages Am Asie"
     },
     {
         "clas": ".vid.pll.voya.voeu",
         "menu": "Playlist",
         "groupe": "Europe",
         "src": "./box_img/europe-01.jpg",
-        "detail": "Voyages"
+        "detail": "Voyages Europe"
     },
     {
         "clas": ".dia.pll.amis.amis",
@@ -284,13 +284,13 @@
         "menu": "Playlist",
         "groupe": "Europe",
         "src": "./box_img/europe-02.jpg",
-        "detail": "Voyages"
+        "detail": "Voyages Europe"
     },
     {
         "clas": ".dia.pll.voya.amas",
         "menu": "Playlist",
         "groupe": "Amerique Asie",
         "src": "./box_img/amerasie-02.jpg",
-        "detail": "Voyages"
+        "detail": "Voyages Am Asie"
     }
 ]
