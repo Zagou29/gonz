@@ -92,7 +92,7 @@ export class Affvid {
   get retourVideo() {
     return this.#vidSelect;
   }
-  aff_an(ul_Years) {
+  aff_ans(ul_Years) {
     this.#ul_Years = ul_Years;
     this.#li_Annee = new DocumentFragment();
     this.#an_Select = new Set(

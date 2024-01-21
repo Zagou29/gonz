@@ -39,7 +39,7 @@ const list_menus = vidList.map((item) => {
 /* Charger la classe videos*/
 const vidClass = new Affvid(vidList);
 /* Afficher le menu années */
-vidClass.aff_an(document.querySelector(".years"));
+vidClass.aff_ans(document.querySelector(".years"));
 /* Charger la classe menus fam voy pll */
 const vidMenu = new MenuVid(list_menus);
 /* Afficher les menus videos */

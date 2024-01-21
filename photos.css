@@ -182,10 +182,6 @@ body {
   scroll-snap-align: start;
   cursor: grab;
 }
-/* afficher l'année, et les images de chgt d'années */
-.show:is([data-seuil^="1"], [data-seuil^="2"]) {
-  border: 2px solid var(--col_an);
-}
 /* --------icone pour le fullscreen------ */
 .fullscreen {
   position: absolute;
@@ -348,7 +344,6 @@ body {
   font-size: var(--fs-liste);
   color: black;
   background-color: gold;
-  border: 1px solid black;
   z-index: 10;
 }
 @media screen and (max-width: 642px) {
