@@ -46,7 +46,6 @@ export class Affimg {
         this.#elt_images.append(image.retourImage);
         seuil = obj.an;
       });
-      console.log(this.#listimg);
     }
     /* construire this.#elt_dates */
     this.#elt_dates = new DocumentFragment();
