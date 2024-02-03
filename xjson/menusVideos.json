@@ -292,5 +292,12 @@
         "groupe": "Amerique Asie",
         "src": "./box_img/amerasie-02.jpg",
         "detail": "Voyages Am Asie"
+    },
+    {
+        "clas": ".dia.voy.euro.sca",
+        "menu": "Voyages",
+        "groupe": "Europe",
+        "src": "./box_img/Scandinavie-2.jpg",
+        "detail": "Scandinavie"
     }
 ]
