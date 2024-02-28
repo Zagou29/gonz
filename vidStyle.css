@@ -29,7 +29,6 @@ body {
 .page {
   display: grid;
   height: 100vh;
-
   grid-template-rows: auto 1fr;
   grid-template-areas:
     "menu"
@@ -46,6 +45,7 @@ body {
 }
 /* menu des onglets haut de page */
 .menu {
+  grid-area: menu;
   position: relative;
   max-width: 100vw;
   display: flex;
