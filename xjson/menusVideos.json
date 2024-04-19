@@ -144,7 +144,7 @@
         "menu": "Voyages",
         "groupe": "Europe",
         "src": "./box_img/Irlande-03.jpg",
-        "detail": "Irlande"
+        "detail": "Irlande-UK"
     },
     {
         "clas": ".vid.voy.euro.sca",
@@ -207,7 +207,7 @@
         "menu": "Voyages",
         "groupe": "Europe",
         "src": "./box_img/Irlande-04.jpg",
-        "detail": "Irlande"
+        "detail": "Irlande-UK"
     },
     {
         "clas": ".dia.voy.euro.med",
