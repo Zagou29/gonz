@@ -270,5 +270,13 @@
     "src": "./images/Kerichen.jpg",
     "spText": "Kerichen",
     "divText": "Les retrouvailles annuelles des ex-Kerichens depuis 2013"
+  },
+  {
+    "menu": "bl",
+    "ph": "",
+    "href": "https://zagadidis.blogspot.com/",
+    "src": "./images/didis.jpg",
+    "spText": "Les Didi's",
+    "divText": "Les visites des Didiers"
   }
 ]
