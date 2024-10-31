@@ -294,6 +294,13 @@
         "detail": "Voyages Am Asie"
     },
     {
+        "clas": ".dia.pll.xuse.muse",
+        "menu": "Playlist",
+        "groupe": "Musees",
+        "src": "./box_img/amerasie-02.jpg",
+        "detail": "Les Musées"
+    },
+    {
         "clas": ".dia.voy.euro.sca",
         "menu": "Voyages",
         "groupe": "Europe",
