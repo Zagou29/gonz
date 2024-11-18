@@ -162,7 +162,7 @@ function afficheLiens(param, year) {
  * @param {element} e li cliqué dans la liste des videos
  * @return {fn} affiche iframes  et titres des videos
  */
-function affVideos(e) {
+function aff_Videos(e) {
   if (!document.querySelector(".activeMenu")) return;
   /* pour années : dia_vid = .ann*/
   let dia_vid =
@@ -226,7 +226,7 @@ menus.forEach((men, index) => {
       affEffRetour("-");
       /* lancer les ecouteurs pour chaque li et les bloc_img */
       if (index < 4) {
-        men.querySelector(".bloc-links").addEventListener("click", affVideos);
+        men.querySelector(".bloc-links").addEventListener("click", aff_Videos);
       }
       if (index === 4) {
         men.querySelector(".bloc-links").addEventListener("click", trans);
