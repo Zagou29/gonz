@@ -13,7 +13,8 @@ html {
 }
 
 body {
-  --fs: 2px;
+  --fs: 0.7rem;
+  --fp: 1rem;
   --fs-body: 1rem;
   --fs-titMenu: clamp(0.9rem, 2.5vw, 2rem);
   --fs-titre: clamp(1.1rem, 1.3vw, 1.4rem);
@@ -60,35 +61,36 @@ body {
   display: flex;
   position: absolute;
   align-items: flex-end;
+  justify-content: center;
   bottom: 2px;
   left: 3rem;
-  width: 60%;
+  width: 75%;
   gap: 3px;
+  color:grey
 }
 .ytItem {
   width: 100%;
-  height: 3px;
+  height: var(--fp);
   font-size: var(--fs);
   text-align: center;
   cursor: pointer;
-  color: transparent;
   list-style: none;
+  border-radius: 3px;
+  padding-top: 2px;
+  white-space: nowrap;
 }
 
 .ytItem.dia {
-  background-color: hsla(0, 100%, 75%, 0.6);
+  background-color: hsla(0, 100%, 75%, 0.4);
 }
 
 .ytItem.vid {
-  background-color: hsla(240, 100%, 75%, 0.6);
+  background-color: hsla(240, 100%, 75%, 0.4);
 }
 .ytItem:hover {
-  font-size: 0.9rem;
-  border-radius: 3px;
-  height: min-content;
   color: black;
   mix-blend-mode: darken;
-  white-space: nowrap;
+  height: 1.1rem;
 }
 .vid.peint {
   background-color: blue;
@@ -110,8 +112,9 @@ body {
   display: inline;
   font-size: var(--fs-titMenu);
   cursor: pointer;
+  bottom: var(--fs);
 }
-.titMenu::after {
+.titMenu::before {
   content: "";
   display: block;
   width: 100%;
@@ -120,17 +123,12 @@ body {
   scale: 0;
   transition: scale 0.2s ease-in-out;
 }
-.activeMenu::before {
-  position: absolute;
-  content: "";
-  display: block;
-  width: 100%;
-  height: 2px;
-  bottom: 0;
-  background-color: blue;
-}
-.titMenu:hover::after {
+
+.titMenu:hover::before {
   scale: 1;
+}
+.titMenu.activeMenu {
+  color: blue;
 }
 /* containers dropdown pour les sous menus */
 .dropdown {
@@ -142,7 +140,7 @@ body {
   font-size: var(--fs-drop);
   background-color: rgb(238, 235, 227, 0.8);
   max-height: calc(100vh - var(--hautMenu) - 15px);
-  z-index: 2; 
+  z-index: 2;
 }
 .decal {
   left: 1rem;
@@ -222,11 +220,13 @@ body {
 }
 /* fleche de retour pour bas de page */
 .retour {
-  border: none;
   display: block;
-  background-color: transparent;
+  position: relative;
+  margin-bottom: var(--fp);
   margin-left: 0.5rem;
+  border: none;
   border-radius: 50%;
+  background-color: transparent;
   box-shadow: 3px 3px 4px hsla(0, 0%, 50%, 0.614);
   opacity: 0;
   visibility: hidden;
@@ -358,18 +358,16 @@ input:checked + .diaLabel {
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
 }
-.copy{
+.copy {
   position: absolute;
-  bottom:0.5rem;
-  left:1rem;
+  bottom: 0.5rem;
+  left: 1rem;
   background-color: transparent;
-  filter:invert(25%);
-  
+  filter: invert(25%);
 }
 
 /* pour les petits ecrans passer le titre en dessous */
 @media screen and (max-width: 700px) {
-  
   .titre {
     position: absolute;
     top: var(--decalHaut-titre);

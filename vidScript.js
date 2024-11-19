@@ -124,7 +124,7 @@ function afficheLiens(param, year) {
   vidClass.affVideos(ecVideos, param, year);
 
   if (!mob().mob) {
-    /** ecoute les barres de videos et va les montrer si pas mobile */
+    /** ecoute les barres de videos et ramène la video si pas mobile */
     vidClass.affBar(document.querySelector(".menu"));
     const ecoute_barre = (e) => {
       ecVideos
