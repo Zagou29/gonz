@@ -134,8 +134,6 @@ function afficheLiens(param, year) {
     /** ecoute les barres de videos et ramène la video si pas mobile */
     vidClass.affBar(document.querySelector(".menu"));
     const ecoute_barre = (e) => {
-      console.log(e.target.dataset.num);
-
       ecVideos
         .querySelector(`[data-num = '${e.target.dataset.num}']`)
         .scrollIntoView();

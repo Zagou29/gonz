@@ -37,7 +37,7 @@ export class Affvid {
   affVideos(element, classe, an) {
     this.#container = element;
     this.#classe = classe;
-    this.#an=an
+    this.#an = an;
     this.#listElement = new DocumentFragment();
     /* préparer vidSelect selon la classe ou l'année */
     if (this.#an) {
@@ -87,9 +87,9 @@ export class Affvid {
       this.#barre = cloneTemplate("barContainer");
       this.#barre.querySelector(".barBox").append(this.#listElem);
       this.#menu.append(this.#barre);
-     
     }
   }
+  // pour compter le nbre de videos dans vidscript
   get retourVideo() {
     return this.#vidSelect;
   }
@@ -104,7 +104,6 @@ export class Affvid {
       this.#li_Annee.append(an_Item.retourAnnItem);
     });
     this.#ul_Years.append(this.#li_Annee);
-     console.log("bang", this.#ul_Years);
   }
 
   #setDim(ecrans, item) {
@@ -135,9 +134,12 @@ class VidItem {
         `${this.#vidItem.clas.slice(0, 4) === ".vid" ? "video" : "diapo"}`
       );
     const video = this.#vidElement.querySelector(".lect");
-    // video.setAttribute("title", this.#vidItem.text);
-      const thumbnail = `https://img.youtube.com/vi/${this.#vidItem.id}/maxresdefault.jpg`;
+    const thumbnail = `https://img.youtube.com/vi/${
+      this.#vidItem.id
+    }/maxresdefault.jpg`;
     video.style.backgroundImage = `url(${thumbnail})`;
+
+    // video.setAttribute("title", this.#vidItem.text);
     // this.#vidItem.id.length !== 34
     //   ? video.setAttribute(
     //       "src",
