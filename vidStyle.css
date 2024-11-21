@@ -66,7 +66,7 @@ body {
   left: 3rem;
   width: 75%;
   gap: 3px;
-  color:grey
+  color: grey;
 }
 .ytItem {
   width: 100%;
@@ -217,6 +217,7 @@ body {
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.479);
   margin: 0 auto 5px;
   z-index: 1;
+  background-size: cover;
 }
 /* fleche de retour pour bas de page */
 .retour {

@@ -120,13 +120,22 @@ function ferme_videos(entries) {
 function afficheLiens(param, year) {
   /* supprime des ecrans YT */
   ecVideos.innerHTML = "";
-  /**affiche les videos  selctionnées par Param et Year*/
+  /**affiche les videos  selectionnées par Param et Year*/
   vidClass.affVideos(ecVideos, param, year);
+  ecVideos.addEventListener("click", (e) => {
+    if (e.target.getAttribute("data-num")) {
+      const top = e.target.getAttribute("data-num");
+      // e.target.parentElement.querySelector(`[data-num ="${top}"]`).remove()
+    }
+  });
 
+  // console.log(document.querySelectorAll(".lect"))
   if (!mob().mob) {
     /** ecoute les barres de videos et ramène la video si pas mobile */
     vidClass.affBar(document.querySelector(".menu"));
     const ecoute_barre = (e) => {
+      console.log(e.target.dataset.num);
+
       ecVideos
         .querySelector(`[data-num = '${e.target.dataset.num}']`)
         .scrollIntoView();

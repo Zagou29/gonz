@@ -87,6 +87,7 @@ export class Affvid {
       this.#barre = cloneTemplate("barContainer");
       this.#barre.querySelector(".barBox").append(this.#listElem);
       this.#menu.append(this.#barre);
+     
     }
   }
   get retourVideo() {
@@ -103,6 +104,7 @@ export class Affvid {
       this.#li_Annee.append(an_Item.retourAnnItem);
     });
     this.#ul_Years.append(this.#li_Annee);
+     console.log("bang", this.#ul_Years);
   }
 
   #setDim(ecrans, item) {
@@ -133,20 +135,22 @@ class VidItem {
         `${this.#vidItem.clas.slice(0, 4) === ".vid" ? "video" : "diapo"}`
       );
     const video = this.#vidElement.querySelector(".lect");
-    video.setAttribute("title", this.#vidItem.text);
-    this.#vidItem.id.length !== 34
-      ? video.setAttribute(
-          "src",
-          `https://www.youtube-nocookie.com/embed/${
-            this.#vidItem.id
-          }?rel=0&amp;modestbranding=1`
-        )
-      : video.setAttribute(
-          "src",
-          `https://www.youtube-nocookie.com/embed/videoseries?list=${
-            this.#vidItem.id
-          }&amp;rel=0&amp;modestbranding=1`
-        );
+    // video.setAttribute("title", this.#vidItem.text);
+      const thumbnail = `https://img.youtube.com/vi/${this.#vidItem.id}/maxresdefault.jpg`;
+    video.style.backgroundImage = `url(${thumbnail})`;
+    // this.#vidItem.id.length !== 34
+    //   ? video.setAttribute(
+    //       "src",
+    //       `https://www.youtube-nocookie.com/embed/${
+    //         this.#vidItem.id
+    //       }?rel=0&amp;modestbranding=1`
+    //     )
+    //   : video.setAttribute(
+    //       "src",
+    //       `https://www.youtube-nocookie.com/embed/videoseries?list=${
+    //         this.#vidItem.id
+    //       }&amp;rel=0&amp;modestbranding=1`
+    //     );
   }
   get retourItem() {
     return this.#vidElement;
