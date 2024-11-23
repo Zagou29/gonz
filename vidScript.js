@@ -99,10 +99,15 @@ function ferme_videos(entries) {
       document
         .querySelector(`.barBox [data-num = "${entry.target.dataset.num}"]`)
         ?.classList.remove("peint");
-      entry.target.src = entry.target.src.replace(
-        entry.target.src,
-        entry.target.src
-      );
+      const videos = entry.target.querySelector(".vidImg");
+      videos.src = videos.src.replace(videos.src, videos.src);
+      // if (entry.target.querySelector(`[data-vid = "y"]`)) {
+      //   console.log("video", entry.target.querySelector(".vidImg"));
+      //   const idImg = entry.target.querySelector(".vidImg").dataset.id;
+      //   entry.target.querySelector(".vidImg").remove();
+      //   //   // supprimer le thumbnail
+      //   vidClass.affVidUnique(entry.target, idImg, "ytThumbR");
+      // }
     } else {
       if (entry.isIntersecting) {
         document
@@ -122,14 +127,18 @@ function afficheLiens(param, year) {
   ecVideos.innerHTML = "";
   /**affiche les videos  selectionnées par Param et Year*/
   vidClass.affVideos(ecVideos, param, year);
+  // si on clique sur l'image, on remplace l'image par la video de meme ID
   ecVideos.addEventListener("click", (e) => {
-    if (e.target.getAttribute("data-num")) {
-      const top = e.target.getAttribute("data-num");
-      // e.target.parentElement.querySelector(`[data-num ="${top}"]`).remove()
+    if (e.target.parentElement.dataset.num) {
+      // isoler les infos de la video de meme id que le thumnail
+      const divImg = e.target.parentElement;
+      // supprimer le thumbnail
+      e.target.remove();
+      // charger la video dans la div ".lect"
+      vidClass.affVidUnique(divImg, e.target.dataset.id, "ytFrameR");
     }
   });
 
-  // console.log(document.querySelectorAll(".lect"))
   if (!mob().mob) {
     /** ecoute les barres de videos et ramène la video si pas mobile */
     vidClass.affBar(document.querySelector(".menu"));

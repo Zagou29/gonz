@@ -105,11 +105,33 @@
     <div class="ecranVideos"></div>
     <div class="copy">© Gonzague de Poulpiquet Avril 2023</div>
   </main>
+  <!-- template pour les miniatures YT -->
+  <template id="ytThumb">
+    <span class="vidTitre"></span>
+    <div class="lect" data-num>
+      <img class="vidImg" data-id="" width="100%" height="100%" loading="lazy">
+    </div>
+  </template>
+  <!-- template pour les miniatures YT de remplacement -->
+  <template id="ytThumbR">
+    <img class="vidImg" data-id="" width="100%" height="100%" loading="lazy">
+  </template>
   <!-- template pour les videos YT -->
   <template id="ytFrame">
     <span class="vidTitre"></span>
-    <img class="lect" width="100%" height="100%" data-num="" loading="lazy">
-    </img>
+    <div class="lect" data-num>
+      <iframe title="" class="vidImg" data-vid="y" data-id="" width="100%" height="100%" loading="lazy"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""
+        sandbox=" allow-scripts  allow-same-origin " src="">
+      </iframe>
+    </div>
+  </template>
+  <!-- template pour les videos YT de remplacement -->
+  <template id="ytFrameR">
+    <iframe title="" class="vidImg" data-vid="y" data-id="" width="100%" height="100%" data-num="" loading="lazy"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""
+      sandbox=" allow-scripts  allow-same-origin " src="">
+    </iframe>
   </template>
   <!-- template des blocs menu photo -->
   <template id="ph">

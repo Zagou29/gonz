@@ -23,6 +23,9 @@ export class Affvid {
   #an_Select;
   #li_Annee;
   #an;
+  #v_t;
+  #vidId;
+  #tempId;
   /**
    * tableau des videos objets
    * @param {vidlist[]} vidlist
@@ -34,14 +37,15 @@ export class Affvid {
    * @param {HTMLElement} element (ecVideos)
    * @param {string} clas (classes selectionné via le lien menu Li)
    */
-  affVideos(element, classe, an) {
-    this.#container = element;
+  // charger les Thumbs dans ecVideos
+  affVideos(container, classe, an) {
+    this.#container = container;
     this.#classe = classe;
     this.#an = an;
     this.#listElement = new DocumentFragment();
     /* préparer vidSelect selon la classe ou l'année */
     if (this.#an) {
-      /* si on selectionne video ou diapo */
+      /* si on déselectionne video ou diapo dans onglet annee*/
       if (this.#classe.length > 4) {
         this.#classe = this.#classe.slice(0, 4);
       } else {
@@ -63,18 +67,45 @@ export class Affvid {
       ...this.#vidSelect.filter((item) => item.clas.includes(".dia")),
     ];
     this.#liste.forEach((obj, index) => {
-      const video = new VidItem(obj);
+      // toujours thumnail pour l'affichage de depart des videos
+      const video = new VidItem(obj, "ytThumb");
       video.retourItem
-        .querySelector(".lect")
+        .querySelector(".vidImg")
         .setAttribute("width", this.#setDim(this.#container, obj)[0]);
       video.retourItem
-        .querySelector(".lect")
+        .querySelector(".vidImg")
         .setAttribute("height", this.#setDim(this.#container, obj)[1]);
       video.retourItem.querySelector(".lect").dataset.num = index;
+      video.retourItem.querySelector(".vidTitre").dataset.numt = index;
       this.#listElement.append(video.retourItem);
     });
+    
     this.#container.append(this.#listElement);
   }
+  // charger une video ou un Thumb après un titre VidTitre
+  affVidUnique(container, vidId, tempId) {
+    this.#tempId = tempId;
+    this.#container = container;
+    this.#vidId = vidId;
+    // this.#listElement = new DocumentFragment();
+    this.#vidSelect = this.#vidlist.find((item) => item.id === this.#vidId);
+    const video = new VidItem(this.#vidSelect, this.#tempId);
+    video.retourItem
+      .querySelector(".vidImg")
+      .setAttribute("width", this.#setDim(this.#container.parentElement, this.#vidSelect)[0]);
+    video.retourItem
+      .querySelector(".vidImg")
+      .setAttribute(
+        "height",
+        this.#setDim(this.#container.parentElement, this.#vidSelect)[1]
+      );
+    // video.retourItem.querySelector(".lect").dataset.num = this.#datanum;
+    // video.retourItem.querySelector(".vidTitre").dataset.numt = "0";
+    // this.#listElement.append(video.retourItem);
+    this.#container.append(video.retourItem);
+  }
+
+  // charger les barres des videos/Thumb sous le menu
   affBar(menu) {
     if (this.#liste.length > 1) {
       this.#menu = menu;
@@ -105,7 +136,7 @@ export class Affvid {
     });
     this.#ul_Years.append(this.#li_Annee);
   }
-
+  // calcul des dimensions des videos/thumbs
   #setDim(ecrans, item) {
     const wl = ecrans.clientWidth - 5;
     const wh = ecrans.clientHeight - 27;
@@ -118,41 +149,50 @@ export class Affvid {
     ];
   }
 }
-
+// création d'un Thumb ou d'un Iframe video
 class VidItem {
+  #tempId;
   #vidItem;
   #vidElement;
-  constructor(vid) {
+  // tempId est le template a utiliser ytThumb ou ytFrame
+  constructor(vid, tempId) {
+    this.#tempId = tempId;
     this.#vidItem = vid;
-    this.#vidElement = cloneTemplate("ytFrame");
-    this.#vidElement.querySelector(".vidTitre").textContent = `${
-      this.#vidItem.clas.slice(0, 4) === ".vid" ? "Video " : "Diapo "
-    }${this.#vidItem.text}`;
-    this.#vidElement
-      .querySelector(".vidTitre")
-      .classList.add(
-        `${this.#vidItem.clas.slice(0, 4) === ".vid" ? "video" : "diapo"}`
-      );
-    const video = this.#vidElement.querySelector(".lect");
-    const thumbnail = `https://img.youtube.com/vi/${
-      this.#vidItem.id
-    }/maxresdefault.jpg`;
-    video.style.backgroundImage = `url(${thumbnail})`;
-
-    // video.setAttribute("title", this.#vidItem.text);
-    // this.#vidItem.id.length !== 34
-    //   ? video.setAttribute(
-    //       "src",
-    //       `https://www.youtube-nocookie.com/embed/${
-    //         this.#vidItem.id
-    //       }?rel=0&amp;modestbranding=1`
-    //     )
-    //   : video.setAttribute(
-    //       "src",
-    //       `https://www.youtube-nocookie.com/embed/videoseries?list=${
-    //         this.#vidItem.id
-    //       }&amp;rel=0&amp;modestbranding=1`
-    //     );
+    this.#vidElement = cloneTemplate(this.#tempId);
+    // preparer le span titre seulement pour AffVideos
+    if (this.#tempId === "ytThumb" || this.#tempId === "ytFrame") {
+      this.#vidElement.querySelector(".vidTitre").textContent = `${
+        this.#vidItem.clas.slice(0, 4) === ".vid" ? "Video " : "Diapo "
+      }${this.#vidItem.text}`;
+      this.#vidElement
+        .querySelector(".vidTitre")
+        .classList.add(
+          `${this.#vidItem.clas.slice(0, 4) === ".vid" ? "video" : "diapo"}`
+        );
+    }
+    const video = this.#vidElement.querySelector(".vidImg");
+    if (this.#tempId === "ytThumb" || this.#tempId === "ytThumbR") {
+      const thumbnail = `https://img.youtube.com/vi/${this.#vidItem.id
+      }/maxresdefault.jpg`;
+      video.style.backgroundImage = `url(${thumbnail})`;
+      video.setAttribute("data-id", this.#vidItem.id);
+    } else {
+      video.setAttribute("data-id", this.#vidItem.id);
+      video.setAttribute("title", this.#vidItem.text);
+      this.#vidItem.id.length !== 34
+        ? video.setAttribute(
+            "src",
+            `https://www.youtube-nocookie.com/embed/${
+              this.#vidItem.id
+            }?rel=0&amp;modestbranding=1`
+          )
+        : video.setAttribute(
+            "src",
+            `https://www.youtube-nocookie.com/embed/videoseries?list=${
+              this.#vidItem.id
+            }&amp;rel=0&amp;modestbranding=1`
+          );
+    }
   }
   get retourItem() {
     return this.#vidElement;
