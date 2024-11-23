@@ -100,8 +100,8 @@ function ferme_videos(entries) {
         .querySelector(`.barBox [data-num = "${entry.target.dataset.num}"]`)
         ?.classList.remove("peint");
       entry.target.src = entry.target.src.replace(
-        entry.target.src,
-        entry.target.src
+        "youtube",
+        "youtube"
       );
     } else {
       if (entry.isIntersecting) {
