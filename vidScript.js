@@ -100,14 +100,7 @@ function ferme_videos(entries) {
         .querySelector(`.barBox [data-num = "${entry.target.dataset.num}"]`)
         ?.classList.remove("peint");
       const videos = entry.target.querySelector(".vidImg");
-      videos.src = videos.src.replace(videos.src, videos.src);
-      // if (entry.target.querySelector(`[data-vid = "y"]`)) {
-      //   console.log("video", entry.target.querySelector(".vidImg"));
-      //   const idImg = entry.target.querySelector(".vidImg").dataset.id;
-      //   entry.target.querySelector(".vidImg").remove();
-      //   //   // supprimer le thumbnail
-      //   vidClass.affVidUnique(entry.target, idImg, "ytThumbR");
-      // }
+      videos.src = videos.src.replace("autoplay=1", "autoplay=0");
     } else {
       if (entry.isIntersecting) {
         document

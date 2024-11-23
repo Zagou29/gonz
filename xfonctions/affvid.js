@@ -99,9 +99,6 @@ export class Affvid {
         "height",
         this.#setDim(this.#container.parentElement, this.#vidSelect)[1]
       );
-    // video.retourItem.querySelector(".lect").dataset.num = this.#datanum;
-    // video.retourItem.querySelector(".vidTitre").dataset.numt = "0";
-    // this.#listElement.append(video.retourItem);
     this.#container.append(video.retourItem);
   }
 
@@ -184,13 +181,13 @@ class VidItem {
             "src",
             `https://www.youtube-nocookie.com/embed/${
               this.#vidItem.id
-            }?rel=0&amp;modestbranding=1`
+            }?rel=0&amp&autoplay=1;modestbranding=1`
           )
         : video.setAttribute(
             "src",
             `https://www.youtube-nocookie.com/embed/videoseries?list=${
               this.#vidItem.id
-            }&amp;rel=0&amp;modestbranding=1`
+            }&amp;rel=0&amp&autoplay=1;modestbranding=1`
           );
     }
   }
