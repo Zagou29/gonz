@@ -39,7 +39,7 @@ export class Affvid {
    */
   // charger les Thumbs dans ecVideos
   affVideos(container, classe, an, tempId) {
-    this.#tempId = tempId
+    this.#tempId = tempId;
     this.#container = container;
     this.#classe = classe;
     this.#an = an;
@@ -69,7 +69,7 @@ export class Affvid {
     ];
     this.#liste.forEach((obj, index) => {
       // toujours thumnail pour l'affichage de depart des videos
-      const video = new VidItem(obj,this.#tempId);
+      const video = new VidItem(obj, this.#tempId);
       video.retourItem
         .querySelector(".vidImg")
         .setAttribute("width", this.#setDim(this.#container, obj)[0]);
@@ -80,7 +80,7 @@ export class Affvid {
       video.retourItem.querySelector(".vidTitre").dataset.numt = index;
       this.#listElement.append(video.retourItem);
     });
-    
+
     this.#container.append(this.#listElement);
   }
   // charger une video ou un Thumb après un titre VidTitre
@@ -91,15 +91,17 @@ export class Affvid {
     // this.#listElement = new DocumentFragment();
     this.#vidSelect = this.#vidlist.find((item) => item.id === this.#vidId);
     const video = new VidItem(this.#vidSelect, this.#tempId);
-    video.retourItem
-      .querySelector(".vidImg")
-      .setAttribute("width", this.#setDim(this.#container.parentElement, this.#vidSelect)[0]);
-    video.retourItem
-      .querySelector(".vidImg")
-      .setAttribute(
-        "height",
-        this.#setDim(this.#container.parentElement, this.#vidSelect)[1]
-      );
+    const imgVid = video.retourItem.querySelector(".vidImg");
+    imgVid.setAttribute(
+      "width",
+      this.#setDim(this.#container.parentElement, this.#vidSelect)[0]
+    );
+    imgVid.setAttribute(
+      "height",
+      this.#setDim(this.#container.parentElement, this.#vidSelect)[1]
+    );
+    imgVid.src = imgVid.src.replace("autoplay=0", "autoplay=1");
+
     this.#container.append(video.retourItem);
   }
 
@@ -170,7 +172,8 @@ class VidItem {
     }
     const video = this.#vidElement.querySelector(".vidImg");
     if (this.#tempId === "ytThumb" || this.#tempId === "ytThumbR") {
-      const thumbnail = `https://img.youtube.com/vi/${this.#vidItem.id
+      const thumbnail = `https://img.youtube.com/vi/${
+        this.#vidItem.id
       }/maxresdefault.jpg`;
       video.style.backgroundImage = `url(${thumbnail})`;
       video.setAttribute("data-id", this.#vidItem.id);
@@ -182,7 +185,7 @@ class VidItem {
             "src",
             `https://www.youtube-nocookie.com/embed/${
               this.#vidItem.id
-            }?rel=0&amp&autoplay=1;modestbranding=1`
+            }?rel=0&amp&autoplay=0;modestbranding=1`
           )
         : video.setAttribute(
             "src",
