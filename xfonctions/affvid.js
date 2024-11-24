@@ -38,7 +38,8 @@ export class Affvid {
    * @param {string} clas (classes selectionné via le lien menu Li)
    */
   // charger les Thumbs dans ecVideos
-  affVideos(container, classe, an) {
+  affVideos(container, classe, an, tempId) {
+    this.#tempId = tempId
     this.#container = container;
     this.#classe = classe;
     this.#an = an;
@@ -68,7 +69,7 @@ export class Affvid {
     ];
     this.#liste.forEach((obj, index) => {
       // toujours thumnail pour l'affichage de depart des videos
-      const video = new VidItem(obj, "ytThumb");
+      const video = new VidItem(obj,this.#tempId);
       video.retourItem
         .querySelector(".vidImg")
         .setAttribute("width", this.#setDim(this.#container, obj)[0]);
@@ -187,7 +188,7 @@ class VidItem {
             "src",
             `https://www.youtube-nocookie.com/embed/videoseries?list=${
               this.#vidItem.id
-            }&amp;rel=0&amp&autoplay=1;modestbranding=1`
+            }&amp;rel=0&amp&autoplay=0;modestbranding=1`
           );
     }
   }

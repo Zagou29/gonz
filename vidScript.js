@@ -115,11 +115,11 @@ function ferme_videos(entries) {
  * @param {string} param class des liens videos
  * @returns {number} le nombre de iframes
  */
-function afficheLiens(param, year) {
+function afficheLiens(param, year,tempId) {
   /* supprime des ecrans YT */
   ecVideos.innerHTML = "";
   /**affiche les videos  selectionnées par Param et Year*/
-  vidClass.affVideos(ecVideos, param, year);
+  vidClass.affVideos(ecVideos, param, year,tempId);
   // si on clique sur l'image, on remplace l'image par la video de meme ID
   ecVideos.addEventListener("click", (e) => {
     if (e.target.parentElement.dataset.num) {
@@ -179,7 +179,13 @@ function aff_Videos(e) {
     e.target.dataset.select;
   let year = e.target.dataset.year ? `${e.target.dataset.year}` : "";
   /* afficher les videos selon class et/ou annee */
-  const aff = afficheLiens(dia_vid, year);
+
+  ;
+  const aff = afficheLiens(
+    dia_vid,
+    year,
+    dia_vid.search("pll") === 5 ? "ytFrame" : "ytThumb"
+  );
   titre.textContent = aff ? e.target.textContent : "";
 }
 /**
