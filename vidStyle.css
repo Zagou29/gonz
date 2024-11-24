@@ -214,14 +214,12 @@ body {
 }
 .lect {
   scroll-snap-align: start;
-
   margin: 0 auto 5px;
   z-index: 1;
 }
 .vidImg {
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.479);
-  background-size: cover;
-  background-position: center;
+  object-fit: cover;
 }
 /* fleche de retour pour bas de page */
 .retour {

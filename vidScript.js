@@ -100,6 +100,7 @@ function ferme_videos(entries) {
         .querySelector(`.barBox [data-num = "${entry.target.dataset.num}"]`)
         ?.classList.remove("peint");
       const videos = entry.target.querySelector(".vidImg");
+      // si Frame, passe Autoplay en "0", si Thumb ne change rien au SRC
       videos.src = videos.src.replace("autoplay=1", "autoplay=0");
     } else {
       if (entry.isIntersecting) {

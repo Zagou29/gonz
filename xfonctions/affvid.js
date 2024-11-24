@@ -172,10 +172,10 @@ class VidItem {
     }
     const video = this.#vidElement.querySelector(".vidImg");
     if (this.#tempId === "ytThumb" || this.#tempId === "ytThumbR") {
-      const thumbnail = `https://img.youtube.com/vi/${
-        this.#vidItem.id
-      }/maxresdefault.jpg`;
-      video.style.backgroundImage = `url(${thumbnail})`;
+      video.setAttribute(
+        "src",
+        `https://img.youtube.com/vi/${this.#vidItem.id}/maxresdefault.jpg`
+      );
       video.setAttribute("data-id", this.#vidItem.id);
     } else {
       video.setAttribute("data-id", this.#vidItem.id);
