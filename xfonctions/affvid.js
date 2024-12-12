@@ -23,7 +23,6 @@ export class Affvid {
   #an_Select;
   #li_Annee;
   #an;
-  #v_t;
   #vidId;
   #tempId;
   /**

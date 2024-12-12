@@ -220,6 +220,7 @@ body {
 .vidImg {
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.479);
   object-fit: cover;
+   cursor: pointer;
 }
 /* fleche de retour pour bas de page */
 .retour {
