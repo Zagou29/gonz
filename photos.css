@@ -171,6 +171,11 @@ body {
   cursor: pointer;
   outline: 1px solid black;
 }
+.show[data-seuil^="1"],
+.show[data-seuil^="2"] {
+  border-radius:5px;
+  border:solid hsl(237, 100%, 38%);
+}
 .show_mod {
   object-fit: contain;
   object-position: center;
@@ -333,18 +338,17 @@ body {
 .liens[data-seuil^="1"],
 .liens[data-seuil^="2"] {
   font-size: var(--fs-liste);
-  color: black;
+  color: grey;
 }
 .liens:hover {
-  position: relative;
   font-size: var(--fs-liste);
   color: var(--col_an);
+  background-color: transparent;
 }
 .show-an {
   font-size: var(--fs-liste);
   color: black;
   background-color: gold;
-  z-index: 10;
 }
 @media screen and (max-width: 642px) {
   .image {

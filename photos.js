@@ -93,7 +93,11 @@ const lien_an = [...cont.querySelectorAll(".liens")];
 /** ne faire apparaitre qu'une date sur 4 pour "photo" */
 if (val_trans === "photo") {
   lien_an.map((dat, index) => {
-    if (index % 4 !== 0) dat.setAttribute("data-seuil", "----");
+    if (index % 3 !== 0) dat.setAttribute("data-seuil", "----");
+  });
+} else {
+  lien_an.map((dat, index) => {
+    if (index % 2 !== 0) dat.setAttribute("data-seuil", "----");
   });
 }
 /* --------------------------------------------- */
@@ -417,7 +421,7 @@ aff_an.textContent = list_img[0].dataset.an;
 /* un observer pour afficher les dates dans la timeline verticale */
 let options = {
   root: null,
-  rootMargin: "0% 0% -100% -98%",
+  rootMargin: "0% -10% -100% -98%",
   threshold: 0,
 };
 const guette = new IntersectionObserver(affiche_date, options);

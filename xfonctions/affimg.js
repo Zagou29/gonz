@@ -32,12 +32,9 @@ export class Affimg {
         seuil = obj.an;
       });
     } else {
-      let ind = 0;
       this.#listimg.forEach((obj, index) => {
         if (obj.an !== seuil) {
           obj.seuil = obj.an;
-          //s'il y a moins de 2 seuil "" apres le précédent non vide , forcer seuil à "", sinon recaler ind sur l'index de cette ligne
-          index - ind < 4 && index - ind > 0 ? (obj.seuil = "") : (ind = index);
         } else {
           obj.seuil = "";
         }
