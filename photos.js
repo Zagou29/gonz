@@ -5,7 +5,7 @@ import { Menubox } from "./xfonctions/menubox.js";
 import { go_fullScreen, stop_fullScreen } from "./xfonctions/fullScreen.js";
 import { navig, ordi_OS } from "./xfonctions/nav_os.js";
 /* Si l'OS est windows, supprimer les barres de defilement */
-if (ordi_OS().win) document.querySelector(".image").classList.add("scrbar");
+if (ordi_OS().win||ordi_OS().mac) document.querySelector(".image").classList.add("scrbar");
 /*  prendre en charge les boxes de VidCript et le sens des dates */
 const val_trans = localStorage.getItem("data"); /* classList venant de Index */
 let sens_date = localStorage.getItem("sens_dates"); /* sens dates */
