@@ -8,7 +8,7 @@ html {
   margin: 0;
   padding: 0;
 }
-.scrbar::-webkit-scrollbar {
+::-webkit-scrollbar {
   display: none;
 }
 body {
