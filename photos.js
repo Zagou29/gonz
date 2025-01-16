@@ -421,7 +421,7 @@ aff_an.textContent = list_img[0].dataset.an;
 /* un observer pour afficher les dates dans la timeline verticale */
 let options = {
   root: null,
-  rootMargin: "0% -10% -100% -98%",
+  rootMargin: "0% -2% -100% -98%",
   threshold: 0,
 };
 const guette = new IntersectionObserver(affiche_date, options);
