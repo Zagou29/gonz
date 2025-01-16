@@ -21,9 +21,9 @@ try {
   console.error(e);
 }
 /* supprimer les barres de defilement */
-// const drop = [...document.querySelectorAll(".dropdown")];
-// drop.forEach((dr) => dr.classList.add("scrbar"));
-// document.querySelector(".ecranVideos").classList.add("scrbar");
+const drop = [...document.querySelectorAll(".dropdown")];
+drop.forEach((dr) => dr.classList.add("scrbar"));
+document.querySelector(".ecranVideos").classList.add("scrbar");
 
 /**Charger la liste globale des videos */
 const vidList = await fetchJSON("./xjson/indexVid.json");

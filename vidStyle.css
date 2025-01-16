@@ -9,9 +9,9 @@ html {
   margin: 0;
   padding: 0;
 }
-/* .scrbar::-webkit-scrollbar {
+.scrbar::-webkit-scrollbar {
   display: none;
-} */
+}
 
 body {
   --fs: 0.7rem;
