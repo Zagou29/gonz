@@ -1,7 +1,6 @@
 html {
   scroll-behavior: smooth;
   scrollbar-color: transparent transparent;
-  -webkit-overflow-scrolling: touch;
 }
 *,
 *::before,
@@ -154,7 +153,6 @@ body {
   background-color: grey;
 }
 .image {
-  overflow-y: hidden;
   display: grid;
   gap: 1px;
   grid-template-columns: repeat(auto-fit, minmax(var(--largImg), 1fr));
