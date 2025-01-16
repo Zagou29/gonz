@@ -1,5 +1,6 @@
 html {
   scroll-behavior: smooth;
+  scrollbar-color: transparent transparent;
 }
 *,
 *::before,
@@ -8,7 +9,10 @@ html {
   margin: 0;
   padding: 0;
 }
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
+  display: none;
+} */
+.scrbar::-webkit-scrollbar {
   display: none;
 }
 body {
