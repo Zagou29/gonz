@@ -33,24 +33,26 @@ export class MenuVid {
     this.#boxSelect = this.#videos.filter((objbox) =>
       objbox.clas.slice(4, 8).includes(this.#dataMenu)
     );
+    console.log(this.#boxSelect)
 
     /** préparer la liste pour le tri */
     this.#listatrier = this.#boxSelect.map((item) => {
       const { clas } = item;
       const typVid = clas.slice(0, 4);
       const menu = clas.slice(4, 8);
-      const groupe = clas.slice(8, 13);
+      const id_groupe = clas.slice(8, 13);
       const detail = clas.slice(13, 17);
-      return { clas, menu, groupe, typVid, detail };
+      return { clas, menu, id_groupe, typVid, detail };
     });
-    /* enlever les doublons de clas et trier */
+    /* enlever les doublons de clas et trier : typvid,id_groupe,detail*/
     this.#liensSelect = [
       ...new Set(this.#listatrier.map((item) => JSON.stringify(item))),
     ]
       .map((item) => JSON.parse(item))
       .sort((a, b) => (a.detail > b.detail ? 1 : a.detail < b.detail ? -1 : 0))
-      .sort((a, b) => (a.groupe > b.groupe ? 1 : a.groupe < b.groupe ? -1 : 0))
+      .sort((a, b) => (a.id_groupe > b.id_groupe ? 1 : a.id_groupe < b.id_groupe ? -1 : 0))
       .sort((a, b) => (a.typVid > b.typVid ? -1 : a.typVid < b.typVid ? 1 : 0));
+    console.log(this.#liensSelect),
     this.#listElement = new DocumentFragment();
     /**créer une boite par objet et l'inserer dans listElement */
     this.#liensSelect.forEach((boite) => {

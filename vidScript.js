@@ -123,7 +123,7 @@ function afficheLiens(param, year, tempId) {
   vidClass.affVideos(ecVideos, param, year, tempId);
   // si on clique sur l'image, on remplace l'image par la video de meme ID
   ecVideos.addEventListener("click", (e) => {
-    if (e.target.parentElement.dataset.num) {
+    if (e.target.className === "vidImg") {
       // isoler les infos de la video de meme id que le thumnail
       const divImg = e.target.parentElement;
       // supprimer le thumbnail
