@@ -123,9 +123,10 @@ function afficheLiens(param, year, tempId) {
   vidClass.affVideos(ecVideos, param, year, tempId);
   // si on clique sur l'image, on remplace l'image par la video de meme ID
   ecVideos.addEventListener("click", (e) => {
+    const divImg = e.target.parentElement;
+    if (!divImg) return;
     if (e.target.className === "vidImg") {
       // isoler les infos de la video de meme id que le thumnail
-      const divImg = e.target.parentElement;
       // supprimer le thumbnail
       e.target.remove();
       // charger la video dans la div ".lect"
@@ -226,6 +227,7 @@ const ecVideos = document.querySelector(".ecranVideos");
 let menuIndex = 0;
 menus.forEach((men, index) => {
   men.addEventListener("click", (e) => {
+    if (e.target.className.includes("btn-top")) return;
     /* supprimer la barre de menu active precedente et refermer le dropmenu*/
     menus[menuIndex].querySelector(".titMenu").classList.remove("activeMenu");
     /* activer le menu choisi */
