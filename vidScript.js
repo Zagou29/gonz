@@ -116,23 +116,25 @@ function ferme_videos(entries) {
  * @param {string} param class des liens videos
  * @returns {number} le nombre de iframes
  */
+// charger la video YT a la place de l'image cliquéé
+function click_img(e) {
+  const divImg = e.target.parentElement;
+  if (e.target.className === "lect") return;
+  if (e.target.className === "vidImg") {
+    // isoler les infos de la video de meme id que le thumnail
+    // supprimer le thumbnail
+    e.target.remove();
+    // charger la video dans la div ".lect"
+    vidClass.affVidUnique(divImg, e.target.dataset.id, "ytFrameR");
+  }
+}
 function afficheLiens(param, year, tempId) {
   /* supprime des ecrans YT */
   ecVideos.innerHTML = "";
   /**affiche les videos  selectionnées par Param et Year*/
   vidClass.affVideos(ecVideos, param, year, tempId);
   // si on clique sur l'image, on remplace l'image par la video de meme ID
-  ecVideos.addEventListener("click", (e) => {
-    const divImg = e.target.parentElement;
-    if (!divImg) return;
-    if (e.target.className === "vidImg") {
-      // isoler les infos de la video de meme id que le thumnail
-      // supprimer le thumbnail
-      e.target.remove();
-      // charger la video dans la div ".lect"
-      vidClass.affVidUnique(divImg, e.target.dataset.id, "ytFrameR");
-    }
-  });
+  ecVideos.addEventListener("click", click_img);
 
   if (!mob().mob) {
     /** ecoute les barres de videos et ramène la video si pas mobile */
@@ -181,7 +183,6 @@ function aff_Videos(e) {
     e.target.dataset.select;
   let year = e.target.dataset.year ? `${e.target.dataset.year}` : "";
   /* afficher les videos selon class et/ou annee */
-
   const aff = afficheLiens(
     dia_vid,
     year,
@@ -244,6 +245,7 @@ menus.forEach((men, index) => {
       /* lancer les ecouteurs pour chaque li et les bloc_img */
       if (index < 4) {
         men.querySelector(".bloc-links").addEventListener("click", aff_Videos);
+        ecVideos.removeEventListener("click", click_img);
       }
       if (index === 4) {
         men.querySelector(".bloc-links").addEventListener("click", trans);

@@ -338,9 +338,9 @@ input:checked + .diaLabel {
   opacity: 0;
   align-self: end;
 }
-.groupe {
+/* .groupe {
   text-align: center;
-}
+} */
 
 .bloc_img:hover .blogs {
   box-shadow: 5px 5px 5px grey;

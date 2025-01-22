@@ -86,8 +86,8 @@ class MenuItem {
       .classList.add(this.#boxList[0].clas.slice(1, 4));
     this.#boxElement.querySelector(".ti_blog").textContent =
       this.#boxList[0].detail;
-    this.#boxElement.querySelector(".groupe").textContent =
-      this.#boxList[0].groupe;
+    // this.#boxElement.querySelector(".groupe").textContent =
+    //   this.#boxList[0].groupe;
     this.#boxElement.querySelector(".ti_blog").dataset.select = this.#boxItem;
     this.liste = new DocumentFragment();
     this.#boxList.forEach((obj) => {
