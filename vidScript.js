@@ -188,6 +188,13 @@ function aff_Videos(e) {
     year,
     mob().mob ? "ytFrame" : dia_vid.search("pll") === 5 ? "ytFrame" : "ytThumb"
   );
+  // si on ne clique pas sur 'Videos' ou 'Diapos' de "Années", refermer les boxes
+  if (!(e.target.tagName === "LABEL") && !(e.target.tagName === "INPUT")) {
+    menu
+      .querySelector(".activeMenu")
+      .parentElement.querySelector(".bloc-links").style.height = "0px";
+  }
+
   titre.textContent = aff ? e.target.textContent : "";
 }
 /**
@@ -219,21 +226,27 @@ function dropclose(e) {
   }
 }
 /* -----------le programme------------------------- */
-
 /* ========cliquer sur les menus ouvre les dropdown========= */
-const menus = [...document.querySelectorAll(".btn-top")];
+const menu = document.querySelector(".menu");
 const titre = document.querySelector(".titre");
 const ecVideos = document.querySelector(".ecranVideos");
-/* ecouter les clicks sur les menus btn-top */
-let menuIndex = 0;
-menus.forEach((men, index) => {
-  men.addEventListener("click", (e) => {
-    if (e.target.className.includes("btn-top")) return;
+/* ecouter les clicks seulement sur les menus span/titMenu */
+menu.addEventListener("click", (e) => {
+  if (e.target.className.includes("titMenu")) {
+    const span_choisi = e.target;
     /* supprimer la barre de menu active precedente et refermer le dropmenu*/
-    menus[menuIndex].querySelector(".titMenu").classList.remove("activeMenu");
+    menu.querySelectorAll(".titMenu").forEach((sp) => {
+      sp.classList.add("nonActif");
+      sp.classList.remove("activeMenu");
+    });
     /* activer le menu choisi */
-    men.querySelector(".titMenu").classList.add("activeMenu");
-    const dropCour = men.querySelector(".bloc-links");
+    span_choisi.classList.add("activeMenu");
+    span_choisi.classList.remove("nonActif");
+    // faire disparaitre les boxes  non actives
+    menu.querySelectorAll(".nonActif").forEach((sp) => {
+      sp.parentElement.querySelector(".bloc-links").style.height = "0px";
+    });
+    const dropCour = span_choisi.parentElement.querySelector(".bloc-links");
     //si on clique et que le menu est fermé ou nul" => Ouvrir
     if (dropCour.style.height === `0px` || !dropCour.style.height) {
       dropCour.style.height = dropCour.scrollHeight + "px";
@@ -243,32 +256,14 @@ menus.forEach((men, index) => {
       titre.textContent = "";
       affEffRetour("-");
       /* lancer les ecouteurs pour chaque li et les bloc_img */
-      if (index < 4) {
-        men.querySelector(".bloc-links").addEventListener("click", aff_Videos);
-        ecVideos.removeEventListener("click", click_img);
-      }
-      if (index === 4) {
-        men.querySelector(".bloc-links").addEventListener("click", trans);
-      }
-      /* si index= 4, la page des blogs s'affiche */
-    } else dropCour.style.height = `0px`;
-
-    /* fermer le dropbox d'avant */
-    if (menuIndex !== index) {
-      menus[menuIndex].querySelector(".bloc-links").style.height = `0px`;
-      document.querySelector(".menu .barBox")?.remove();
+      dropCour.addEventListener("click", aff_Videos);
+      ecVideos.removeEventListener("click", click_img);
+      dropCour.addEventListener("click", trans);
+    } else {
+      dropCour.style.height = `0px`;
+      span_choisi.classList.remove("activeMenu");
     }
-    /* si on clique deux fois sur un menu sans choisir un sous menu, enlever le soulignement */
-    if (
-      menuIndex === index &&
-      men.querySelector(".bloc-links").style.height === `0px` &&
-      !ecVideos.innerHTML
-    ) {
-      men.querySelector(".titMenu").classList.remove("activeMenu");
-    }
-    /* remettre l'index courant */
-    menuIndex = index;
-  });
+  }
 });
 /* ecouter les clicks hors le menu principal et fermer le dropmenu */
 document.querySelector("body").addEventListener("click", dropclose);

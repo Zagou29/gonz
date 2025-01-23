@@ -148,9 +148,9 @@ body {
   width: calc(100vw - 2rem);
 }
 .bloc-links {
-  transition: height 0.3s ease-in-out;
-  height: 0px;
   display: flex;
+  height: 0px;
+  transition: height 0.3s ease-in-out;
   flex-direction: column;
   justify-content: flex-start;
   align-content: center;
@@ -158,7 +158,6 @@ body {
 .bloc-links li {
   padding: 2px 5px;
   list-style-type: none;
-  /* display: block; */
   width: auto;
 }
 .bloc-links li:hover {
