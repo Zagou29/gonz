@@ -83,7 +83,7 @@ function typeVid(el) {
  * @param {string} sens (+ affiche, - efface)
  */
 function affEffRetour(sens) {
-  const retour = document.querySelector(".retour");
+  const retour = menu.querySelector(".retour");
   if (sens === "+") {
     retour.classList.add("show");
     retour.addEventListener("click", toTop);
@@ -138,7 +138,7 @@ function afficheLiens(param, year, tempId) {
 
   if (!mob().mob) {
     /** ecoute les barres de videos et ramène la video si pas mobile */
-    vidClass.affBar(document.querySelector(".menu"));
+    vidClass.affBar(menu);
     const ecoute_barre = (e) => {
       ecVideos
         .querySelector(`[data-num = '${e.target.dataset.num}']`)
@@ -176,10 +176,10 @@ function afficheLiens(param, year, tempId) {
  * @return {fn} affiche iframes  et titres des videos
  */
 function aff_Videos(e) {
-  if (!document.querySelector(".activeMenu")) return;
+  if (!menu.querySelector(".activeMenu")) return;
   /* pour années : dia_vid = .ann*/
   let dia_vid =
-    `${typeVid(document.querySelector(".activeMenu").parentElement)}` +
+    `${typeVid(menu.querySelector(".activeMenu").parentElement)}` +
     e.target.dataset.select;
   let year = e.target.dataset.year ? `${e.target.dataset.year}` : "";
   /* afficher les videos selon class et/ou annee */
@@ -212,15 +212,15 @@ function trans(e) {
 /* ferme les menus au listener sur ecvideos */
 function dropclose(e) {
   if (
-    (e.target === ecVideos || e.target === document.querySelector(".menu")) &&
+    (e.target === ecVideos || e.target === menu) &&
     !ecVideos.innerHTML &&
-    document.querySelector(".activeMenu")
+    menu.querySelector(".activeMenu")
   ) {
     /* met height du menu à zero et supprime la barre activeMenu */
-    document
+    menu
       .querySelector(".activeMenu")
       .parentElement.querySelector(".bloc-links").style.height = `0px`;
-    document
+    menu
       .querySelector(".titMenu.activeMenu")
       .classList.remove("activeMenu");
   }
