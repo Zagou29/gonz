@@ -184,13 +184,13 @@ class VidItem {
             "src",
             `https://www.youtube-nocookie.com/embed/${
               this.#vidItem.id
-            }?rel=0&amp&autoplay=0;modestbranding=1`
+            }?rel=0&autoplay=0`
           )
         : video.setAttribute(
             "src",
             `https://www.youtube-nocookie.com/embed/videoseries?list=${
               this.#vidItem.id
-            }&amp;rel=0&amp&autoplay=0;modestbranding=1`
+            }&rel=0&autoplay=0`
           );
     }
   }
