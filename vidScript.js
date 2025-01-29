@@ -232,8 +232,8 @@ const titre = document.querySelector(".titre");
 const ecVideos = document.querySelector(".ecranVideos");
 /* ecouter les clicks seulement sur les menus span/titMenu */
 menu.addEventListener("click", (e) => {
-  if (e.target.className.includes("titMenu")) {
-    const span_choisi = e.target;
+  const span_choisi = e.target;
+  if (span_choisi.className.includes("titMenu")) {
     /* supprimer la barre de menu active precedente et refermer le dropmenu*/
     menu.querySelectorAll(".titMenu").forEach((sp) => {
       sp.classList.add("nonActif");
