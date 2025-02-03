@@ -220,9 +220,7 @@ function dropclose(e) {
     menu
       .querySelector(".activeMenu")
       .parentElement.querySelector(".bloc-links").style.height = `0px`;
-    menu
-      .querySelector(".titMenu.activeMenu")
-      .classList.remove("activeMenu");
+    menu.querySelector(".titMenu.activeMenu").classList.remove("activeMenu");
   }
 }
 /* -----------le programme------------------------- */
@@ -231,17 +229,22 @@ const menu = document.querySelector(".menu");
 const titre = document.querySelector(".titre");
 const ecVideos = document.querySelector(".ecranVideos");
 /* ecouter les clicks seulement sur les menus span/titMenu */
+
+/* Fonction pour gérer l'activation du menu */
+function activerMenu(spanChoisi) {
+  // Supprimer la barre de menu active précédente et refermer le dropmenu
+  menu.querySelectorAll(".titMenu").forEach((sp) => {
+    sp.classList.add("nonActif");
+    sp.classList.remove("activeMenu");
+  });
+  spanChoisi.classList.add("activeMenu");
+  spanChoisi.classList.remove("nonActif");
+}
+/* Ecouter les clicks seulement sur les menus span/titMenu */
 menu.addEventListener("click", (e) => {
   const span_choisi = e.target;
   if (span_choisi.className.includes("titMenu")) {
-    /* supprimer la barre de menu active precedente et refermer le dropmenu*/
-    menu.querySelectorAll(".titMenu").forEach((sp) => {
-      sp.classList.add("nonActif");
-      sp.classList.remove("activeMenu");
-    });
-    /* activer le menu choisi */
-    span_choisi.classList.add("activeMenu");
-    span_choisi.classList.remove("nonActif");
+    activerMenu(span_choisi);
     // faire disparaitre les boxes  non actives
     menu.querySelectorAll(".nonActif").forEach((sp) => {
       sp.parentElement.querySelector(".bloc-links").style.height = "0px";

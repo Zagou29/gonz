@@ -69,12 +69,9 @@ export class Affvid {
     this.#liste.forEach((obj, index) => {
       // toujours thumnail pour l'affichage de depart des videos
       const video = new VidItem(obj, this.#tempId);
-      video.retourItem
-        .querySelector(".vidImg")
-        .setAttribute("width", this.#setDim(this.#container, obj)[0]);
-      video.retourItem
-        .querySelector(".vidImg")
-        .setAttribute("height", this.#setDim(this.#container, obj)[1]);
+      const vidImg = video.retourItem.querySelector(".vidImg");
+      vidImg.setAttribute("width", this.#setDim(this.#container, obj)[0]);
+      vidImg.setAttribute("height", this.#setDim(this.#container, obj)[1]);
       video.retourItem.querySelector(".lect").dataset.num = index;
       video.retourItem.querySelector(".vidTitre").dataset.numt = index;
       this.#listElement.append(video.retourItem);
@@ -87,21 +84,22 @@ export class Affvid {
     this.#tempId = tempId;
     this.#container = container;
     this.#vidId = vidId;
-    // this.#listElement = new DocumentFragment();
     this.#vidSelect = this.#vidlist.find((item) => item.id === this.#vidId);
     const video = new VidItem(this.#vidSelect, this.#tempId);
-    const imgVid = video.retourItem.querySelector(".vidImg");
-    imgVid.setAttribute(
-      "width",
-      this.#setDim(this.#container.parentElement, this.#vidSelect)[0]
-    );
-    imgVid.setAttribute(
-      "height",
-      this.#setDim(this.#container.parentElement, this.#vidSelect)[1]
-    );
-    imgVid.src = imgVid.src.replace("autoplay=0", "autoplay=1");
+    if (this.#vidSelect) {
+      const imgVid = video.retourItem.querySelector(".vidImg");
+      imgVid.setAttribute(
+        "width",
+        this.#setDim(this.#container.parentElement, this.#vidSelect)[0]
+      );
+      imgVid.setAttribute(
+        "height",
+        this.#setDim(this.#container.parentElement, this.#vidSelect)[1]
+      );
+      imgVid.src = imgVid.src.replace("autoplay=0", "autoplay=1");
 
-    this.#container.append(video.retourItem);
+      this.#container.append(video.retourItem);
+    }
   }
 
   // charger les barres des videos/Thumb sous le menu
@@ -160,14 +158,13 @@ class VidItem {
     this.#vidElement = cloneTemplate(this.#tempId);
     // preparer le span titre seulement pour AffVideos
     if (this.#tempId === "ytThumb" || this.#tempId === "ytFrame") {
-      this.#vidElement.querySelector(".vidTitre").textContent = `${
+      const vidTitre = this.#vidElement.querySelector(".vidTitre");
+      vidTitre.textContent = `${
         this.#vidItem.clas.slice(0, 4) === ".vid" ? "Video " : "Diapo "
       }${this.#vidItem.text}`;
-      this.#vidElement
-        .querySelector(".vidTitre")
-        .classList.add(
-          `${this.#vidItem.clas.slice(0, 4) === ".vid" ? "video" : "diapo"}`
-        );
+      vidTitre.classList.add(
+        `${this.#vidItem.clas.slice(0, 4) === ".vid" ? "video" : "diapo"}`
+      );
     }
     const video = this.#vidElement.querySelector(".vidImg");
     if (this.#tempId === "ytThumb" || this.#tempId === "ytThumbR") {
@@ -179,19 +176,16 @@ class VidItem {
     } else {
       video.setAttribute("data-id", this.#vidItem.id);
       video.setAttribute("title", this.#vidItem.text);
-      this.#vidItem.id.length !== 34
-        ? video.setAttribute(
-            "src",
-            `https://www.youtube-nocookie.com/embed/${
+      video.setAttribute(
+        "src",
+        this.#vidItem.id.length !== 34
+          ? `https://www.youtube-nocookie.com/embed/${
               this.#vidItem.id
             }?rel=0&autoplay=0`
-          )
-        : video.setAttribute(
-            "src",
-            `https://www.youtube-nocookie.com/embed/videoseries?list=${
+          : `https://www.youtube-nocookie.com/embed/videoseries?list=${
               this.#vidItem.id
             }&rel=0&autoplay=0`
-          );
+      );
     }
   }
   get retourItem() {
