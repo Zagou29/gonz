@@ -1,84 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Galerie photos de la famille Zagou - Albums et collections de photos personnelles">
+  <meta name="theme-color" content="#ffffff">
   <meta name="robots" content="noindex, nofollow, noimageindex">
   <meta name="googlebot" content="noindex">
-  <meta name="description" content="les photos de Zagou">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-  <link rel="shortcut icon" href="./images/Zag_icon.png" type="image/x-icon">
-  <title>Photos de la famille de Zag</title>
-  <script type="module" src="./photos.js"></script>
+  <link rel="icon" href="./images/Zag_icon.png" type="image/png">
+  <title>Photos Famille Zag</title>
+  <script type="module" src="./photos.js" defer></script>
   <link rel="stylesheet" href="./photos.css">
 </head>
 
 <body>
   <header class="entete">
     <div class="minibar">
-      <button class="ret_fl hamburger " type="button" aria-label="Menu">
-        <span class="barre haut"></span>
-        <span class="barre milieu"></span>
-        <span class="barre bas"></span>
+      <button class="ret_fl hamburger" type="button" aria-label="Menu principal">
+        <span class="barre haut" aria-hidden="true"></span>
+        <span class="barre milieu" aria-hidden="true"></span>
+        <span class="barre bas" aria-hidden="true"></span>
       </button>
-      <button class="ret_fl ratio" type="button" aria-label="Aspect Ratio">
-        <span class="material-icons-outlined asp_image"> aspect_ratio </span>
+      <button class="ret_fl ratio" type="button" aria-label="Changer le format d'affichage">
+        <span class="material-icons-outlined asp_image" aria-hidden="true">aspect_ratio</span>
       </button>
     </div>
     <span class="transval titre"></span>
-    <span class="annee titre"></span>
+    <span class="annee titre" role="status" aria-live="polite"></span>
   </header>
-  <ul class="box_annees">
-    <!-- ici arrivent <li class="lien"></li> -->
-  </ul>
-  <ul class="menu">
-    <!-- ici arrivent les lien_menu -->
-  </ul>
+
+  <nav>
+    <ul class="box_annees" aria-label="Navigation par années">
+      <!-- Généré dynamiquement -->
+    </ul>
+    <ul class="menu" aria-label="Menu principal">
+      <!-- Généré dynamiquement -->
+    </ul>
+  </nav>
+
   <main class="envel">
-    <div class="image">
+    <div class="image" role="region" aria-label="Galerie photos">
       <div class="ret_fl fleches bloc precedent">
-        <span class="material-icons-outlined bloc iconFl left"> arrow_circle_left </span>
-        <span class="material-icons-outlined bloc iconFl debut"> block </span>
+        <span  class="material-icons-outlined bloc iconFl left"
+          aria-label="Image précédente">arrow_circle_left</span>
+        <span class="material-icons-outlined bloc iconFl debut" aria-label="Première image">block</span>
       </div>
       <div class="ret_fl fleches bloc suivant">
-        <span class="material-icons-outlined bloc iconFl right"> arrow_circle_right </span>
-        <span class="material-icons-outlined bloc iconFl fin"> block </span>
+        <span class="material-icons-outlined bloc iconFl right"
+          aria-label="Image suivante">arrow_circle_right</span>
+        <span class="material-icons-outlined bloc iconFl fin" aria-label="Dernière image">block</span>
       </div>
       <div class="fullscreen">
-        <p class="bloc">Touche F &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:Fullscreen<br>Barre
-          Espace&nbsp;&nbsp;&nbsp;:Diapo <br>Touche S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:Son
-          <br>Touche + ou - &nbsp; :Durée Diapo
+        <p class="bloc">
+          <kbd>Espace</kbd> : Diaporama<br>
+          <kbd>F</kbd> : Plein écran<br>
+          <kbd>S</kbd> : Son<br>
+          <kbd>+</kbd>/<kbd>-</kbd> : Durée
         </p>
       </div>
-      <!-- ici arrivent les <img> -->
+      <!-- Zone d'affichage des images -->
     </div>
   </main>
+
   <footer class="pied">
-    <button class="ret_fl retour" aria-label="Retour">
-      <span class="material-icons-outlined spanRetour"> arrow_circle_left</span>
+    <button class="ret_fl retour" aria-label="Retour à l'accueil">
+      <span class="material-icons-outlined spanRetour" aria-hidden="true">arrow_circle_left</span>
     </button>
-    <button class="diapo" aria-label="Diaporama">
-      <span class="material-icons-outlined spanRetour slide"> slideshow</span>
-      <span class="material-icons-outlined spanRetour mute"> volume_off</span>
-      <span class="material-icons-outlined spanRetour son"> volume_up</span>
-      <span class=" spanRetour duree"></span>
+    <button class="diapo" aria-label="Contrôle du diaporama">
+      <span class="material-icons-outlined spanRetour slide" aria-hidden="true">slideshow</span>
+      <span class="material-icons-outlined spanRetour mute" aria-hidden="true">volume_off</span>
+      <span class="material-icons-outlined spanRetour son" aria-hidden="true">volume_up</span>
+      <span class="spanRetour duree" role="status" aria-live="polite"></span>
     </button>
-    <button class="ret_fl inverser" aria-label="Inverser">
-      <span class="material-icons-outlined spanRetour up"> arrow_circle_up </span>
-      <span class="material-icons-outlined spanRetour down"> arrow_circle_down </span>
+    <button class="ret_fl inverser" aria-label="Inverser l'ordre">
+      <span class="material-icons-outlined spanRetour up" aria-hidden="true">arrow_circle_up</span>
+      <span class="material-icons-outlined spanRetour down" aria-hidden="true">arrow_circle_down</span>
     </button>
   </footer>
-  <!-- template des images de Photos -->
+
   <template id="photos">
-    <img loading="lazy" src="" alt="Photo de Zagou" class="" data-an="" data-num="">
+    <img loading="lazy" decoding="async" src="" alt="" class="" data-an="" data-num="">
   </template>
-  <!-- template des liens du menu timeline droit -->
+
   <template id="liendate">
-    <li class="liens " data-an="" data-num="">
+    <li class="liens" data-an="" data-num=""></li>
   </template>
-  <!-- template des liens du menu dates gauche -->
+
   <template id="menu_dates">
     <li class="lien_menu" data-idmenu=""></li>
   </template>
