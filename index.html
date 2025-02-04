@@ -8,10 +8,11 @@
   <meta name="robots" content="noindex, nofollow, noimageindex">
   <meta name="googlebot" content="noindex">
   <meta name="description" content="Toutes les videos de Zagou">
-  <title>Videos et Diapos de la famille Zag et des Voyages</title>
+  <link rel="preconnect" href="https://www.youtube.com">
   <link rel="shortcut icon" href="./images/Zag_icon.png" type="image/x-icon">
   <link rel="stylesheet" href="./vidStyle.css">
-  <script type="module" src="./vidScript.js"></script>
+  <script type="module" src="./vidScript.js" defer></script>
+  <title>Vidéos & Diapos - Famille Zag</title>
 </head>
 
 <body class="page">
@@ -116,12 +117,12 @@
   <template id="ytThumb">
     <span class="vidTitre" data-numt=""></span>
     <div class="lect" data-num>
-      <img class="vidImg" data-id="" width="100%" height="100%" loading="lazy" src="">
+      <img class="vidImg" data-id="" width="100%" height="100%" loading="lazy" decoding="async" src="">
     </div>
   </template>
   <!-- template pour les miniatures YT de remplacement -->
   <template id="ytThumbR">
-    <img class="vidImg" data-id="" width="100%" height="100%" loading="lazy" src="">
+    <img class="vidImg" data-id="" width="100%" height="100%" loading="lazy" decoding="async" src="">
   </template>
   <!-- template pour les videos YT -->
   <template id="ytFrame">
