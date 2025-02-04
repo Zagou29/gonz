@@ -5,7 +5,9 @@ import { Menubox } from "./xfonctions/menubox.js";
 import { go_fullScreen, stop_fullScreen } from "./xfonctions/fullScreen.js";
 import { navig, ordi_OS } from "./xfonctions/nav_os.js";
 /* Si l'OS est windows, supprimer les barres de defilement */
-if (ordi_OS().win||ordi_OS().ios) document.querySelector(".image").classList.add("scrbar");
+if (ordi_OS().win || ordi_OS().ios) {
+  document.querySelector(".image").classList.add("scrbar");
+}
 /*  prendre en charge les boxes de VidCript et le sens des dates */
 const val_trans = localStorage.getItem("data"); /* classList venant de Index */
 let sens_date = localStorage.getItem("sens_dates"); /* sens dates */
@@ -64,7 +66,6 @@ try {
   tab_titre = boxes.returnBoxes;
   /** va charger les objets img */
   const listImages = await fetchJSON("./xjson/photoImg.json");
-
   /** 1 recent vers vieux, -1 le contraire */
   inverser(listImages, Math.floor(sens_date));
   /** si pas le json total, filtrer par val_trans */
@@ -92,12 +93,8 @@ const list_img = [...boiteImg.querySelectorAll(".show")];
 const lien_an = [...cont.querySelectorAll(".liens")];
 /** ne faire apparaitre qu'une date sur 4 pour "photo" */
 if (val_trans === "photo") {
-  lien_an.map((dat, index) => {
-    if (index % 3 !== 0) dat.setAttribute("data-seuil", "----");
-  });
-} else {
-  lien_an.map((dat, index) => {
-    if (index % 2 !== 0) dat.setAttribute("data-seuil", "----");
+  lien_an.forEach((dat, index) => {
+    if (index % 3 !== 0) dat.setAttribute("data-seuil", "");
   });
 }
 /* --------------------------------------------- */
@@ -348,7 +345,7 @@ const alert = () => full.classList.remove("showfl");
 /* quand on arrive sur l'ecran Photo, */
 const zoom = (e) => {
   /** si on clique sur une des icones fleches, ou image vide sort de cet ecouteur */
-  if (e.target.matches(".bloc")|| e.target.matches(".image")) return;
+  if (e.target.matches(".bloc") || e.target.matches(".image")) return;
   zoome = zoome === true ? false : true;
   /* sortir de fullscreen et arreter la musique*/
   stop_fullScreen();

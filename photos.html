@@ -16,15 +16,14 @@
 </head>
 
 <body>
-  <!-- <span>titre</span> -->
   <header class="entete">
     <div class="minibar">
-      <button class="ret_fl hamburger " type="button">
+      <button class="ret_fl hamburger " type="button" aria-label="Menu">
         <span class="barre haut"></span>
         <span class="barre milieu"></span>
         <span class="barre bas"></span>
       </button>
-      <button class="ret_fl ratio" type="button">
+      <button class="ret_fl ratio" type="button" aria-label="Aspect Ratio">
         <span class="material-icons-outlined asp_image"> aspect_ratio </span>
       </button>
     </div>
@@ -39,7 +38,6 @@
   </ul>
   <main class="envel">
     <div class="image">
-
       <div class="ret_fl fleches bloc precedent">
         <span class="material-icons-outlined bloc iconFl left"> arrow_circle_left </span>
         <span class="material-icons-outlined bloc iconFl debut"> block </span>
@@ -51,29 +49,30 @@
       <div class="fullscreen">
         <p class="bloc">Touche F &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:Fullscreen<br>Barre
           Espace&nbsp;&nbsp;&nbsp;:Diapo <br>Touche S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:Son
-          <br>Touche + ou - &nbsp; :Durée Diapo</p>
+          <br>Touche + ou - &nbsp; :Durée Diapo
+        </p>
       </div>
       <!-- ici arrivent les <img> -->
     </div>
   </main>
   <footer class="pied">
-    <button class="ret_fl retour">
+    <button class="ret_fl retour" aria-label="Retour">
       <span class="material-icons-outlined spanRetour"> arrow_circle_left</span>
     </button>
-    <button class="diapo">
+    <button class="diapo" aria-label="Diaporama">
       <span class="material-icons-outlined spanRetour slide"> slideshow</span>
       <span class="material-icons-outlined spanRetour mute"> volume_off</span>
       <span class="material-icons-outlined spanRetour son"> volume_up</span>
       <span class=" spanRetour duree"></span>
     </button>
-    <button class="ret_fl inverser ">
+    <button class="ret_fl inverser" aria-label="Inverser">
       <span class="material-icons-outlined spanRetour up"> arrow_circle_up </span>
       <span class="material-icons-outlined spanRetour down"> arrow_circle_down </span>
     </button>
   </footer>
   <!-- template des images de Photos -->
   <template id="photos">
-    <img loading="lazy" src="" alt="" class="" data-an="" data-num="">
+    <img loading="lazy" src="" alt="Photo de Zagou" class="" data-an="" data-num="">
   </template>
   <!-- template des liens du menu timeline droit -->
   <template id="liendate">
