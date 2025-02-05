@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="UTF-8">
@@ -7,10 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow, noimageindex">
   <meta name="googlebot" content="noindex">
-  <meta name="description" content="Toutes les videos de Zagou">
+  <meta name="description" content="Toutes les vidéos de Zagou">
   <link rel="preconnect" href="https://www.youtube.com">
   <link rel="shortcut icon" href="./images/Zag_icon.png" type="image/x-icon">
   <link rel="stylesheet" href="./vidStyle.css">
+  <!-- Préchargement des ressources critiques -->
+  <link rel="preload" href="./vidStyle.css" as="style">
+  <link rel="preload" href="./vidScript.js" as="script">
+  <!-- Chargement du script principal en tant que module -->
   <script type="module" src="./vidScript.js" defer></script>
   <title>Vidéos & Diapos - Famille Zag</title>
 </head>
@@ -18,9 +22,9 @@
 <body class="page">
   <nav class="menu">
     <!-- Menu Famille -->
-    <div class="btn-top fa">
-      <span class="titMenu">Famille</span>
-      <div class="dropdown decal">
+    <div class="btn-top fa" role="menuitem" aria-haspopup="true" aria-expanded="false">
+      <span class="titMenu" aria-label="Menu Famille">Famille</span>
+      <div class="dropdown decal" role="menu">
         <div class="bloc-links">
           <div class="sousMenuBlog">
             <div class="envIcon menu_famille">
@@ -31,9 +35,9 @@
       </div>
     </div>
     <!-- Menu Voyages -->
-    <div class="btn-top vo">
-      <span class="titMenu">Voyages</span>
-      <div class="dropdown decal">
+    <div class="btn-top vo" role="menuitem" aria-haspopup="true">
+      <span class="titMenu" aria-label="Menu Voyages">Voyages</span>
+      <div class="dropdown decal" role="menu">
         <div class="bloc-links">
           <div class="sousMenuBlog">
             <div class="envIcon menu_voyage">
@@ -44,9 +48,9 @@
       </div>
     </div>
     <!-- Menu Playlists -->
-    <div class="btn-top pl">
-      <span class="titMenu">Playlists</span>
-      <div class="dropdown decal">
+    <div class="btn-top pl" role="menuitem" aria-haspopup="true">
+      <span class="titMenu" aria-label="Menu Playlists">Playlists</span>
+      <div class="dropdown decal" role="menu">
         <div class="bloc-links">
           <div class="sousMenuBlog">
             <div class="envIcon menu_playlist">
@@ -57,14 +61,14 @@
       </div>
     </div>
     <!-- Menu Années -->
-    <div class="btn-top an">
-      <span class="titMenu">Annees</span>
-      <div class="dropdown decalR">
+    <div class="btn-top an" role="menuitem" aria-haspopup="true">
+      <span class="titMenu" aria-label="Menu Années">Années</span>
+      <div class="dropdown decalR" role="menu">
         <div class="bloc-links">
           <div class="sousMenuAnn">
             <div class="a1 checkB">
               <input type="checkbox" id="avideo" name="Videos" value=".vid" checked>
-              <label class="vidLabel" for="avideo">Videos</label>
+              <label class="vidLabel" for="avideo">Vidéos</label>
               <input type="checkbox" id="adiapo" name="diapos" value=".dia" checked>
               <label class="diaLabel" for="adiapo">Diapos</label>
             </div>
@@ -76,9 +80,9 @@
       </div>
     </div>
     <!-- Menu Photos -->
-    <div class="btn-top ph">
-      <span class="titMenu ">Photos</span>
-      <div class="dropdown decal">
+    <div class="btn-top ph" role="menuitem" aria-haspopup="true">
+      <span class="titMenu" aria-label="Menu Photos">Photos</span>
+      <div class="dropdown decal" role="menu">
         <div class="bloc-links">
           <div class="sousMenuBlog">
             <div class="envIcon ePhotos">
@@ -89,9 +93,9 @@
       </div>
     </div>
     <!-- Menu Blogs -->
-    <div class="btn-top bl">
-      <span class="titMenu">Blogs</span>
-      <div class="dropdown decal">
+    <div class="btn-top bl" role="menuitem" aria-haspopup="true">
+      <span class="titMenu" aria-label="Menu Blogs">Blogs</span>
+      <div class="dropdown decal" role="menu">
         <div class="bloc-links">
           <div class="sousMenuBlog">
             <div class="envIcon eBlogs">
@@ -101,22 +105,24 @@
         </div>
       </div>
     </div>
-    <!-- Bouton Retour et titre des selections -->
-    <button class="retour" aria-label="retour">
-      <img id="imgRetour" loading="lazy" src="./images/retour.png" alt="back to top">
+    <!-- Bouton Retour et titre des sélections -->
+    <button class="retour" aria-label="Retour en haut de page" title="Retour en haut">
+      <img id="imgRetour" loading="lazy" src="./images/retour.png" alt="Flèche retour en haut">
     </button>
-    <span class="titre"> </span>
+    <span class="titre" aria-live="polite"> </span>
   </nav>
-  <main class="enveloppe">
-    <h1 id="zagVideos">ZagVideos</h1>
-    <div class="ecranVideos"></div>
-    <div class="copy">© Gonzague de Poulpiquet Avril 2023</div>
+  <main class="enveloppe" role="main">
+    <h1 id="zagVideos" tabindex="-1">ZagVideos</h1>
+    <div class="ecranVideos" role="region" aria-label="Zone d'affichage des vidéos" tabindex="0"></div>
+    <footer class="copy" role="contentinfo">
+      <small>© <time datetime="2023-04">Avril 2023</time> Gonzague de Poulpiquet</small>
+    </footer>
   </main>
   <!-- Templates -->
   <!-- template pour les miniatures YT -->
   <template id="ytThumb">
-    <span class="vidTitre" data-numt=""></span>
-    <div class="lect" data-num>
+    <span class="vidTitre" data-numt="" role="heading" aria-level="2"></span>
+    <div class="lect" data-num role="button" tabindex="0">
       <img class="vidImg" data-id="" width="100%" height="100%" loading="lazy" decoding="async" src="">
     </div>
   </template>
@@ -124,21 +130,21 @@
   <template id="ytThumbR">
     <img class="vidImg" data-id="" width="100%" height="100%" loading="lazy" decoding="async" src="">
   </template>
-  <!-- template pour les videos YT -->
+  <!-- template pour les vidéos YT -->
   <template id="ytFrame">
     <span class="vidTitre"></span>
     <div class="lect" data-num="">
       <iframe class="vidImg" title="" data-id="" width="100%" height="100%" loading="lazy"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""
-        sandbox=" allow-scripts  allow-same-origin " src="">
+        sandbox="allow-scripts allow-same-origin" src="">
       </iframe>
     </div>
   </template>
-  <!-- template pour les videos YT de remplacement -->
+  <!-- template pour les vidéos YT de remplacement -->
   <template id="ytFrameR">
     <iframe class="vidImg" title="" data-id="" width="100%" height="100%" loading="lazy"
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""
-      sandbox=" allow-scripts  allow-same-origin " src="">
+      sandbox="allow-scripts allow-same-origin" src="">
     </iframe>
   </template>
   <!-- template des blocs menu photo -->
@@ -160,11 +166,11 @@
   <!-- template des blocs menu fam voy pll -->
   <template id="menuBlocs">
     <div class="bloc_img">
-      <img class="blogs " loading="lazy" src="" alt="">
+      <img class="blogs" loading="lazy" src="" alt="">
       <span class="ti_blog" data-select=""></span>
       <ul class="vid_list texte">
-        <p class="groupe"></p> <!--a supprimer si pas d'affichage -->
-        <!-- listes des videos detail -->
+        <p class="groupe"></p> <!-- à supprimer si pas d'affichage -->
+        <!-- listes des vidéos détail -->
       </ul>
     </div>
   </template>
@@ -179,7 +185,7 @@
   <template id="itemYT">
     <li class="ytItem"></li>
   </template>
-  <!-- template des item liens annees -->
+  <!-- template des item liens années -->
   <template id="itemAn">
     <li data-year="" data-select=""></li>
   </template>

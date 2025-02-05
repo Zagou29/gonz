@@ -1,57 +1,77 @@
 import { cloneTemplate } from "./dom.js";
 
 /**
- * @typedef {object} boxes
- * @property {string} menu
- * @property {string} ph id
- * @property {string} href
- * @property {string} src
- * @property {string} spText texte
- * @property {string} divText
+ * @typedef {object} Box
+ * @property {string} menu - Type de menu
+ * @property {string} ph - Identifiant
+ * @property {string} href - Lien
+ * @property {string} src - Source de l'image
+ * @property {string} spText - Texte de l'image
+ * @property {string} divText - Texte descriptif
+ */
+
+/**
+ * Gestion des boîtes de menu
+ * @class Menubox
  */
 export class Menubox {
-  /** @type {boxes[]} objet avec tous les boxes (id,title,completed)*/
-  #boxes = [];
-  #boxSelect = [];
+  /** @type {Box[]} */
+  #boxes;
+  #boxSelect;
   #dataMenu;
   #boxElement;
   #liensElements;
-  #liensSelect;
   #listLiens;
-  /** @type {HTMLUListelement}li créée a partir des todos */
-  #listElement = [];
+  /** @type {DocumentFragment} */
+  #listElement;
+
   /**
-   *construit une liste de todos
-   * @param {boxes[]} boxes
+   * @param {Box[]} boxes - Liste des boîtes
    */
   constructor(boxes) {
+    if (!Array.isArray(boxes)) {
+      throw new TypeError("boxes doit être un tableau");
+    }
     this.#boxes = boxes;
   }
-  /** renvoyer les boxes de choix des photos dans index.html */
+
+  /**
+   * Affiche les boîtes de sélection
+   * @param {HTMLElement} element - Élément DOM parent
+   * @param {string} datamenu - Type de menu
+   * @param {string} sens - Sens d'insertion ("1" pour append, autre pour prepend)
+   * @throws {Error} Si les paramètres sont invalides
+   */
   apBox_Ph(element, datamenu, sens) {
+    if (!element || !(element instanceof HTMLElement)) {
+      throw new Error("element doit être un élément DOM valide");
+    }
+    if (typeof datamenu !== "string") {
+      throw new TypeError("datamenu doit être une chaîne de caractères");
+    }
+    if (typeof sens !== "string") {
+      throw new TypeError("sens doit être une chaîne de caractères");
+    }
+
     this.#boxElement = element;
     this.#dataMenu = datamenu;
-    /** Array des objets box de PH*/
     this.#boxSelect = this.#boxes.filter(
       (objbox) => objbox.menu === this.#dataMenu
     );
-    /** definir l'emplacement d'insertion des boites */
+
     this.#listElement = new DocumentFragment();
-    /**céer une boite par objet et l'inserer dans listElement */
-    if (sens === "1") {
-      this.#boxSelect.forEach((boite) => {
-        const box = new BoxItem(boite);
-        this.#listElement.append(box.returnBox);
-      });
-    } else {
-      this.#boxSelect.forEach((boite) => {
-        const box = new BoxItem(boite);
-        this.#listElement.prepend(box.returnBox);
-      });
-    }
+    const insertMethod = sens === "1" ? "append" : "prepend";
+    this.#boxSelect.forEach((boite) => {
+      const box = new BoxItem(boite);
+      this.#listElement[insertMethod](box.returnBox);
+    });
     this.#boxElement.append(this.#listElement);
   }
-  /** recuperer les ph et spText pour Photos */
+
+  /**
+   * Récupère les boîtes de photos
+   * @returns {Array<{ph: string, spText: string}>}
+   */
   get returnBoxes() {
     return this.#boxes
       .filter((obj) => obj.menu === "ph")
@@ -60,29 +80,36 @@ export class Menubox {
         return { ph, spText };
       });
   }
-  /** renvoyer les lien_menu dans photo.html */
+
+  /**
+   * Affiche les liens de menu
+   * @param {HTMLElement} element - Élément DOM parent
+   * @param {string} sens - Sens d'insertion ("1" pour prepend, autre pour append)
+   * @throws {Error} Si les paramètres sont invalides
+   */
   apLienMenu(element, sens) {
+    if (!element || !(element instanceof HTMLElement)) {
+      throw new Error("element doit être un élément DOM valide");
+    }
+    if (typeof sens !== "string") {
+      throw new TypeError("sens doit être une chaîne de caractères");
+    }
+
     this.#liensElements = element;
     this.#listLiens = new DocumentFragment();
-    if (sens === "1") {
-      this.#boxes.forEach((lien) => {
-        const lienMenu = new Lien_menu_item(lien);
-        this.#listLiens.prepend(lienMenu.retourLienItem);
-      });
-    } else {
-      this.#boxes.forEach((lien) => {
-        const lienMenu = new Lien_menu_item(lien);
-        this.#listLiens.append(lienMenu.retourLienItem);
-      });
-    }
+    const insertMethod = sens === "1" ? "prepend" : "append";
+    this.#boxes.forEach((lien) => {
+      const lienMenu = new Lien_menu_item(lien);
+      this.#listLiens[insertMethod](lienMenu.retourLienItem);
+    });
     this.#liensElements.append(this.#listLiens);
   }
 }
+
 /** creer une boite HTML pour index.html */
 class BoxItem {
   #boxElement;
   #boxItem;
-  #menu;
   constructor(box) {
     this.#boxItem = box;
     this.#boxElement = cloneTemplate(this.#boxItem.menu).firstElementChild;
@@ -96,15 +123,17 @@ class BoxItem {
       this.#boxItem.spText;
     this.#boxElement.querySelector(".texte").textContent =
       this.#boxItem.divText;
-    this.#boxItem.menu === "ph"
-      ? (this.#boxElement.querySelector(".ti_blog").dataset.ph =
-          this.#boxItem.ph)
-      : this.#boxElement.setAttribute("href", this.#boxItem.href);
+    if (this.#boxItem.menu === "ph") {
+      this.#boxElement.querySelector(".ti_blog").dataset.ph = this.#boxItem.ph;
+    } else {
+      this.#boxElement.setAttribute("href", this.#boxItem.href);
+    }
   }
   get returnBox() {
     return this.#boxElement;
   }
 }
+
 /** créer un lien_menu pour photo.html */
 class Lien_menu_item {
   #lienItem;

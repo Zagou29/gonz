@@ -1,40 +1,59 @@
 import { cloneTemplate } from "./dom.js";
 
 /**
- * @property {string} menu
- * @property {string} ph id
- * @property {string} href
- * @property {string} src
- * @property {string} spText texte
- * @property {string} divText
+ * @typedef {Object} VideoItem
+ * @property {string} clas - Classe CSS
+ * @property {string} src - Source de l'image
+ * @property {string} detail - Détail de la vidéo
+ * @property {string} text - Texte descriptif
+ * @property {string} groupe - Groupe d'appartenance
  */
-/* creation des menus fam voy pll */
+
+/**
+ * Gestion des menus vidéo
+ * @class MenuVid
+ */
 export class MenuVid {
-  #videos = [];
-  #boxSelect = [];
+  #videos;
+  #boxSelect;
   #dataMenu;
   #boxElement;
+  /** @type {Array<{clas: string, menu: string, id_groupe: string, typVid: string, detail: string}>} */
   #liensSelect;
   #listatrier;
   #item;
   /** @type {HTMLUListelement}li créée a partir des todos */
   #listElement = [];
   /**
-   *construit une liste de todos
+   * @param {VideoItem[]} videos - Liste des vidéos
    */
   constructor(videos) {
+    if (!Array.isArray(videos)) {
+      throw new TypeError("videos doit être un tableau");
+    }
     this.#videos = videos;
   }
-  /** renvoyer les boxes de choix des photos dans index.html */
+
+  /**
+   * Affiche les boxes de sélection
+   * @param {HTMLElement} element - Élément DOM parent
+   * @param {string} datamenu - Type de menu
+   * @throws {Error} Si les paramètres sont invalides
+   */
   affBoxes(element, datamenu) {
+    if (!element || !(element instanceof HTMLElement)) {
+      throw new Error("element doit être un élément DOM valide");
+    }
+    if (typeof datamenu !== "string") {
+      throw new TypeError("datamenu doit être une chaîne de caractères");
+    }
+
     this.#boxElement = element;
     this.#dataMenu = datamenu;
-    /** Array des objets box de PH*/
     this.#boxSelect = this.#videos.filter((objbox) =>
       objbox.clas.slice(4, 8).includes(this.#dataMenu)
     );
 
-    /** préparer la liste pour le tri */
     this.#listatrier = this.#boxSelect.map((item) => {
       const { clas } = item;
       const typVid = clas.slice(0, 4);
@@ -54,7 +73,6 @@ export class MenuVid {
       )
       .sort((a, b) => (a.typVid > b.typVid ? -1 : a.typVid < b.typVid ? 1 : 0));
     this.#listElement = new DocumentFragment();
-    /**créer une boite par objet et l'inserer dans listElement */
     this.#liensSelect.forEach((boite) => {
       this.#item = this.#boxSelect.filter((it) => it.clas === boite.clas);
       const box = new MenuItem(this.#item);
@@ -63,6 +81,7 @@ export class MenuVid {
     this.#boxElement.append(this.#listElement);
   }
 }
+
 /** creer une boite qui contient les infos vid/menu/groupe/select */
 class MenuItem {
   #boxElement;
@@ -71,9 +90,7 @@ class MenuItem {
   liste;
   constructor(box) {
     this.#boxList = box;
-    /* prendre la classe du premier item */
     this.#boxItem = this.#boxList[0].clas;
-    /** créer une boite à partir du template */
     this.#boxElement = cloneTemplate("menuBlocs").firstElementChild;
     this.#boxElement
       .querySelector(".blogs")
@@ -86,7 +103,6 @@ class MenuItem {
       .classList.add(this.#boxList[0].clas.slice(1, 4));
     this.#boxElement.querySelector(".ti_blog").textContent =
       this.#boxList[0].detail;
-    // a supprimer si pas d'affichage des groupes
     this.#boxElement.querySelector(".groupe").textContent =
       this.#boxList[0].groupe;
     this.#boxElement.querySelector(".ti_blog").dataset.select = this.#boxItem;
@@ -101,6 +117,7 @@ class MenuItem {
     return this.#boxElement;
   }
 }
+
 /* Creation d'une ligne de detail videos */
 class Box_liste {
   #detail;
