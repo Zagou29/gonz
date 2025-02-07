@@ -6,7 +6,7 @@ import { go_fullScreen, stop_fullScreen } from "./xfonctions/fullScreen.js";
 import { navig, ordi_OS } from "./xfonctions/nav_os.js";
 /* Si l'OS est windows, supprimer les barres de defilement */
 // if (ordi_OS().win || ordi_OS().ios) {
-  document.querySelector(".image").classList.add("scrbar");
+  // document.querySelector(".image").classList.add("scrbar");
 // }
 /*  prendre en charge les boxes de VidCript et le sens des dates */
 const val_trans = localStorage.getItem("data"); /* classList venant de Index */

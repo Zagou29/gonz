@@ -13,13 +13,13 @@ html {
   display: none;
   
 }
-.scrbar {
-  -ms-overflow-style: none;  /* Pour Internet Explorer et Edge */
-  scrollbar-width: none;     /* Pour Firefox */
+/* .scrbar {
+  -ms-overflow-style: none; 
+  scrollbar-width: none;   
 }
 .scrbar::-webkit-scrollbar {
   display: none;
-}
+} */
 body {
   font-family: "Arial Narrow", Arial, sans-serif;
   font-size: var(--fs-body);
