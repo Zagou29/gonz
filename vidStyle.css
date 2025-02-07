@@ -32,7 +32,14 @@ html {
   margin: 0;
   padding: 0;
 }
-
+::-webkit-scrollbar {
+  display: none;
+  
+}
+.scrbar {
+  -ms-overflow-style: none;  /* Pour Internet Explorer et Edge */
+  scrollbar-width: none;     /* Pour Firefox */
+}
 .scrbar::-webkit-scrollbar {
   display: none;
 }
