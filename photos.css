@@ -1,6 +1,5 @@
 html {
   scroll-behavior: smooth;
-  scrollbar-color: transparent transparent;
 }
 *,
 *::before,
