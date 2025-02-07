@@ -161,6 +161,7 @@ body {
   display: grid;
   gap: 1px;
   grid-template-columns: repeat(auto-fit, minmax(var(--largImg), 1fr));
+  overflow: auto;
 }
 .image_mod {
   overflow: auto;
