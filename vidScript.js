@@ -21,9 +21,12 @@ try {
   console.error(e);
 }
 /* supprimer les barres de defilement */
-// const drop = [...document.querySelectorAll(".dropdown")];
-// drop.forEach((dr) => dr.classList.add("scrbar"));
-// document.querySelector(".ecranVideos").classList.add("scrbar");
+// const elements = [
+//   ...document.querySelectorAll(".dropdown"),
+//   document.querySelector(".ecranVideos"),
+// ].filter(Boolean);
+// elements.forEach((element) => element.classList.add("scrbar"));
+
 
 /**Charger la liste globale des videos */
 const vidList = await fetchJSON("./xjson/indexVid.json");
@@ -52,8 +55,8 @@ function toTop() {
 }
 /**
  * definir la class .dia, .vid, tout, ou rien
- * @param {element} box1
- * @param {element} box2
+ * @param {HTMLElement} box1
+ * @param {HTMLElement} box2
  * @returns {string} ['non','', .dia, .vid]
  */
 function typeb(box1, box2) {
@@ -69,7 +72,7 @@ function typeb(box1, box2) {
 /* Renvoyer 'non' ou .dia ou .vid ou "" selon chechbox video/diapo */
 /**
  * choix des videos ou diapos ou rien de Voy et Pll
- * @param {element} el menu Voy ou Pll
+ * @param {HTMLElement} el menu Voy ou Pll
  * @returns {fn} typeb(box1;box2)
  */
 function typeVid(el) {
@@ -172,7 +175,7 @@ function afficheLiens(param, year, tempId) {
 }
 /**
  * afficher les videos à partir de la classe ou la date choisie
- * @param {element} e li cliqué dans la liste des videos
+ * @param {HTMLElement} e li cliqué dans la liste des videos
  * @return {fn} affiche iframes  et titres des videos
  */
 function aff_Videos(e) {
@@ -199,7 +202,7 @@ function aff_Videos(e) {
 }
 /**
  * transférer le dataset.ph vers photo.html
- * @param {element} e li cliqué dans les menus blogs et photos
+ * @param {HTMLElement} e li cliqué dans les menus blogs et photos
  */
 function trans(e) {
   if (!e.target.dataset.ph) return;

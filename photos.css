@@ -10,7 +10,6 @@ html {
 }
 ::-webkit-scrollbar {
   display: none;
-  
 }
 /* .scrbar {
   -ms-overflow-style: none; 
@@ -182,8 +181,8 @@ body {
 }
 .show[data-seuil^="1"],
 .show[data-seuil^="2"] {
-  border-radius:5px;
-  border:solid hsl(237, 100%, 38%);
+  border-radius: 5px;
+  border: solid hsl(237, 100%, 38%);
 }
 .show_mod {
   object-fit: contain;
