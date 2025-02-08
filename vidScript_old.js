@@ -20,6 +20,10 @@ try {
   document.body.prepend(alertEl);
   console.error(e);
 }
+/* supprimer les barres de defilement */
+const drop = [...document.querySelectorAll(".dropdown")];
+drop.forEach((dr) => dr.classList.add("scrbar"));
+document.querySelector(".ecranVideos").classList.add("scrbar");
 
 /**Charger la liste globale des videos */
 const vidList = await fetchJSON("./xjson/indexVid.json");
@@ -48,8 +52,8 @@ function toTop() {
 }
 /**
  * definir la class .dia, .vid, tout, ou rien
- * @param {HTMLElement} box1
- * @param {HTMLElement} box2
+ * @param {element} box1
+ * @param {element} box2
  * @returns {string} ['non','', .dia, .vid]
  */
 function typeb(box1, box2) {
@@ -65,7 +69,7 @@ function typeb(box1, box2) {
 /* Renvoyer 'non' ou .dia ou .vid ou "" selon chechbox video/diapo */
 /**
  * choix des videos ou diapos ou rien de Voy et Pll
- * @param {HTMLElement} el menu Voy ou Pll
+ * @param {element} el menu Voy ou Pll
  * @returns {fn} typeb(box1;box2)
  */
 function typeVid(el) {
@@ -79,7 +83,7 @@ function typeVid(el) {
  * @param {string} sens (+ affiche, - efface)
  */
 function affEffRetour(sens) {
-  const retour = menu.querySelector(".retour");
+  const retour = document.querySelector(".retour");
   if (sens === "+") {
     retour.classList.add("show");
     retour.addEventListener("click", toTop);
@@ -110,15 +114,15 @@ function ferme_videos(entries) {
  * @param {string} param class des liens videos
  * @returns {number} le nombre de iframes
  */
-function afficheLiens(param, year, tempId) {
+function afficheLiens(param, year) {
   /* supprime des ecrans YT */
   ecVideos.innerHTML = "";
-  /**affiche les videos  selectionnées par Param et Year*/
-  vidClass.affVideos(ecVideos, param, year, tempId);
+  /**affiche les videos  selctionnées par Param et Year*/
+  vidClass.affVideos(ecVideos, param, year);
 
   if (!mob().mob) {
     /** ecoute les barres de videos et ramène la video si pas mobile */
-    vidClass.affBar(menu);
+    vidClass.affBar(document.querySelector(".menu"));
     const ecoute_barre = (e) => {
       ecVideos
         .querySelector(`[data-num = '${e.target.dataset.num}']`)
@@ -152,30 +156,23 @@ function afficheLiens(param, year, tempId) {
 }
 /**
  * afficher les videos à partir de la classe ou la date choisie
- * @param {HTMLElement} e li cliqué dans la liste des videos
+ * @param {element} e li cliqué dans la liste des videos
  * @return {fn} affiche iframes  et titres des videos
  */
 function aff_Videos(e) {
-  if (!menu.querySelector(".activeMenu")) return;
+  if (!document.querySelector(".activeMenu")) return;
   /* pour années : dia_vid = .ann*/
   let dia_vid =
-    `${typeVid(menu.querySelector(".activeMenu").parentElement)}` +
+    `${typeVid(document.querySelector(".activeMenu").parentElement)}` +
     e.target.dataset.select;
   let year = e.target.dataset.year ? `${e.target.dataset.year}` : "";
   /* afficher les videos selon class et/ou annee */
-  const aff = afficheLiens(dia_vid, year, "ytFrame");
-  // si on ne clique pas sur 'Videos' ou 'Diapos' de "Années", refermer les boxes
-  if (!(e.target.tagName === "LABEL") && !(e.target.tagName === "INPUT")) {
-    menu
-      .querySelector(".activeMenu")
-      .parentElement.querySelector(".bloc-links").style.height = "0px";
-  }
-
+  const aff = afficheLiens(dia_vid, year);
   titre.textContent = aff ? e.target.textContent : "";
 }
 /**
  * transférer le dataset.ph vers photo.html
- * @param {HTMLElement} e li cliqué dans les menus blogs et photos
+ * @param {element} e li cliqué dans les menus blogs et photos
  */
 function trans(e) {
   if (!e.target.dataset.ph) return;
@@ -188,44 +185,34 @@ function trans(e) {
 /* ferme les menus au listener sur ecvideos */
 function dropclose(e) {
   if (
-    (e.target === ecVideos || e.target === menu) &&
+    (e.target === ecVideos || e.target === document.querySelector(".menu")) &&
     !ecVideos.innerHTML &&
-    menu.querySelector(".activeMenu")
+    document.querySelector(".activeMenu")
   ) {
     /* met height du menu à zero et supprime la barre activeMenu */
-    menu
+    document
       .querySelector(".activeMenu")
       .parentElement.querySelector(".bloc-links").style.height = `0px`;
-    menu.querySelector(".titMenu.activeMenu").classList.remove("activeMenu");
+    document
+      .querySelector(".titMenu.activeMenu")
+      .classList.remove("activeMenu");
   }
 }
 /* -----------le programme------------------------- */
+
 /* ========cliquer sur les menus ouvre les dropdown========= */
-const menu = document.querySelector(".menu");
+const menus = [...document.querySelectorAll(".btn-top")];
 const titre = document.querySelector(".titre");
 const ecVideos = document.querySelector(".ecranVideos");
-/* ecouter les clicks seulement sur les menus span/titMenu */
-
-/* Fonction pour gérer l'activation du menu */
-function activerMenu(spanC) {
-  // Supprimer la barre de menu active précédente et refermer le dropmenu
-  menu.querySelectorAll(".titMenu").forEach((sp) => {
-    sp.classList.add("nonActif");
-    sp.classList.remove("activeMenu");
-  });
-  spanC.classList.add("activeMenu");
-  spanC.classList.remove("nonActif");
-}
-/* Ecouter les clicks seulement sur les menus span/titMenu */
-menu.addEventListener("click", (e) => {
-  const span_choisi = e.target;
-  if (span_choisi.className.includes("titMenu")) {
-    activerMenu(span_choisi);
-    // faire disparaitre les boxes  non actives
-    menu.querySelectorAll(".nonActif").forEach((sp) => {
-      sp.parentElement.querySelector(".bloc-links").style.height = "0px";
-    });
-    const dropCour = span_choisi.parentElement.querySelector(".bloc-links");
+/* ecouter les clicks sur les menus btn-top */
+let menuIndex = 0;
+menus.forEach((men, index) => {
+  men.addEventListener("click", (e) => {
+    /* supprimer la barre de menu active precedente et refermer le dropmenu*/
+    menus[menuIndex].querySelector(".titMenu").classList.remove("activeMenu");
+    /* activer le menu choisi */
+    men.querySelector(".titMenu").classList.add("activeMenu");
+    const dropCour = men.querySelector(".bloc-links");
     //si on clique et que le menu est fermé ou nul" => Ouvrir
     if (dropCour.style.height === `0px` || !dropCour.style.height) {
       dropCour.style.height = dropCour.scrollHeight + "px";
@@ -235,13 +222,31 @@ menu.addEventListener("click", (e) => {
       titre.textContent = "";
       affEffRetour("-");
       /* lancer les ecouteurs pour chaque li et les bloc_img */
-      dropCour.addEventListener("click", aff_Videos);
-      dropCour.addEventListener("click", trans);
-    } else {
-      dropCour.style.height = `0px`;
-      span_choisi.classList.remove("activeMenu");
+      if (index < 4) {
+        men.querySelector(".bloc-links").addEventListener("click", aff_Videos);
+      }
+      if (index === 4) {
+        men.querySelector(".bloc-links").addEventListener("click", trans);
+      }
+      /* si index= 4, la page des blogs s'affiche */
+    } else dropCour.style.height = `0px`;
+
+    /* fermer le dropbox d'avant */
+    if (menuIndex !== index) {
+      menus[menuIndex].querySelector(".bloc-links").style.height = `0px`;
+      document.querySelector(".menu .barBox")?.remove();
     }
-  }
+    /* si on clique deux fois sur un menu sans choisir un sous menu, enlever le soulignement */
+    if (
+      menuIndex === index &&
+      men.querySelector(".bloc-links").style.height === `0px` &&
+      !ecVideos.innerHTML
+    ) {
+      men.querySelector(".titMenu").classList.remove("activeMenu");
+    }
+    /* remettre l'index courant */
+    menuIndex = index;
+  });
 });
 /* ecouter les clicks hors le menu principal et fermer le dropmenu */
 document.querySelector("body").addEventListener("click", dropclose);
