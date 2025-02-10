@@ -15,16 +15,16 @@
   <link rel="preload" href="./vidStyle.css" as="style">
   <link rel="preload" href="./vidScript.js" as="script">
   <!-- Chargement du script principal en tant que module -->
-  <script type="module" src="./vidScript.js" ></script>
+  <script type="module" src="./vidScript.js"></script>
   <title>Vidéos & Diapos - Famille Zag</title>
 </head>
 
 <body class="page">
   <nav class="menu">
     <!-- Menu Famille -->
-    <div class="btn-top fa"  aria-haspopup="true" aria-expanded="false">
-      <span class="titMenu" aria-label="Menu Famille">Famille</span>
-      <div class="dropdown decal" >
+    <div class="btn-top fa" aria-haspopup="true" aria-expanded="false">
+      <span class="titMenu">Famille</span>
+      <div class="dropdown decal">
         <div class="bloc-links">
           <div class="sousMenuBlog">
             <div class="envIcon menu_famille">
@@ -35,9 +35,9 @@
       </div>
     </div>
     <!-- Menu Voyages -->
-    <div class="btn-top vo"  aria-haspopup="true">
-      <span class="titMenu" aria-label="Menu Voyages">Voyages</span>
-      <div class="dropdown decal" >
+    <div class="btn-top vo" aria-haspopup="true">
+      <span class="titMenu">Voyages</span>
+      <div class="dropdown decal">
         <div class="bloc-links">
           <div class="sousMenuBlog">
             <div class="envIcon menu_voyage">
@@ -48,9 +48,9 @@
       </div>
     </div>
     <!-- Menu Playlists -->
-    <div class="btn-top pl"  aria-haspopup="true">
-      <span class="titMenu" aria-label="Menu Playlists">Playlists</span>
-      <div class="dropdown decal" >
+    <div class="btn-top pl" aria-haspopup="true">
+      <span class="titMenu">Playlists</span>
+      <div class="dropdown decal">
         <div class="bloc-links">
           <div class="sousMenuBlog">
             <div class="envIcon menu_playlist">
@@ -61,9 +61,9 @@
       </div>
     </div>
     <!-- Menu Années -->
-    <div class="btn-top an"  aria-haspopup="true">
-      <span class="titMenu" aria-label="Menu Années">Années</span>
-      <div class="dropdown decalR" >
+    <div class="btn-top an" aria-haspopup="true">
+      <span class="titMenu">Années</span>
+      <div class="dropdown decalR">
         <div class="bloc-links">
           <div class="sousMenuAnn">
             <div class="a1 checkB">
@@ -80,9 +80,9 @@
       </div>
     </div>
     <!-- Menu Photos -->
-    <div class="btn-top ph"  aria-haspopup="true">
-      <span class="titMenu" aria-label="Menu Photos">Photos</span>
-      <div class="dropdown decal" >
+    <div class="btn-top ph" aria-haspopup="true">
+      <span class="titMenu">Photos</span>
+      <div class="dropdown decal">
         <div class="bloc-links">
           <div class="sousMenuBlog">
             <div class="envIcon ePhotos">
@@ -93,9 +93,9 @@
       </div>
     </div>
     <!-- Menu Blogs -->
-    <div class="btn-top bl"  aria-haspopup="true">
-      <span class="titMenu" aria-label="Menu Blogs">Blogs</span>
-      <div class="dropdown decal" >
+    <div class="btn-top bl" aria-haspopup="true">
+      <span class="titMenu">Blogs</span>
+      <div class="dropdown decal">
         <div class="bloc-links">
           <div class="sousMenuBlog">
             <div class="envIcon eBlogs">
@@ -106,23 +106,23 @@
       </div>
     </div>
     <!-- Bouton Retour et titre des sélections -->
-    <button class="retour" aria-label="Retour en haut de page" title="Retour en haut">
+    <button class="retour" title="Retour en haut">
       <img id="imgRetour" loading="lazy" src="./images/retour.png" alt="Flèche retour en haut">
     </button>
     <span class="titre" aria-live="polite"> </span>
   </nav>
-  <main class="enveloppe" >
+  <main class="enveloppe">
     <h1 id="zagVideos" tabindex="-1">ZagVideos</h1>
-    <div class="ecranVideos"  aria-label="Zone d'affichage des vidéos" tabindex="0"></div>
-    <footer class="copy" >
+    <div class="ecranVideos" tabindex="0"></div>
+    <footer class="copy">
       <small>© <time datetime="2023-04">Avril 2023</time> Gonzague de Poulpiquet</small>
     </footer>
   </main>
   <!-- Templates -->
   <!-- template pour les miniatures YT -->
   <template id="ytThumb">
-    <span class="vidTitre" data-numt=""  aria-level="2"></span>
-    <div class="lect" data-num  tabindex="0">
+    <span class="vidTitre" data-numt="" aria-level="2"></span>
+    <div class="lect" data-num tabindex="0">
       <img class="vidImg" data-id="" width="100%" height="100%" loading="lazy" decoding="async" src="">
     </div>
   </template>
