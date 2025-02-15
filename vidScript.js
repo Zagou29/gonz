@@ -26,8 +26,8 @@ try {
 //   document.querySelector(".ecranVideos"),
 // ].filter(Boolean);
 // elements.forEach((element) => element.classList.add("scrbar"));
-
-
+ alert(navigator.userAgent);
+/* -----------------les classes et les menus --------------------- */
 /**Charger la liste globale des videos */
 const vidList = await fetchJSON("./xjson/indexVid.json");
 const menuList = await fetchJSON("./xjson/menusVideos.json");
@@ -46,9 +46,9 @@ vidClass.aff_ans(document.querySelector(".years"));
 /* Charger la classe menus fam voy pll */
 const vidMenu = new MenuVid(list_menus);
 /* Afficher les menus videos */
-vidMenu.affBoxes(document.querySelector(".menu_famille"), ".fam");
-vidMenu.affBoxes(document.querySelector(".menu_voyage"), ".voy");
-vidMenu.affBoxes(document.querySelector(".menu_playlist"), ".pll");
+vidMenu.affBoxes(document.querySelector(".menu_fam"));
+vidMenu.affBoxes(document.querySelector(".menu_voy"));
+vidMenu.affBoxes(document.querySelector(".menu_pll"));
 /* -----------------les fonctions--------------------- */
 function toTop() {
   ecVideos.scrollTo({ top: 0, behavior: "smooth" });
@@ -137,8 +137,8 @@ function afficheLiens(param, year, tempId) {
   /**affiche les videos  selectionnées par Param et Year*/
   vidClass.affVideos(ecVideos, param, year, tempId);
   // si on clique sur l'image, on remplace l'image par la video de meme ID
-  ecVideos.addEventListener("click", click_img);
-
+  ecVideos.addEventListener("click", click_img)
+  
   if (!mob().mob) {
     /** ecoute les barres de videos et ramène la video si pas mobile */
     vidClass.affBar(menu);

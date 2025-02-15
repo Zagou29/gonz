@@ -40,20 +40,20 @@ export class MenuVid {
    * @param {string} datamenu - Type de menu
    * @throws {Error} Si les paramètres sont invalides
    */
-  affBoxes(element, datamenu) {
+  affBoxes(element) {
     if (!element || !(element instanceof HTMLElement)) {
       throw new Error("element doit être un élément DOM valide");
     }
-    if (typeof datamenu !== "string") {
-      throw new TypeError("datamenu doit être une chaîne de caractères");
-    }
+    // if (typeof datamenu !== "string") {
+    //   throw new TypeError("datamenu doit être une chaîne de caractères");
+    // }
 
     this.#boxElement = element;
-    this.#dataMenu = datamenu;
     this.#boxSelect = this.#videos.filter((objbox) =>
-      objbox.clas.slice(4, 8).includes(this.#dataMenu)
+      objbox.clas
+        .slice(4, 8)
+        .includes("." + this.#boxElement.className.slice(13))
     );
-
     this.#listatrier = this.#boxSelect.map((item) => {
       const { clas } = item;
       const typVid = clas.slice(0, 4);
