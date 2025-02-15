@@ -25,12 +25,15 @@ export class Affvid {
   #an;
   #vidId;
   #tempId;
+  #hautSpan;
+
   /**
    * tableau des videos objets
    * @param {vidlist[]} vidlist
    */
   constructor(vidlist) {
     this.#vidlist = vidlist;
+    this.#hautSpan = navigator.userAgent.indexOf("iPad") > 0 ? 40 : 27;
   }
   /**
    * @param {HTMLElement} element (ecVideos)
@@ -136,7 +139,7 @@ export class Affvid {
   // calcul des dimensions des videos/thumbs
   #setDim(ecrans, item) {
     const wl = ecrans.clientWidth - 5;
-    const wh = ecrans.clientHeight - 27;
+    const wh = ecrans.clientHeight - this.#hautSpan;
     const ratioI = item.ec === "43" ? 4 / 3 : 16 / 9;
     const ratioW = wl / wh;
     /* si on compare les ratios,il faut inverser et definir d'abord la hauteur */
