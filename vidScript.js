@@ -26,7 +26,6 @@ try {
 //   document.querySelector(".ecranVideos"),
 // ].filter(Boolean);
 // elements.forEach((element) => element.classList.add("scrbar"));
- alert(navigator.userAgent);
 /* -----------------les classes et les menus --------------------- */
 /**Charger la liste globale des videos */
 const vidList = await fetchJSON("./xjson/indexVid.json");

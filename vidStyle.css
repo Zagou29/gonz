@@ -54,7 +54,7 @@ body {
 
 .page {
   display: grid;
-  height: 100vh;
+  height: 100dvh;
   grid-template-rows: auto 1fr;
   grid-template-areas:
     "menu"
