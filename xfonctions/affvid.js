@@ -82,14 +82,13 @@ export class Affvid {
 
     this.#container.append(this.#listElement);
   }
-  // charger une video ou un Thumb après un titre VidTitre
-  affVidUnique(container, vidId, tempId) {
-    this.#tempId = tempId;
+  // charger une ytFrameR après un titre VidTitre
+  aff_ytFrameR(container, vidId) {
     this.#container = container;
     this.#vidId = vidId;
     this.#vidSelect = this.#vidlist.find((item) => item.id === this.#vidId);
-    const video = new VidItem(this.#vidSelect, this.#tempId);
     if (this.#vidSelect) {
+      const video = new VidItem(this.#vidSelect, "ytFrameR");
       const imgVid = video.retourItem.querySelector(".vidImg");
       imgVid.setAttribute(
         "width",
@@ -170,7 +169,7 @@ class VidItem {
       );
     }
     const video = this.#vidElement.querySelector(".vidImg");
-    if (this.#tempId === "ytThumb" || this.#tempId === "ytThumbR") {
+    if (this.#tempId === "ytThumb" ) {
       video.setAttribute(
         "src",
         `https://img.youtube.com/vi/${this.#vidItem.id}/maxresdefault.jpg`

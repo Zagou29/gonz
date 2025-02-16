@@ -49,6 +49,7 @@ vidMenu.affBoxes(document.querySelector(".menu_fam"));
 vidMenu.affBoxes(document.querySelector(".menu_voy"));
 vidMenu.affBoxes(document.querySelector(".menu_pll"));
 /* -----------------les fonctions--------------------- */
+/* remonter au debut de la page */
 function toTop() {
   ecVideos.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -118,43 +119,39 @@ function ferme_videos(entries) {
  * @param {string} param class des liens videos
  * @returns {number} le nombre de iframes
  */
-// charger la video YT a la place de l'image cliquéé
+// charger la video YTFrameR a la place de l'image cliquée
 function click_img(e) {
   const divImg = e.target.parentElement;
-  if (e.target.className === "lect") return;
   if (e.target.className === "vidImg") {
-    // isoler les infos de la video de meme id que le thumnail
-    // supprimer le thumbnail
+    // supprimer le thumbnail img
     e.target.remove();
     // charger la video dans la div ".lect"
-    vidClass.affVidUnique(divImg, e.target.dataset.id, "ytFrameR");
+    vidClass.aff_ytFrameR(divImg, e.target.dataset.id);
   }
 }
+/* ramener la video selectionnée dans barBox */
+const ecoute_barre = (e) => {
+  ecVideos
+    .querySelector(`[data-num = '${e.target.dataset.num}']`)
+    .scrollIntoView();
+};
+// afficher les videos selon param et year et ytThumb ou ytFrame
 function afficheLiens(param, year, tempId) {
   /* supprime des ecrans YT */
   ecVideos.innerHTML = "";
   /**affiche les videos  selectionnées par Param et Year*/
   vidClass.affVideos(ecVideos, param, year, tempId);
   // si on clique sur l'image, on remplace l'image par la video de meme ID
-  ecVideos.addEventListener("click", click_img)
-  
+  if (tempId === "ytThumb") ecVideos.addEventListener("click", click_img);
   if (!mob().mob) {
     /** ecoute les barres de videos et ramène la video si pas mobile */
     vidClass.affBar(menu);
-    const ecoute_barre = (e) => {
-      ecVideos
-        .querySelector(`[data-num = '${e.target.dataset.num}']`)
-        .scrollIntoView();
-    };
     document.querySelector(".barBox")?.addEventListener("click", ecoute_barre);
   }
-
   /* rajoute la fleche de retour Home  si plus d'une vidéo affichée */
   const nbVideos = vidClass.retourVideo.length;
   if (ecVideos.innerHTML && nbVideos > 1) affEffRetour("+");
-  /**
-   * selectionne les iframes
-   */
+  //  selectionne les iframes
   const lect = ecVideos.querySelectorAll(".lect");
   /** */
   const options = {
