@@ -227,9 +227,9 @@ body {
 
 .enveloppe {
   grid-area: main;
-  padding:5px 0 5px 0;
+  padding-bottom: 5px;
   overflow: hidden;
-  max-height: calc(100dvh - var(--menu-height));
+  /* max-height: calc(100dvh - var(--menu-height)); */
   background: url("./images/Mimosa2.jpg") left/cover;
   display: flex;
   flex-direction: column;
