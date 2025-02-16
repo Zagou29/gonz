@@ -227,7 +227,7 @@ body {
 
 .enveloppe {
   grid-area: main;
-  padding: 5px 0;
+  padding:5px 0 5px 0;
   overflow: hidden;
   max-height: calc(100dvh - var(--menu-height));
   background: url("./images/Mimosa2.jpg") left/cover;
@@ -263,7 +263,7 @@ body {
 
 .lect {
   scroll-snap-align: start;
-  margin: 0 auto 5px;
+  margin: 0 auto;
   z-index: 1;
 }
 
