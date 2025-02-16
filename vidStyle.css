@@ -88,25 +88,22 @@ body {
 .barBox {
   display: flex;
   position: absolute;
-  align-items: flex-end;
-  justify-content: center;
   bottom: 2px;
-  left: 3rem;
-  width: 75%;
+  max-width: 100%;
+  margin:0 10px 0 10px;
   gap: 3px;
   color: grey;
 }
 
 .ytItem {
-  width: 100%;
   height: var(--font-size-medium);
   font-size: var(--font-size-small);
   text-align: center;
   cursor: pointer;
   list-style: none;
   border-radius: 3px;
-  padding-top: 2px;
-  white-space: nowrap;
+  padding: 2px;
+  overflow: hidden;
 }
 
 .ytItem.dia {
@@ -121,16 +118,24 @@ body {
   color: black;
   mix-blend-mode: darken;
   height: 1.1rem;
+  white-space: nowrap;
+  overflow: unset;
 }
 
 .vid.peint {
   background-color: var(--color-primary);
   color: white;
+  white-space: nowrap;
+  overflow: unset;
+  
 }
 
 .dia.peint {
   background-color: var(--color-secondary);
+  overflow: auto;
   color: white;
+  white-space: nowrap;
+  overflow: unset;
 }
 
 .btn-top {
@@ -229,7 +234,6 @@ body {
   grid-area: main;
   padding: 2px 0 5px 0;
   overflow: hidden;
-  /* max-height: calc(100dvh - var(--menu-height)); */
   background: url("./images/Mimosa2.jpg") left/cover;
   display: flex;
   flex-direction: column;
