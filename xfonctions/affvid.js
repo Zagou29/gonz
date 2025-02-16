@@ -33,7 +33,7 @@ export class Affvid {
    */
   constructor(vidlist) {
     this.#vidlist = vidlist;
-    this.#hautSpan = navigator.userAgent.indexOf("iPad") > 0 ? 40 : 27;
+    this.#hautSpan = navigator.userAgent.indexOf("iPad") > 0 ? 35 : 27;
   }
   /**
    * @param {HTMLElement} element (ecVideos)
