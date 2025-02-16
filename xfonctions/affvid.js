@@ -33,8 +33,6 @@ export class Affvid {
    */
   constructor(vidlist) {
     this.#vidlist = vidlist;
-    // this.#hautSpan = navigator.userAgent.indexOf("iPad") > 0 ? 35 : 27;
-    this.#hautSpan=27
   }
   /**
    * @param {HTMLElement} element (ecVideos)
@@ -139,7 +137,7 @@ export class Affvid {
   // calcul des dimensions des videos/thumbs
   #setDim(ecrans, item) {
     const wl = ecrans.clientWidth - 5;
-    const wh = ecrans.clientHeight - this.#hautSpan;
+    const wh = ecrans.clientHeight - 27;
     const ratioI = item.ec === "43" ? 4 / 3 : 16 / 9;
     const ratioW = wl / wh;
     /* si on compare les ratios,il faut inverser et definir d'abord la hauteur */
@@ -170,7 +168,7 @@ class VidItem {
       );
     }
     const video = this.#vidElement.querySelector(".vidImg");
-    if (this.#tempId === "ytThumb" ) {
+    if (this.#tempId === "ytThumb") {
       video.setAttribute(
         "src",
         `https://img.youtube.com/vi/${this.#vidItem.id}/maxresdefault.jpg`
