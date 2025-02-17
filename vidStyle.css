@@ -34,7 +34,6 @@ html {
 }
 ::-webkit-scrollbar {
   display: none;
-  
 }
 
 /* .scrbar {
@@ -90,7 +89,7 @@ body {
   position: absolute;
   bottom: 2px;
   max-width: 100%;
-  margin:0 10px 0 10px;
+  margin: 0 10px 0 10px;
   gap: 3px;
   color: grey;
 }
@@ -127,7 +126,6 @@ body {
   color: white;
   white-space: nowrap;
   overflow: unset;
-  
 }
 
 .dia.peint {
@@ -267,14 +265,10 @@ body {
 
 .lect {
   scroll-snap-align: start;
-  margin: 0 auto;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.479);
+  margin: 0 auto 5px;
   z-index: 1;
-}
-
-.vidImg {
-  box-shadow: 5px 5px 5px var(--color-shadow);
-  object-fit: cover;
-  cursor: pointer;
+  cursor: grab;
 }
 
 /* Fleche de retour pour bas de page */
@@ -408,7 +402,7 @@ input:checked + .diaLabel {
   opacity: 0;
   align-self: end;
 }
-.detail{
+.detail {
   font-size: var(--font-size-small);
 }
 
