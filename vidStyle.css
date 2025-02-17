@@ -1,6 +1,30 @@
+/* Variables CSS */
+:root {
+  --color-primary: blue;
+  --color-secondary: red;
+  --color-background: #f4f4f4;
+  --color-text: black;
+  --color-text-light: rgba(128, 128, 128, 0.8);
+  --color-highlight: gold;
+  --color-shadow: rgba(0, 0, 0, 0.479);
+  --color-shadow-light: rgba(255, 255, 255, 0.7);
+  --font-size-small: 0.7rem;
+  --font-size-medium: 1rem;
+  --font-size-large: 3rem;
+  --font-size-title: clamp(0.9rem, 2.5vw, 2rem);
+  --font-size-subtitle: clamp(1.1rem, 1.3vw, 1.4rem);
+  --font-size-dropdown: clamp(0.8rem, 1.3vw, 1.3rem);
+  --font-size-blog: clamp(0.9rem, 1vw, 1.3rem);
+  --menu-height: calc(var(--font-size-title) + 2.4rem);
+  --title-offset: calc(1.2rem + var(--font-size-title));
+  --transition-duration: 0.3s;
+}
+
 html {
   scroll-behavior: smooth;
+  scrollbar-color: transparent transparent;
 }
+
 *,
 *::before,
 *::after {
@@ -8,40 +32,46 @@ html {
   margin: 0;
   padding: 0;
 }
+::-webkit-scrollbar {
+  display: none;
+  
+}
+
+/* .scrbar {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;   
+} */
+/* .scrbar::-webkit-scrollbar {
+  display: none;
+} */
 
 body {
-  --fs: 0.7rem;
-  --fp: 1rem;
-  --fs-body: 1rem;
-  --fs-titMenu: clamp(0.9rem, 2.5vw, 2rem);
-  --fs-titre: clamp(1.1rem, 1.3vw, 1.4rem);
-  --fs-drop: clamp(0.8rem, 1.3vw, 1.3rem);
-  --fs-tiBlog: clamp(0.9rem, 1vw, 1.3rem);
-  --decDrop: 6rem;
-  --hautMenu: calc(var(--fs-titMenu) + 2.4rem);
-  --decalHaut-titre: calc(1.2rem + var(--fs-titMenu));
-  color: black;
+  color: var(--color-text);
   font-family: Arial, Helvetica, sans-serif;
-  font-size: var(--fs-body);
+  font-size: var(--font-size-medium);
+  background-color: var(--color-background);
 }
+
 .page {
   display: grid;
-  height: 100vh;
+  height: 100dvh;
   grid-template-rows: auto 1fr;
   grid-template-areas:
     "menu"
     "main";
   background-repeat: no-repeat;
 }
+
 #zagVideos {
   position: fixed;
   bottom: 10%;
   align-self: center;
-  font-size: 3rem;
+  font-size: var(--font-size-large);
   color: hsl(0, 100%, 50%);
-  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7);
+  text-shadow: 1px 1px 1px var(--color-shadow-light);
 }
-/* menu des onglets haut de page */
+
+/* Menu des onglets haut de page */
 .menu {
   grid-area: menu;
   position: relative;
@@ -50,31 +80,30 @@ body {
   align-items: center;
   justify-content: space-around;
   padding: 1rem 0;
-  height: var(--hautMenu);
+  height: var(--menu-height);
   background-color: white;
   box-shadow: 0 3px 3px rgba(183, 182, 182, 0.472);
 }
+
 .barBox {
   display: flex;
   position: absolute;
-  align-items: flex-end;
-  justify-content: center;
   bottom: 2px;
-  left: 3rem;
-  width: 75%;
+  max-width: 100%;
+  margin:0 10px 0 10px;
   gap: 3px;
-  color:grey
+  color: grey;
 }
+
 .ytItem {
-  width: 100%;
-  height: var(--fp);
-  font-size: var(--fs);
+  height: var(--font-size-medium);
+  font-size: var(--font-size-small);
   text-align: center;
   cursor: pointer;
   list-style: none;
   border-radius: 3px;
-  padding-top: 2px;
-  white-space: nowrap;
+  padding: 2px;
+  overflow: hidden;
 }
 
 .ytItem.dia {
@@ -84,85 +113,105 @@ body {
 .ytItem.vid {
   background-color: hsla(240, 100%, 75%, 0.4);
 }
+
 .ytItem:hover {
   color: black;
   mix-blend-mode: darken;
   height: 1.1rem;
+  white-space: nowrap;
+  overflow: unset;
 }
+
 .vid.peint {
-  background-color: blue;
+  background-color: var(--color-primary);
   color: white;
+  white-space: nowrap;
+  overflow: unset;
+  
 }
+
 .dia.peint {
-  background-color: rgb(255, 0, 0);
+  background-color: var(--color-secondary);
+  overflow: auto;
   color: white;
+  white-space: nowrap;
+  overflow: unset;
 }
+
 .btn-top {
   height: fit-content;
   border: none;
   outline: none;
   align-items: center;
 }
+
 .titMenu {
   position: relative;
   text-align: center;
   display: inline;
-  font-size: var(--fs-titMenu);
+  font-size: var(--font-size-title);
   cursor: pointer;
-  bottom: var(--fs);
+  bottom: var(--font-size-small);
 }
+
 .titMenu::before {
   content: "";
   display: block;
   width: 100%;
   height: 2px;
-  background-color: blue;
-  scale: 0;
-  transition: scale 0.2s ease-in-out;
+  background-color: var(--color-primary);
+  transform: scaleX(0);
+  transition: transform var(--transition-duration) ease-in-out;
 }
 
 .titMenu:hover::before {
-  scale: 1;
+  transform: scaleX(1);
 }
+
 .titMenu.activeMenu {
-  color: blue;
+  color: var(--color-primary);
 }
-/* containers dropdown pour les sous menus */
+
+/* Containers dropdown pour les sous menus */
 .dropdown {
   position: absolute;
   border-radius: 5px;
   overflow: auto;
-  top: calc(var(--hautMenu) + 2px);
+  top: calc(var(--menu-height) + 2px);
   cursor: default;
-  font-size: var(--fs-drop);
-  background-color: rgb(238, 235, 227, 0.8);
-  max-height: calc(100vh - var(--hautMenu) - 15px);
+  font-size: var(--font-size-dropdown);
+  background-color: rgba(238, 235, 227, 0.8);
+  max-height: calc(100vh - var(--menu-height) - 15px);
   z-index: 2;
 }
+
 .decal {
   left: 1rem;
   width: calc(100vw - 2rem);
 }
+
 .bloc-links {
-  transition: height 0.3s ease-in-out;
-  height: 0px;
   display: flex;
+  height: 0;
+  transition: height var(--transition-duration) ease-in-out;
   flex-direction: column;
   justify-content: flex-start;
   align-content: center;
 }
+
 .bloc-links li {
   padding: 2px 5px;
   list-style-type: none;
-  /* display: block; */
   width: auto;
 }
+
 .bloc-links li:hover {
   cursor: pointer;
-  color: blue;
+  color: var(--color-primary);
   text-decoration: underline;
 }
-/*  sous menus des dropdown */
+
+/* Sous menus des dropdown */
 .sousMenuAnn {
   display: grid;
   grid-template-areas:
@@ -170,56 +219,69 @@ body {
     "ba ba";
   padding: 1rem;
 }
+
 .sousMenuBlog {
   padding: 0.5rem;
 }
-/* mise en forme des videos */
+
+/* Mise en forme des videos */
 .videos {
   display: none;
   grid-area: video;
 }
+
 .enveloppe {
   grid-area: main;
-  padding: 5px 0;
+  padding: 2px 0 5px 0;
   overflow: hidden;
-  max-height: calc(100vh - var(--hautMenu));
   background: url("./images/Mimosa2.jpg") left/cover;
   display: flex;
   flex-direction: column;
   position: relative;
 }
+
 .ecranVideos {
   overflow: auto;
   height: 100%;
   text-align: center;
   scroll-snap-type: y mandatory;
-  scroll-padding-top: var(--fs-titre);
+  scroll-padding-top: var(--font-size-subtitle);
   scroll-behavior: smooth;
   z-index: 1;
 }
+
 .vidTitre {
   text-align: center;
   color: white;
-  font-size: var(--fs-titre);
+  font-size: var(--font-size-subtitle);
   display: block;
 }
+
 .diapo {
-  text-shadow: 2px 2px 1px red;
+  text-shadow: 2px 2px 1px var(--color-secondary);
 }
+
 .video {
-  text-shadow: 2px 2px 1px blue;
+  text-shadow: 2px 2px 1px var(--color-primary);
 }
+
 .lect {
   scroll-snap-align: start;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.479);
-  margin: 0 auto 5px;
+  margin: 0 auto;
   z-index: 1;
 }
-/* fleche de retour pour bas de page */
+
+.vidImg {
+  box-shadow: 5px 5px 5px var(--color-shadow);
+  object-fit: cover;
+  cursor: pointer;
+}
+
+/* Fleche de retour pour bas de page */
 .retour {
   display: block;
   position: relative;
-  margin-bottom: var(--fp);
+  margin-bottom: var(--font-size-medium);
   margin-left: 0.5rem;
   border: none;
   border-radius: 50%;
@@ -228,71 +290,83 @@ body {
   opacity: 0;
   visibility: hidden;
 }
+
 #imgRetour {
-  height: calc(var(--fs-titMenu) * 1.2);
+  height: calc(var(--font-size-title) * 1.2);
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   border: 3px solid transparent;
 }
+
 button:hover {
   cursor: pointer;
   box-shadow: 3px 3px 4px black;
 }
-/* centrer verticalement les continents de Voyage*/
+
+/* Centrer verticalement les continents de Voyage */
 .show {
   opacity: 1;
   visibility: visible;
 }
+
 .sousMenuVoy > ul {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
 .checkB {
   display: flex;
   justify-content: space-around;
 }
+
 .a1 {
   grid-area: a1;
   text-align: center;
 }
+
 .ba {
   grid-area: ba;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
 }
-/* les lignes a et b sont centrées, les autres non */
 
-/* border les sous menus */
+/* Border les sous menus */
 .sousMenuAnn :is(ul, .checkB) {
-  border: 1px dotted rgba(128, 128, 128, 0.8);
+  border: 1px dotted var(--color-text-light);
 }
+
 label {
-  color: rgba(128, 128, 128, 0.8);
+  color: var(--color-text-light);
 }
+
 label:hover {
   cursor: pointer;
   text-shadow: 1px 1px white;
 }
+
 input {
   display: none;
 }
+
 input:checked + .vidLabel {
   color: hsl(240, 100%, 56%);
 }
+
 input:checked + .diaLabel {
   color: hsl(0, 100%, 56%);
 }
-/* titres */
+
+/* Titres */
 .titre {
   right: 0.5rem;
   top: 1rem;
   text-align: center;
-  font-size: var(--fs-titMenu);
-  color: blue;
+  font-size: var(--font-size-title);
+  color: var(--color-primary);
 }
-/* mise en forme des icones Blog */
 
+/* Mise en forme des icones Blog */
 .envIcon {
   display: grid;
   gap: 0.2rem;
@@ -304,10 +378,11 @@ input:checked + .diaLabel {
   padding: 0.2rem;
   text-decoration: none;
   aspect-ratio: 1/1;
-  font-size: var(--fs-tiBlog);
+  font-size: var(--font-size-blog);
   text-shadow: 1px 1px 2px black;
-  color: gold;
+  color: var(--color-highlight);
 }
+
 .texte,
 .blogs,
 .ti_blog,
@@ -315,21 +390,29 @@ input:checked + .diaLabel {
   grid-column: 1 / 2;
   grid-row: 1 / 2;
 }
+
 .blogs {
   width: 100%;
   border-radius: 10%;
   aspect-ratio: 1 / 1;
 }
+
 .ti_blog {
   padding-top: 1rem;
   text-align: center;
 }
+
 .texte {
   border-radius: 10%;
   padding: 5px;
   opacity: 0;
   align-self: end;
 }
+.detail{
+  font-size: var(--font-size-small);
+}
+
+/* A supprimer si pas d'affichage */
 .groupe {
   text-align: center;
 }
@@ -337,24 +420,29 @@ input:checked + .diaLabel {
 .bloc_img:hover .blogs {
   box-shadow: 5px 5px 5px grey;
 }
+
 .bloc_img:hover .blogs.vid {
   box-shadow: 5px 5px 5px hsl(240, 100%, 70%);
 }
+
 .bloc_img:hover .blogs.dia {
   box-shadow: 5px 5px 5px hsl(0, 100%, 70%);
 }
+
 .bloc_img:hover .ti_blog {
-  font-size: calc(var(--fs-tiBlog) * 1.5);
+  font-size: calc(var(--font-size-blog) * 1.5);
   cursor: pointer;
   z-index: 2;
 }
+
 .bloc_img:hover .texte {
   opacity: 1;
-  transition: opacity 0.3s ease-in-out;
-  background-color: hsl(50, 0%, 50%, 0.3);
+  transition: opacity var(--transition-duration) ease-in-out;
+  background-color: hsla(50, 0%, 50%, 0.3);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
 }
+
 .copy {
   position: absolute;
   bottom: 0.5rem;
@@ -363,26 +451,31 @@ input:checked + .diaLabel {
   filter: invert(25%);
 }
 
-/* pour les petits ecrans passer le titre en dessous */
+/* Pour les petits écrans passer le titre en dessous */
 @media screen and (max-width: 700px) {
   .titre {
     position: absolute;
-    top: var(--decalHaut-titre);
+    top: var(--title-offset);
     left: 50%;
     transform: translateX(-50%);
   }
+
   .envIcon {
     grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   }
+
   .texte {
-    font-size: calc(var(--fs-titMenu) / 1.2);
+    font-size: calc(var(--font-size-title) / 1.2);
   }
+
   .decalR {
     right: 5px;
   }
+
   .blogs.vid {
     box-shadow: 3px 3px 3px hsl(240, 100%, 70%);
   }
+
   .blogs.dia {
     box-shadow: 3px 3px 3px hsl(0, 100%, 70%);
   }
