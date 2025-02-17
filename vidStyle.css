@@ -408,6 +408,9 @@ input:checked + .diaLabel {
   opacity: 0;
   align-self: end;
 }
+.detail{
+  font-size: var(--font-size-small);
+}
 
 /* A supprimer si pas d'affichage */
 .groupe {
