@@ -219,7 +219,7 @@
     {
         "clas": ".dia.voy.euro.frn",
         "menu": "Voyages",
-        "groupe": "",
+        "groupe": "Europe",
         "src": "./box_img/FranceNord-02.jpg",
         "detail": "France Nord"
     },
