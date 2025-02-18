@@ -144,11 +144,11 @@ function afficheLiens(param, year, tempId) {
   vidClass.affVideos(ecVideos, param, year, tempId);
   // si on clique sur l'image, on remplace l'image par la video de meme ID
   if (tempId === "ytThumb") ecVideos.addEventListener("click", click_img);
-  if (!mob().mob) {
+  // if (!mob().mob) {
     /** ecoute les barres de videos et ramène la video si pas mobile */
     vidClass.affBar(menu);
     document.querySelector(".barBox")?.addEventListener("click", ecoute_barre);
-  }
+  // }
   /* rajoute la fleche de retour Home  si plus d'une vidéo affichée */
   const nbVideos = vidClass.retourVideo.length;
   if (ecVideos.innerHTML && nbVideos > 1) affEffRetour("+");
@@ -186,7 +186,7 @@ function aff_Videos(e) {
   const aff = afficheLiens(
     dia_vid,
     year,
-    mob().mob ? "ytFrame" : dia_vid.search("pll") > 0 ? "ytFrame" : "ytThumb"
+    mob().mob ? "ytFrame" : !dia_vid.search(".pll") ? "ytFrame" : "ytThumb"
   );
   // si on ne clique pas sur 'Videos' ou 'Diapos' de "Années", refermer les boxes
   if (!(e.target.tagName === "LABEL") && !(e.target.tagName === "INPUT")) {
