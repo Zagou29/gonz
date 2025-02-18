@@ -144,11 +144,11 @@ function afficheLiens(param, year, tempId) {
   vidClass.affVideos(ecVideos, param, year, tempId);
   // si on clique sur l'image, on remplace l'image par la video de meme ID
   if (tempId === "ytThumb") ecVideos.addEventListener("click", click_img);
-  // if (!mob().mob) {
-  /** ecoute les barres de videos et ramène la video si pas mobile */
-  vidClass.affBar(menu);
-  document.querySelector(".barBox")?.addEventListener("click", ecoute_barre);
-  // }
+  if (!mob().mob || navigator.userAgent.match(/iPad|/i)) {
+    /** ecoute les barres de videos et ramène la video si pas mobile */
+    vidClass.affBar(menu);
+    document.querySelector(".barBox")?.addEventListener("click", ecoute_barre);
+  }
   /* rajoute la fleche de retour Home  si plus d'une vidéo affichée */
   const nbVideos = vidClass.retourVideo.length;
   if (ecVideos.innerHTML && nbVideos > 1) affEffRetour("+");
@@ -157,8 +157,8 @@ function afficheLiens(param, year, tempId) {
   /** */
   const options = {
     root: ecVideos,
-    rootMargin: "0px 0px -45% 0px",
-    threshold: 0.5,
+    rootMargin: "0px",
+    threshold: 1,
   };
   /**
    * quand un iframe sort de Ecvideos,arrete la video et affiche la barre en bleu
