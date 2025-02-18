@@ -31,6 +31,7 @@ export class MenuVid {
     if (!Array.isArray(videos)) {
       throw new TypeError("videos doit être un tableau");
     }
+    // videos est la liste de toutes le videos raccrochées aux menusVideos.json
     this.#videos = videos;
   }
 
@@ -44,25 +45,31 @@ export class MenuVid {
     if (!element || !(element instanceof HTMLElement)) {
       throw new Error("element doit être un élément DOM valide");
     }
-    // if (typeof datamenu !== "string") {
-    //   throw new TypeError("datamenu doit être une chaîne de caractères");
-    // }
-
+    // element est la div menu_fam, menu_voy ou menu_pll
     this.#boxElement = element;
     this.#boxSelect = this.#videos.filter((objbox) =>
       objbox.clas
         .slice(4, 8)
         .includes("." + this.#boxElement.className.slice(13))
     );
+    // this.#boxSelect filtre de videos(videos+menus) par la clas .fam/.voy/.pll
+    // enlever le typevideo de la clas et le mettre dans tv
+    this.#boxSelect = this.#boxSelect.map((item) => {
+      item.tv = item.clas.slice(0, 4);
+      item.clas = item.clas.slice(4);
+      return item;
+    });
+    // console.log("this.#boxSelect", this.#boxSelect);
+    // ne garder que le menu (fam/voy/pll), le id_groupe, le detail venat de la classe
     this.#listatrier = this.#boxSelect.map((item) => {
       const { clas } = item;
-      const typVid = clas.slice(0, 4);
-      const menu = clas.slice(4, 8);
-      const id_groupe = clas.slice(8, 13);
-      const detail = clas.slice(13, 17);
-      return { clas, menu, id_groupe, typVid, detail };
+      const menu = clas.slice(0, 4);
+      const id_groupe = clas.slice(4, 9);
+      const detail = clas.slice(9, 17);
+      return { clas, menu, id_groupe, detail };
     });
-    /* enlever les doublons de clas et trier : typvid,id_groupe,detail*/
+    // console.log("this.#listatrier", this.#listatrier);
+    /* enlever tous les doublons de listeatrier et trier : par detail puis groupe*/
     this.#liensSelect = [
       ...new Set(this.#listatrier.map((item) => JSON.stringify(item))),
     ]
@@ -70,8 +77,8 @@ export class MenuVid {
       .sort((a, b) => (a.detail > b.detail ? 1 : a.detail < b.detail ? -1 : 0))
       .sort((a, b) =>
         a.id_groupe > b.id_groupe ? 1 : a.id_groupe < b.id_groupe ? -1 : 0
-      )
-      .sort((a, b) => (a.typVid > b.typVid ? -1 : a.typVid < b.typVid ? 1 : 0));
+      );
+    // console.log("this.#liensSelect", this.#liensSelect);
     this.#listElement = new DocumentFragment();
     this.#liensSelect.forEach((boite) => {
       this.#item = this.#boxSelect.filter((it) => it.clas === boite.clas);
@@ -82,7 +89,8 @@ export class MenuVid {
   }
 }
 
-/** creer une boite qui contient les infos vid/menu/groupe/select */
+ // box=:{"clas": ".dia.voy.asie.vie","groupe": "Asie","text": "2017 Saigon-Da.Nang",
+// "src": "./box_img/Vietnam-11.jpg","detail": "Vietnam}
 class MenuItem {
   #boxElement;
   #boxItem;
@@ -91,6 +99,7 @@ class MenuItem {
   constructor(box) {
     this.#boxList = box;
     this.#boxItem = this.#boxList[0].clas;
+    // console.log("boxItem", this.#boxItem, "this.#boxList", this.#boxList);
     this.#boxElement = cloneTemplate("menuBlocs").firstElementChild;
     this.#boxElement
       .querySelector(".blogs")
@@ -126,6 +135,8 @@ class Box_liste {
     this.#detail = detail;
     this.#ligneElement = cloneTemplate("videoListe").firstElementChild;
     this.#ligneElement.textContent = this.#detail.text;
+    this.#ligneElement.classList.add(this.#detail.tv)
+  
   }
   get returnDetail() {
     return this.#ligneElement;

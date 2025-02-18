@@ -186,7 +186,7 @@ function aff_Videos(e) {
   const aff = afficheLiens(
     dia_vid,
     year,
-    mob().mob ? "ytFrame" : dia_vid.search("pll") === 5 ? "ytFrame" : "ytThumb"
+    mob().mob ? "ytFrame" : dia_vid.search("pll") > 0 ? "ytFrame" : "ytThumb"
   );
   // si on ne clique pas sur 'Videos' ou 'Diapos' de "Années", refermer les boxes
   if (!(e.target.tagName === "LABEL") && !(e.target.tagName === "INPUT")) {

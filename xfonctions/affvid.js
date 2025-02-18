@@ -42,7 +42,7 @@ export class Affvid {
   affVideos(container, classe, an, tempId) {
     this.#tempId = tempId;
     this.#container = container;
-    this.#classe = classe;
+    this.#classe = classe.slice(4);
     this.#an = an;
     this.#listElement = new DocumentFragment();
     /* préparer vidSelect selon la classe ou l'année */
