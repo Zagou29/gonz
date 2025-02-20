@@ -55,11 +55,10 @@ export class MenuVid {
     // this.#boxSelect filtre de videos(videos+menus) par la clas .fam/.voy/.pll
     // enlever le typevideo de la clas et le mettre dans tv
     this.#boxSelect = this.#boxSelect.map((item) => {
-      item.tv = item.clas.slice(0, 4);
+      item.tv = item.clas.slice(1, 4);
       item.clas = item.clas.slice(4);
       return item;
     });
-    // console.log("this.#boxSelect", this.#boxSelect);
     // ne garder que le menu (fam/voy/pll), le id_groupe, le detail venat de la classe
     this.#listatrier = this.#boxSelect.map((item) => {
       const { clas } = item;
@@ -68,7 +67,6 @@ export class MenuVid {
       const detail = clas.slice(9, 17);
       return { clas, menu, id_groupe, detail };
     });
-    // console.log("this.#listatrier", this.#listatrier);
     /* enlever tous les doublons de listeatrier et trier : par detail puis groupe*/
     this.#liensSelect = [
       ...new Set(this.#listatrier.map((item) => JSON.stringify(item))),
@@ -78,7 +76,6 @@ export class MenuVid {
       .sort((a, b) =>
         a.id_groupe > b.id_groupe ? 1 : a.id_groupe < b.id_groupe ? -1 : 0
       );
-    // console.log("this.#liensSelect", this.#liensSelect);
     this.#listElement = new DocumentFragment();
     this.#liensSelect.forEach((boite) => {
       this.#item = this.#boxSelect.filter((it) => it.clas === boite.clas);
@@ -99,7 +96,6 @@ class MenuItem {
   constructor(box) {
     this.#boxList = box;
     this.#boxItem = this.#boxList[0].clas;
-    // console.log("boxItem", this.#boxItem, "this.#boxList", this.#boxList);
     this.#boxElement = cloneTemplate("menuBlocs").firstElementChild;
     this.#boxElement
       .querySelector(".blogs")
@@ -116,7 +112,7 @@ class MenuItem {
       this.#boxList[0].groupe;
     this.#boxElement.querySelector(".ti_blog").dataset.select = this.#boxItem;
     this.liste = new DocumentFragment();
-    this.#boxList.forEach((obj) => {
+    this.#boxList.sort((a, b) => (a.tv > b.tv ? -1 : a.tv < b.tv ? 1 : 0)).forEach((obj) => {
       const ligne = new Box_liste(obj);
       this.liste.append(ligne.returnDetail);
     });

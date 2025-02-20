@@ -121,6 +121,7 @@ class BoxItem {
       .setAttribute("alt", this.#boxItem.spText);
     this.#boxElement.querySelector(".ti_blog").textContent =
       this.#boxItem.spText;
+    this.#boxElement.querySelector(".texte").classList.add("ph_bl");
     this.#boxElement.querySelector(".texte").textContent =
       this.#boxItem.divText;
     if (this.#boxItem.menu === "ph") {

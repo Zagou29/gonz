@@ -144,11 +144,10 @@ function afficheLiens(param, year, tempId) {
   vidClass.affVideos(ecVideos, param, year, tempId);
   // si on clique sur l'image, on remplace l'image par la video de meme ID
   if (tempId === "ytThumb") ecVideos.addEventListener("click", click_img);
-  if (!mob().mob || navigator.userAgent.match(/iPad|/i)) {
-    /** ecoute les barres de videos et ramène la video si pas mobile */
-    vidClass.affBar(menu);
-    document.querySelector(".barBox")?.addEventListener("click", ecoute_barre);
-  }
+  /** ecoute les barres de videos et ramène la video si pas mobile */
+  vidClass.affBar(menu);
+  document.querySelector(".barBox")?.addEventListener("click", ecoute_barre);
+
   /* rajoute la fleche de retour Home  si plus d'une vidéo affichée */
   const nbVideos = vidClass.retourVideo.length;
   if (ecVideos.innerHTML && nbVideos > 1) affEffRetour("+");
