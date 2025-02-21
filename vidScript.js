@@ -32,10 +32,10 @@ const vidList = await fetchJSON("./xjson/indexVid.json");
 const menuList = await fetchJSON("./xjson/menusVideos.json");
 /** trier les videos selon l'année old-> new */
 vidList.sort((a, b) => (a.annee > b.annee ? 1 : a.annee < b.annee ? -1 : 0));
-/** raccorder les videos aux menuboxes par les classes */
+/** raccorder les videos aux menuboxes par les classes sans le typevideo*/
 const list_menus = vidList.map((item) => {
   const { clas, text } = item;
-  const lien = menuList.filter((li) => li.clas === clas)[0];
+  const lien = menuList.filter((li) => li.clas === clas.slice(4))[0];
   const { groupe, src, detail } = lien;
   return { clas, groupe, text, src, detail };
 });
