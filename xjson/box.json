@@ -4,47 +4,23 @@
     "ph": "photo",
     "href": "",
     "src": "./images/pelemele.jpg",
-    "spText": "1900-2023",
+    "spText": "Années 1900/2000",
     "divText": "Toutes les photos de la famille de 1900 à ce jour"
   },
   {
     "menu": "ph",
-    "ph": "carious",
-    "href": "",
-    "src": "./images/Carious.jpg",
-    "spText": "Carious",
-    "divText": "Les Carious de 1900 à 2008"
-  },
-  {
-    "menu": "ph",
-    "ph": "avion",
+    "ph": "a1418",
     "href": "",
     "src": "./images/Avions-4.jpg",
-    "spText": "Avions 1418",
-    "divText": "Grand Père était dans l'aviation durant la guerre de 14/18.\n                  \n                  Il nous a laissé 250 photos stéréo sur plaques de verre..\n                  Voici les avions..."
-  },
-  {
-    "menu": "ph",
-    "ph": "guerre",
-    "href": "",
-    "src": "./images/Guerre.jpg",
     "spText": "Guerre 1418",
-    "divText": "Il a aussi photographié Verdun en 1917. \n                  Des canons, des chars, des soldats..."
-  },
-  {
-    "menu": "ph",
-    "ph": "fam17",
-    "href": "",
-    "src": "./images/fam1720.jpg",
-    "spText": "Famille 1917",
-    "divText": "De Trefry à l'Aberwrach, les photos de la famille de\n                  Poulpiquet / Dubois jusqu'en 1944 environ.."
+    "divText": "Grand Père était dans l'aviation durant la guerre de 14/18. \n   Il était photographe aerien... "
   },
   {
     "menu": "ph",
     "ph": "marys",
     "href": "",
     "src": "./images/marys.jpg",
-    "spText": "Les Mary's",
+    "spText": "Les Mary/Achard",
     "divText": "Les Mary à Nozay . C'était la famille de Maman. \n                  Deux photos de l'usine de notre grand père Achard au Fuilet"
   },
   {
@@ -65,26 +41,18 @@
   },
   {
     "menu": "ph",
-    "ph": "lasc",
+    "ph": "a0070",
     "href": "",
     "src": "./images/lascamps.jpg",
-    "spText": "Lascamps 47-55",
-    "divText": "Mariage des parents en 1947. Gonzague, Béatrice, Dominique\n                  puis Daniel ..."
-  },
-  {
-    "menu": "ph",
-    "ph": "mimo",
-    "href": "",
-    "src": "./images/mimosa1.jpg",
-    "spText": "Mimosa 56-70",
-    "divText": "En 1956, nous avons déménagé au Mimosa, où sont ensuite nés\n                  Chritian, Benoît et Gaëlle"
+    "spText": "Années 00/60",
+    "divText": "De Treffry à Lascamps puis au Mimosa..."
   },
   {
     "menu": "ph",
     "ph": "a708",
     "href": "",
     "src": "./images/a7080.jpg",
-    "spText": "Années 70",
+    "spText": "Années 1970",
     "divText": "Arrivée de Anne Lise \n                  puis Marie et Eric..."
   },
   {
@@ -92,7 +60,7 @@
     "ph": "a80",
     "href": "",
     "src": "./images/a80.jpg",
-    "spText": "Années 80",
+    "spText": "Années 1980",
     "divText": "Arrivée à Bavent,\n                  naissance de Lise \n                  Déménagement à Hotot"
   },
   {
@@ -100,48 +68,40 @@
     "ph": "a90",
     "href": "",
     "src": "./images/a90.jpg",
-    "spText": "Années 90",
+    "spText": "Années 1990",
     "divText": "Hotot en Auge, \n                  9 mois en Irlande,\n                  \n                  retour à Hotot"
   },
   {
     "menu": "ph",
-    "ph": "chgv",
+    "ph": "a0009",
     "href": "",
     "src": "./images/chg2000.jpg",
-    "spText": "2000-2007",
+    "spText": "Années 2000",
     "divText": "Changement de siècle, puis de vie à partir de 2004"
   },
   {
     "menu": "ph",
-    "ph": "a0813",
+    "ph": "a1019",
     "href": "",
     "src": "./images/08_13.jpg",
-    "spText": "2008-2013",
+    "spText": "Années 2010",
     "divText": "Keriskin, Saint Nazaire, avec Margot"
   },
   {
     "menu": "ph",
-    "ph": "a1419",
-    "href": "",
-    "src": "./images/a1416.jpg",
-    "spText": "2014-2019",
-    "divText": "Les 4 petites filles grandissent."
-  },
-  {
-    "menu": "ph",
-    "ph": "a2022",
+    "ph": "a2029",
     "href": "",
     "src": "./images/a2022.jpg",
-    "spText": "2020-2022",
-    "divText": "Le Covid arrive,\n                  \n                  nos parents s'en vont."
+    "spText": "Années 2020",
+    "divText": "Le Covid, mort des parents, la vie continue..."
   },
   {
     "menu": "ph",
-    "ph": "a2324",
+    "ph": "carious",
     "href": "",
-    "src": "./images/a2324.jpg",
-    "spText": "2023-2024",
-    "divText": "La vie repart sans nos parents"
+    "src": "./images/Carious.jpg",
+    "spText": "Les Carious",
+    "divText": "Les Carious de 1900 à 2008"
   },
   {
     "menu": "bl",
