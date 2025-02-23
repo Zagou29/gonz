@@ -73,14 +73,14 @@
         "clas": ".voy.asie.chi",
         "menu": "Voyages",
         "groupe": "Asie",
-        "src": "./box_img/Chine01.jpg",
+        "src": "./box_img/chine-box.webp",
         "detail": "Chine"
     },
     {
         "clas": ".voy.asie.vie",
         "menu": "Voyages",
         "groupe": "Asie",
-        "src": "./box_img/Vietnam-04.jpg",
+        "src": "./box_img/vietnam.webp",
         "detail": "Vietnam"
     },
     {
