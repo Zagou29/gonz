@@ -59,14 +59,14 @@
         "clas": ".voy.amer.usa",
         "menu": "Voyages",
         "groupe": "Amérique",
-        "src": "./box_img/UsaQuebec01.jpg",
+        "src": "./box_img/usa.webp",
         "detail": "U.S.A"
     },
     {
         "clas": ".voy.amer.mex",
         "menu": "Voyages",
         "groupe": "Amérique",
-        "src": "./box_img/Mexique04.jpg",
+        "src": "./box_img/mexique.webp",
         "detail": "Mexique"
     },
     {
@@ -87,49 +87,49 @@
         "clas": ".voy.euro.frn",
         "menu": "Voyages",
         "groupe": "Europe",
-        "src": "./box_img/FranceNord-02.jpg",
+        "src": "./box_img/normandie.webp",
         "detail": "France Nord"
     },
     {
         "clas": ".voy.euro.frs",
         "menu": "Voyages",
         "groupe": "Europe",
-        "src": "./box_img/FranceSud-01.jpg",
+        "src": "./box_img/france-sud.webp",
         "detail": "France Sud"
     },
     {
         "clas": ".voy.euro.med",
         "menu": "Voyages",
         "groupe": "Europe",
-        "src": "./box_img/Mediterranee-02.jpg",
+        "src": "./box_img/grece.webp",
         "detail": "Mediterranée"
     },
     {
         "clas": ".voy.euro.irl",
         "menu": "Voyages",
         "groupe": "Europe",
-        "src": "./box_img/Irlande-03.jpg",
+        "src": "./box_img/irlande.webp",
         "detail": "Irlande-UK"
     },
     {
         "clas": ".voy.euro.sca",
         "menu": "Voyages",
         "groupe": "Europe",
-        "src": "./box_img/Scandinavie.jpg",
+        "src": "./box_img/scandinavie.webp",
         "detail": "Scandinavie"
     },
     {
         "clas": ".voy.iles.imd",
         "menu": "Voyages",
         "groupe": "Les Iles",
-        "src": "./box_img/imed-03.jpg",
+        "src": "./box_img/mediterranee.webp",
         "detail": "Iles Mediterranée"
     },
     {
         "clas": ".voy.iles.fra",
         "menu": "Voyages",
         "groupe": "Les Iles",
-        "src": "./box_img/Antilles-03.jpg",
+        "src": "./box_img/antilles.webp",
         "detail": "Iles France Antilles"
     },
     {
