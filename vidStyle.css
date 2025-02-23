@@ -10,7 +10,7 @@
   --color-shadow-light: rgba(255, 255, 255, 0.7);
   --color-background-vid: hsla(240, 100%, 75%, 0.4);
   --color-background-dia: hsla(0, 100%, 75%, 0.4);
-  --font-size-small: 0.8rem;
+  --font-size-small: 0.7rem;
   --font-size-medium: 1rem;
   --font-size-large: 3rem;
   --font-size-title: clamp(0.9rem, 2.5vw, 2rem);
@@ -369,7 +369,7 @@ input:checked + .diaLabel {
 .envIcon {
   display: grid;
   gap: 0.2rem;
-  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
 }
 
 .bloc_img {

@@ -143,15 +143,22 @@
         "clas": ".pll.fami.fami",
         "menu": "Playlist",
         "groupe": "Zag & Margot",
-        "src": "./box_img/famille-01.jpg",
+        "src": "./box_img/famille.webp",
         "detail": "Famille"
     },
     {
-        "clas": ".pll.voya.amas",
+        "clas": ".pll.voya.asie",
         "menu": "Playlist",
-        "groupe": "Amerique Asie",
-        "src": "./box_img/amerasie-02.jpg",
-        "detail": "Voyages Am Asie"
+        "groupe": "Asie",
+        "src": "./box_img/chine.webp",
+        "detail": "Voyages Asie"
+    },
+    {
+        "clas": ".pll.voya.amer",
+        "menu": "Playlist",
+        "groupe": "Amerique",
+        "src": "./box_img/mexique-800.webp",
+        "detail": "Voyages Ameriques"
     },
     {
         "clas": ".pll.voya.euro",
@@ -164,7 +171,7 @@
         "clas": ".pll.xuse.muse",
         "menu": "Playlist",
         "groupe": "Nos Musées",
-        "src": "./box_img/amerasie-01.jpg",
+        "src": "./box_img/musees.webp",
         "detail": "Les Musées"
     }
 ]

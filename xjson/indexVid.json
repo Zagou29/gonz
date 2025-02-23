@@ -1430,7 +1430,7 @@
   {
     "ec": "16",
     "id": "PLqkgFQr1NwGz3TT54Igp3KsfLspJgA7e5",
-    "clas": ".vid.pll.voya.amas",
+    "clas": ".vid.pll.voya.asie",
     "annee": "2013",
     "text": "2013 Chine"
   },
@@ -1444,7 +1444,7 @@
   {
     "ec": "16",
     "id": "PLqkgFQr1NwGxTtKAeFljrH8LPo1aFZX7v",
-    "clas": ".vid.pll.voya.amas",
+    "clas": ".vid.pll.voya.amer",
     "annee": "2018",
     "text": "2018 Mexique"
   },
@@ -1458,28 +1458,28 @@
   {
     "ec": "43",
     "id": "PLfEuyy3Ro4praVyLtwNkjAKJBJYa0kGL_",
-    "clas": ".vid.pll.voya.amas",
+    "clas": ".vid.pll.voya.asie",
     "annee": "2001",
     "text": "2001 Inde Margot"
   },
   {
     "ec": "43",
     "id": "PLfEuyy3Ro4prZQucgLcxinxNcd7vOZ5So",
-    "clas": ".vid.pll.voya.amas",
+    "clas": ".vid.pll.voya.amer",
     "annee": "2002",
     "text": "2002 Mexique Margot"
   },
   {
     "ec": "43",
     "id": "PLqkgFQr1NwGxkDD3hxfjCKnFZ3IAuoH3d",
-    "clas": ".vid.pll.voya.amas",
+    "clas": ".vid.pll.voya.amer",
     "annee": "2011",
     "text": "2011 Antilles"
   },
   {
     "ec": "16",
     "id": "PLqkgFQr1NwGyAetBRedKk6Bezo-lsZY9E",
-    "clas": ".vid.pll.voya.amas",
+    "clas": ".vid.pll.voya.asie",
     "annee": "2017",
     "text": "2017 Vietnam"
   },
@@ -1500,14 +1500,14 @@
   {
     "ec": "16",
     "id": "PLqkgFQr1NwGwLVVrThBlIbsNSQWOWSoyV",
-    "clas": ".vid.pll.voya.amas",
+    "clas": ".vid.pll.voya.amer",
     "annee": "2010",
     "text": "2010 Nord Amer"
   },
   {
     "ec": "16",
     "id": "PLfEuyy3Ro4pqElZa33qePsB6Y_IDXOciB",
-    "clas": ".vid.pll.voya.amas",
+    "clas": ".vid.pll.voya.amer",
     "annee": "2017",
     "text": "2017 NYC Marie Yann "
   },
@@ -1570,7 +1570,7 @@
   {
     "ec": "16",
     "id": "PLcupyD4Gq2T_Arnr1_JifwTStgQdaakWm",
-    "clas": ".dia.pll.voya.amas",
+    "clas": ".dia.pll.voya.asie",
     "annee": "2013",
     "text": "2013 Chine"
   },
@@ -1584,14 +1584,14 @@
   {
     "ec": "16",
     "id": "PLcupyD4Gq2T-yaCItt6IiXIh-mtixj6AB",
-    "clas": ".dia.pll.voya.amas",
+    "clas": ".dia.pll.voya.amer",
     "annee": "2006",
     "text": "2006 Mexique"
   },
   {
     "ec": "43",
     "id": "PLcupyD4Gq2T8GD_7rAkL8uWSBgFr3qZh8",
-    "clas": ".dia.pll.voya.amas",
+    "clas": ".dia.pll.voya.amer",
     "annee": "2018",
     "text": "2018 Musées Mex"
   },
@@ -1605,14 +1605,14 @@
   {
     "ec": "16",
     "id": "PLcupyD4Gq2T-Mof-XCx4BSlmIUSqVu_wA",
-    "clas": ".dia.pll.voya.amas",
+    "clas": ".dia.pll.voya.amer",
     "annee": "2011",
     "text": "2011 Antilles"
   },
   {
     "ec": "16",
     "id": "PLcupyD4Gq2T_bfOBN-A7VkbzcEXpHP75c",
-    "clas": ".dia.pll.voya.amas",
+    "clas": ".dia.pll.voya.asie",
     "annee": "2017",
     "text": "2017 Vietnam"
   },
@@ -1626,7 +1626,7 @@
   {
     "ec": "16",
     "id": "PLcupyD4Gq2T80ygksZHfGLUT3v2Wc1cVY",
-    "clas": ".dia.pll.voya.amas",
+    "clas": ".dia.pll.voya.amer",
     "annee": "2010",
     "text": "2010 Nord Amer"
   },
