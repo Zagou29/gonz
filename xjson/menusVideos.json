@@ -4,56 +4,56 @@
         "menu": "Famille",
         "groupe": "avant",
         "src": "./box_img/grandpere-1917.webp",
-        "detail": "1917 à 1949"
+        "detail": "Années 1900 à 1949"
     },
     {
         "clas": ".fam.7079.a70",
         "menu": "Famille",
         "groupe": "Enfants",
-        "src": "./box_img/nous-1978.webp",
-        "detail": "1970 à 1979"
+        "src": "./box_img/annees70.webp",
+        "detail": "Années 70"
     },
     {
         "clas": ".fam.8089.a80",
         "menu": "Famille",
         "groupe": "Enfants",
-        "src": "./box_img/enfants-1986.webp",
-        "detail": "1980 à 1989"
+        "src": "./box_img/enfants-86.webp",
+        "detail": "Années 80"
     },
     {
         "clas": ".fam.9099.a90",
         "menu": "Famille",
         "groupe": "Ados",
-        "src": "./box_img/famille-1995.webp",
-        "detail": "1990 à 1999"
+        "src": "./box_img/annee95.webp",
+        "detail": "Années 90"
     },
     {
         "clas": ".fam.an20.a00",
         "menu": "Famille",
         "groupe": "Ados",
-        "src": "./box_img/famille-2006.webp",
-        "detail": "2000 à 2009"
+        "src": "./box_img/annees2000.webp",
+        "detail": "Années 2000"
     },
     {
         "clas": ".fam.an20.a10",
         "menu": "Famille",
         "groupe": "Margot",
         "src": "./box_img/margot-2014.webp",
-        "detail": "2010 à 2019"
+        "detail": "Années 2010"
     },
     {
         "clas": ".fam.an20.a20",
         "menu": "Famille",
         "groupe": "Margot",
         "src": "./box_img/margot-2023.webp",
-        "detail": "2020 à 2029"
+        "detail": "Années 2020"
     },
     {
         "clas": ".fam.5069.a60",
         "menu": "Famille",
         "groupe": "Parents",
         "src": "./box_img/parents-1947.webp",
-        "detail": "1950 à 1969"
+        "detail": "Années 50/60"
     },
     {
         "clas": ".voy.amer.usa",
