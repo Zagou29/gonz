@@ -115,7 +115,7 @@
     "menu": "bl",
     "ph": "",
     "href": "https://marzagfamily.blogspot.com/",
-    "src": "./box_img/ZagFamily.jpg",
+    "src": "./box_img/zagfamily.webp",
     "spText": "Zag Family",
     "divText": "Toutes les vidéos/diapos de la famille jusqu'en 2007"
   },
@@ -123,7 +123,7 @@
     "menu": "bl",
     "ph": "",
     "href": "https://marzagou.blogspot.com/",
-    "src": "./box_img/FamilleZag-2.jpg",
+    "src": "./box_img/famille-23.webp",
     "spText": "Marzablog",
     "divText": "les videos et diapos à partir de 2008 avec Gonzague et Margot"
   },
@@ -131,7 +131,7 @@
     "menu": "bl",
     "ph": "",
     "href": "https://marzavoyages.blogspot.com/",
-    "src": "./box_img/Portugal-2.jpg",
+    "src": "./box_img/portugal.webp",
     "spText": "Voyages Marzagou",
     "divText": "Tous mes voyages avant et avec Margot"
   },
@@ -139,7 +139,7 @@
     "menu": "bl",
     "ph": "",
     "href": "https://zagfrsd.blogspot.com/",
-    "src": "./box_img/France.jpg",
+    "src": "./box_img/france.webp",
     "spText": "France",
     "divText": "Toutes nos périgrinations à travers la france depuis 2009"
   },
@@ -147,7 +147,7 @@
     "menu": "bl",
     "ph": "",
     "href": "https://zagirlande.blogspot.com/",
-    "src": "./box_img/Irlande-2.jpg",
+    "src": "./box_img/irlande.webp",
     "spText": "Irlande & UK",
     "divText": "En Irlande et UK avec Margot"
   },
@@ -179,7 +179,7 @@
     "menu": "bl",
     "ph": "",
     "href": "https://randomex18.blogspot.com/",
-    "src": "./box_img/Mexique-2.jpg",
+    "src": "./box_img/mexique-2.webp",
     "spText": "Mexique",
     "divText": "Mexique :2002 Margot, 2006 Gonzague, ensemble 2018"
   },
@@ -195,7 +195,7 @@
     "menu": "bl",
     "ph": "",
     "href": "https://randovietnam2017.blogspot.com/",
-    "src": "./box_img/Vietnam-3.jpg",
+    "src": "./box_img/vietnam-2.webp",
     "spText": "Vietnam",
     "divText": "Vietnam 2017 avec Mado et Michel"
   },
@@ -203,7 +203,7 @@
     "menu": "bl",
     "ph": "",
     "href": "https://voyagesiut.blogspot.com/",
-    "src": "./box_img/MexiqueMarg-2.jpg",
+    "src": "./box_img/mexique-margot.webp",
     "spText": "Voyages Margot",
     "divText": "Voyages de Margot avec l'IUT Inde 2001, Mexique 2002"
   },
@@ -219,7 +219,7 @@
     "menu": "bl",
     "ph": "",
     "href": "https://100ansyc.blogspot.com/",
-    "src": "./box_img/100ans.jpg",
+    "src": "./box_img/100ans.webp",
     "spText": "100 ans",
     "divText": "L'anniversaire des 100ans de Mum Cariou en 2020"
   },
@@ -227,7 +227,7 @@
     "menu": "bl",
     "ph": "",
     "href": "https://krcnds.blogspot.com/",
-    "src": "./box_img/Kerichen.jpg",
+    "src": "./box_img/kerichen.webp",
     "spText": "Kerichen",
     "divText": "Les retrouvailles annuelles des ex-Kerichens depuis 2013"
   },
@@ -235,7 +235,7 @@
     "menu": "bl",
     "ph": "",
     "href": "https://zagadidis.blogspot.com/",
-    "src": "./box_img/didis.jpg",
+    "src": "./box_img/didis.webp",
     "spText": "Les Didi's",
     "divText": "Les visites des Didiers"
   },
@@ -243,7 +243,7 @@
     "menu": "bl",
     "ph": "",
     "href": "https://mariehelenepb.blogspot.com/",
-    "src": "./box_img/Paysbas.jpg",
+    "src": "./box_img/paysbas.webp",
     "spText": "Pays Bas",
     "divText": "Visite chez Marie Hélène"
   }
