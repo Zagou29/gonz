@@ -233,7 +233,7 @@ body {
   grid-area: main;
   padding: 2px 0 5px 0;
   overflow: hidden;
-  background: url("./images/Mimosa2.jpg") left/cover;
+  background: url("./box_img/Mimosa2.jpg") left/cover;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -452,7 +452,7 @@ input:checked + .diaLabel {
   -webkit-backdrop-filter: blur(2px);
 }
 .bloc_img:hover .ph_bl {
- background-color: unset;
+  background-color: unset;
 }
 
 .copy {
@@ -471,18 +471,18 @@ input:checked + .diaLabel {
     left: 50%;
     transform: translateX(-50%);
   }
-.menu{
-  height: var(--menu-height-mobile);
-}
-.dropdown{
-  top:var(--menu-height-mobile)
-}
+  .menu {
+    height: var(--menu-height-mobile);
+  }
+  .dropdown {
+    top: var(--menu-height-mobile);
+  }
   .envIcon {
     grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   }
-.texte{
-  display:none
-}
+  .texte {
+    display: none;
+  }
   .decalR {
     right: 5px;
   }
