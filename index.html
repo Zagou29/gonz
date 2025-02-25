@@ -28,7 +28,7 @@
         <div class="bloc-links">
           <div class="sousMenuBlog">
             <div class="envIcon menu_fam">
-              <!-- boite de chargement des boxes menu -->
+              <!-- boite de chargement des boxes menuBlocs -->
             </div>
           </div>
         </div>
@@ -41,7 +41,7 @@
         <div class="bloc-links">
           <div class="sousMenuBlog">
             <div class="envIcon menu_voy">
-              <!-- boite de chargement des boxes menu -->
+              <!-- boite de chargement des boxes menuBlocs -->
             </div>
           </div>
         </div>
@@ -54,7 +54,7 @@
         <div class="bloc-links">
           <div class="sousMenuBlog">
             <div class="envIcon menu_pll">
-              <!-- boite de chargement des boxes menu -->
+              <!-- boite de chargement des boxes menuBlocs -->
             </div>
           </div>
         </div>
@@ -86,7 +86,7 @@
         <div class="bloc-links">
           <div class="sousMenuBlog">
             <div class="envIcon ePhotos">
-              <!-- boite flexible pour chaque blog-->
+              <!-- boite de chargement des boxes menu photo-->
             </div>
           </div>
         </div>
@@ -99,7 +99,7 @@
         <div class="bloc-links">
           <div class="sousMenuBlog">
             <div class="envIcon eBlogs">
-              <!-- boite flexible pour chaque blog-->
+              <!-- boite de chargement des boxes menu blogs-->
             </div>
           </div>
         </div>
@@ -110,10 +110,14 @@
       <img id="imgRetour" loading="lazy" src="./box_img/retour.png" alt="Flèche retour en haut">
     </button>
     <span class="titre"> </span>
+    <ul class="barBox">
+      <!-- place des <li> titres et videos -->
+    </ul>
+
   </nav>
   <main class="enveloppe">
-    <h1 id="zagVideos" tabindex="-1">ZagVideos</h1>
-    <div class="ecranVideos" tabindex="0">
+    <h1 id="zagVideos">ZagVideos</h1>
+    <div class="ecranVideos">
       <!-- place des span titres et videos -->
     </div>
     <footer class="copy">
@@ -124,7 +128,7 @@
   <!-- template pour les miniatures YT -->
   <template id="ytThumb">
     <span class="vidTitre" data-numt=""></span>
-    <div class="lect" data-num tabindex="0">
+    <div class="lect" data-num>
       <img class="vidImg" data-id="" width="100%" height="100%" loading="lazy" decoding="async" src="">
     </div>
   </template>
@@ -167,25 +171,15 @@
       <img class="blogs" loading="lazy" src="" alt="">
       <span class="ti_blog" data-select=""></span>
       <ul class="vid_list texte">
-        <p class="groupe"></p> <!-- à supprimer si pas d'affichage -->
+        <p class="groupe"></p>
+        <!-- à supprimer si pas d'affichage -->
         <!-- listes des vidéos détail -->
       </ul>
     </div>
   </template>
-  <template id="videoListe">
-    <li class="detail"></li>
-  </template>
-  <!-- template du container des barres -->
-  <template id="barContainer">
-    <ul class="barBox"></ul>
-  </template>
-  <!-- template des item liens barres  -->
-  <template id="itemYT">
-    <li class="ytItem"></li>
-  </template>
-  <!-- template des item liens années -->
-  <template id="itemAn">
-    <li data-year="" data-select=""></li>
+  <!-- template des barres videos et liste des videos dans boxes  -->
+  <template id="line">
+    <li></li>
   </template>
 </body>
 

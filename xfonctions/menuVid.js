@@ -129,8 +129,9 @@ class Box_liste {
   #ligneElement;
   constructor(detail) {
     this.#detail = detail;
-    this.#ligneElement = cloneTemplate("videoListe").firstElementChild;
+    this.#ligneElement = cloneTemplate("line").firstElementChild;
     this.#ligneElement.textContent = this.#detail.text;
+    this.#ligneElement.classList.add("detail")
     this.#ligneElement.classList.add(this.#detail.tv)
   
   }

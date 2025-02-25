@@ -145,8 +145,8 @@ function afficheLiens(param, year, tempId) {
   // si on clique sur l'image, on remplace l'image par la video de meme ID
   if (tempId === "ytThumb") ecVideos.addEventListener("click", click_img);
   /** ecoute les barres de videos et ramène la video si pas mobile */
-  vidClass.affBar(menu);
-  document.querySelector(".barBox")?.addEventListener("click", ecoute_barre);
+  vidClass.affBar(barBox);
+  menu.querySelector(".barBox").addEventListener("click", ecoute_barre);
 
   /* rajoute la fleche de retour Home  si plus d'une vidéo affichée */
   const nbVideos = vidClass.retourVideo.length;
@@ -225,7 +225,8 @@ function dropclose(e) {
 /* -----------le programme------------------------- */
 /* ========cliquer sur les menus ouvre les dropdown========= */
 const menu = document.querySelector(".menu");
-const titre = document.querySelector(".titre");
+const barBox = menu.querySelector(".barBox");
+const titre = menu.querySelector(".titre");
 const ecVideos = document.querySelector(".ecranVideos");
 /* ecouter les clicks seulement sur les menus span/titMenu */
 
@@ -254,7 +255,7 @@ menu.addEventListener("click", (e) => {
       dropCour.style.height = dropCour.scrollHeight + "px";
       /* effacer les videos, le titre global et la fleche retour */
       ecVideos.innerHTML = "";
-      document.querySelector(".menu .barBox")?.remove();
+      document.querySelector(".menu .barBox").innerHTML = "";
       titre.textContent = "";
       affEffRetour("-");
       /* lancer les ecouteurs pour chaque li et les bloc_img */

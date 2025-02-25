@@ -113,9 +113,7 @@ export class Affvid {
         barItem.retourBarItem.dataset.num = index;
         this.#listElem.append(barItem.retourBarItem);
       });
-      this.#barre = cloneTemplate("barContainer");
-      this.#barre.querySelector(".barBox").append(this.#listElem);
-      this.#menu.append(this.#barre);
+      this.#menu.append(this.#listElem);
     }
   }
   // pour compter le nbre de videos dans vidscript
@@ -198,8 +196,9 @@ class BarItem {
   #barElement;
   constructor(vid) {
     this.#vidObj = vid;
-    this.#barElement = cloneTemplate("itemYT").firstElementChild;
+    this.#barElement = cloneTemplate("line").firstElementChild;
     this.#barElement.textContent = this.#vidObj.text;
+    this.#barElement.classList.add("ytItem");
     this.#barElement.classList.add(this.#vidObj.clas.slice(1, 4));
   }
 
@@ -212,7 +211,7 @@ class AnnItem {
   #annElement;
   constructor(vid) {
     this.#vidObj = vid;
-    this.#annElement = cloneTemplate("itemAn").firstElementChild;
+    this.#annElement = cloneTemplate("line").firstElementChild;
     this.#annElement.textContent = this.#vidObj;
     this.#annElement.dataset.year = this.#vidObj;
     this.#annElement.dataset.select = ".ann";
