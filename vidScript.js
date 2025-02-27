@@ -100,16 +100,16 @@ function affEffRetour(sens) {
 function ferme_videos(entries) {
   entries.forEach((entry) => {
     if (!entry.isIntersecting && entry.intersectionRatio) {
-      menu
-        .querySelector(`.barBox [data-num = "${entry.target.dataset.num}"]`)
+      barBox
+        .querySelector(`[data-num = "${entry.target.dataset.num}"]`)
         ?.classList.remove("peint");
       const videos = entry.target.querySelector(".vidImg");
       // si Frame, stoppe le son, si Thumb ne change rien au SRC
       videos.src = videos.src.replace("autoplay=1", "autoplay=0");
     } else {
       if (entry.isIntersecting) {
-        menu
-          .querySelector(`.barBox [data-num = "${entry.target.dataset.num}"]`)
+        barBox
+          .querySelector(`[data-num = "${entry.target.dataset.num}"]`)
           ?.classList.add("peint");
       }
     }
