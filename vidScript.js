@@ -100,7 +100,7 @@ function affEffRetour(sens) {
 function ferme_videos(entries) {
   entries.forEach((entry) => {
     if (!entry.isIntersecting && entry.intersectionRatio) {
-      document
+      menu
         .querySelector(`.barBox [data-num = "${entry.target.dataset.num}"]`)
         ?.classList.remove("peint");
       const videos = entry.target.querySelector(".vidImg");
@@ -108,7 +108,7 @@ function ferme_videos(entries) {
       videos.src = videos.src.replace("autoplay=1", "autoplay=0");
     } else {
       if (entry.isIntersecting) {
-        document
+        menu
           .querySelector(`.barBox [data-num = "${entry.target.dataset.num}"]`)
           ?.classList.add("peint");
       }
@@ -146,7 +146,7 @@ function afficheLiens(param, year, tempId) {
   if (tempId === "ytThumb") ecVideos.addEventListener("click", click_img);
   /** ecoute les barres de videos et ramène la video si pas mobile */
   vidClass.affBar(barBox);
-  menu.querySelector(".barBox").addEventListener("click", ecoute_barre);
+  barBox.addEventListener("click", ecoute_barre);
 
   /* rajoute la fleche de retour Home  si plus d'une vidéo affichée */
   const nbVideos = vidClass.retourVideo.length;
@@ -255,7 +255,7 @@ menu.addEventListener("click", (e) => {
       dropCour.style.height = dropCour.scrollHeight + "px";
       /* effacer les videos, le titre global et la fleche retour */
       ecVideos.innerHTML = "";
-      document.querySelector(".menu .barBox").innerHTML = "";
+      barBox.innerHTML = "";
       titre.textContent = "";
       affEffRetour("-");
       /* lancer les ecouteurs pour chaque li et les bloc_img */
