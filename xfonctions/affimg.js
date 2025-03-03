@@ -8,6 +8,9 @@ export class Affimg {
   #elt_dates; //element ou charger les liensdates
   #ancre_imgs; //Boite où charger les images
   #ancres_dates; //Boite où charger les Li dates
+  #image; //images à afficher
+  #lien_date; //liens dates à afficher
+
   constructor(listimg, opt, asp) {
     this.#listimg = listimg;
     this.#opt = opt;
@@ -27,8 +30,8 @@ export class Affimg {
           obj.num = n;
           obj.seuil = "";
         }
-        const image = new AffItem(obj, this.#asp);
-        this.#elt_images.append(image.retourImage);
+        this.#image = new AffItem(obj, this.#asp);
+        this.#elt_images.append(this.#image.retourImage);
         vseuil = obj.an;
       })
     } else {
@@ -42,8 +45,8 @@ export class Affimg {
           obj.seuil = "";
         }
         obj.num = index;
-        const image = new AffItem(obj, this.#asp);
-        this.#elt_images.append(image.retourImage);
+        this.#image = new AffItem(obj, this.#asp);
+        this.#elt_images.append(this.#image.retourImage);
         vseuil = obj.an;
       });
     }
@@ -51,13 +54,13 @@ export class Affimg {
     this.#elt_dates = new DocumentFragment();
     if (this.#opt === "photo") {
       this.#listimg.forEach((obj) => {
-        const liendate = new DateItem(obj);
-        if (obj.seuil !== "") this.#elt_dates.append(liendate.retourDateItem);
+        this.#lien_date = new DateItem(obj);
+        if (obj.seuil !== "") this.#elt_dates.append(this.#lien_date.retourDateItem);
       });
     } else {
       this.#listimg.forEach((obj) => {
-        const liendate = new DateItem(obj);
-        this.#elt_dates.append(liendate.retourDateItem);
+        this.#lien_date = new DateItem(obj);
+        this.#elt_dates.append(this.#lien_date.retourDateItem);
       });
     }
   }

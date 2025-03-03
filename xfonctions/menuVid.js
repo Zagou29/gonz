@@ -16,7 +16,6 @@ import { cloneTemplate } from "./dom.js";
 export class MenuVid {
   #videos;
   #boxSelect;
-  #dataMenu;
   #boxElement;
   /** @type {Array<{clas: string, menu: string, id_groupe: string, typVid: string, detail: string}>} */
   #liensSelect;
@@ -38,7 +37,6 @@ export class MenuVid {
   /**
    * Affiche les boxes de sélection
    * @param {HTMLElement} element - Élément DOM parent
-   * @param {string} datamenu - Type de menu
    * @throws {Error} Si les paramètres sont invalides
    */
   affBoxes(element) {
