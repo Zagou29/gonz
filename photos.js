@@ -219,7 +219,7 @@ const diaporama = (image, diap_ic) => {
   });
 };
 
-/* ---utilisation des icones fleches pour derouler les images*/
+/* ---utilisation des icones menu, ratio, retour, et inverser image*/
 const av_ar = (image, fl) => {
   fl.forEach((el, index) => {
     el.addEventListener("click", (e) => {
@@ -409,7 +409,7 @@ let sensSon = 1; /* son "on" au départ des diapos*/
 let zoome = false; /* mode 'image' au départ */
 let yimg = 0; /* position depart des images */
 // let pos = false;
-let audio = new Audio(`./audio/audio_${rnd(5)}.mp3`); /* audio */
+let audio = new Audio(`./audio/audio_${rnd(11)}.mp3`); /* audio */
 let nId; /* initialiser le setInterval pour deplac horiz du diaporama */
 let k = 1; /* k images deroulées par le diaporama */
 diap.querySelector(".mute").classList.add("eff_fl");
