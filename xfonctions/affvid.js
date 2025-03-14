@@ -85,7 +85,6 @@ export class Affvid {
         this.#setDim(this.#container, obj)[1]
       );
       this.#video.retourItem.querySelector(".lect").dataset.num = index;
-      this.#video.retourItem.querySelector(".vidTitre").dataset.numt = index;
       this.#listElement.append(this.#video.retourItem);
     });
 
@@ -149,6 +148,7 @@ export class Affvid {
     this.#ratioI = item.ec === "43" ? 4 / 3 : 16 / 9;
     this.#ratioW = this.#wl / this.#wh;
     /* si on compare les ratios,il faut inverser et definir d'abord la hauteur */
+    /* return [ width(wl), height(wh)]*/
     return [
       this.#ratioW > this.#ratioI
         ? Math.floor(this.#wh * this.#ratioI)
