@@ -31,6 +31,15 @@ const right = fix_fond.querySelector(".right"); /*  fleche droite*/
 const left = fix_fond.querySelector(".left"); /*  fleche gauche*/
 const stop_debut = fix_fond.querySelector(".debut"); /*  stop gauche*/
 const stop_fin = fix_fond.querySelector(".fin"); /* stop droit */
+/* Constantes pour les valeurs utilisées dans plusieurs endroits */
+const DELAI_MIN = 1000; // en millisecondes
+const DELAI_MAX = 4000; // en millisecondes
+const PAS_DELAI = 500; // en millisecondes
+const diapElements = {
+  mute: diap.querySelector(".mute"),
+  son: diap.querySelector(".son"),
+};
+
 let tab_titre = [];
 //---------préparation des liens pour le timer de droite-------------
 /* cherche l'ID venant de index et affecte le titre à */
@@ -53,10 +62,18 @@ if (sens_date === "1") {
 }
 /** fonction de tri du json entre numb et an */
 const inverser = (liste, sens) => {
-  liste.sort((a, b) =>
-    a.src > b.src ? sens * -1 : a.src < b.src ? sens * 1 : 0
-  );
-  liste.sort((a, b) => (a.an > b.an ? sens * -1 : a.an < b.an ? sens * 1 : 0));
+  // liste.sort((a, b) =>
+  //   a.src > b.src ? sens * -1 : a.src < b.src ? sens * 1 : 0
+  // );
+  // liste.sort((a, b) => (a.an > b.an ? sens * -1 : a.an < b.an ? sens * 1 : 0));
+  liste.sort((a, b) => {
+    // Trier d'abord par année
+    if (a.an !== b.an) {
+      return a.an > b.an ? sens * -1 : sens * 1;
+    }
+    // Puis par source si les années sont identiques
+    return a.src > b.src ? sens * -1 : a.src < b.src ? sens * 1 : 0;
+  });
 };
 try {
   /** creation des lien_menu et du tableau des ph/spText */
@@ -115,12 +132,12 @@ const posit_annee = () => {
 const play_pause = (sens) => {
   if (sens === 1) {
     audio.play();
-    diap.querySelector(".mute").classList.add("eff_fl");
-    diap.querySelector(".son").classList.remove("eff_fl");
+    diapElements.mute.classList.add("eff_fl");
+    diapElements.son.classList.remove("eff_fl");
   } else {
     audio.pause();
-    diap.querySelector(".mute").classList.remove("eff_fl");
-    diap.querySelector(".son").classList.add("eff_fl");
+    diapElements.mute.classList.remove("eff_fl");
+    diapElements.son.classList.add("eff_fl");
   }
   return sens;
 };
@@ -130,8 +147,8 @@ const clear_music = () => {
   nId = null;
   audio.currentTime = 0;
   audio.pause();
-  diap.querySelector(".mute").classList.add("eff_fl");
-  diap.querySelector(".son").classList.remove("eff_fl");
+  diapElements.mute.classList.add("eff_fl");
+  diapElements.son.classList.remove("eff_fl");
   diap.classList.remove("diapo_on");
 };
 /* toggle lancer / arreter diapos et icone diapo si l'image n'est pas la dernière*/
@@ -157,13 +174,10 @@ const toggleSon = (sens) => {
 };
 /* si condition= true on est au debut ou à la fin */
 const toggleStop = (condition, el_stop, el_fl) => {
-  if (condition) {
-    el_stop.classList.remove("eff_fl");
-    el_fl.classList.add("eff_fl");
-    el_stop === stop_fin ? clear_music() : null;
-  } else {
-    el_stop.classList.add("eff_fl");
-    el_fl.classList.remove("eff_fl");
+  el_stop.classList.toggle("eff_fl", !condition);
+  el_fl.classList.toggle("eff_fl", condition);
+  if (condition && el_stop === stop_fin) {
+    clear_music();
   }
 };
 /* montre l'icone stop debut ou l'icone stop fin ou efface */
@@ -268,9 +282,9 @@ const av_ar = (image, fl) => {
 /* augmenter, diminuer le delai */
 const delaiChange = (del, sens) => {
   if (!zoome) return del;
-  del = del + 500 * sens;
-  del = del >= 1000 ? del : (del = 1000);
-  del = del >= 4000 ? (del = 4000) : del;
+  del = del + PAS_DELAI * sens;
+  del = Math.max(DELAI_MIN, del);
+  del = Math.min(DELAI_MAX, del);
   document.querySelector(".duree").textContent = `${del / 1000} sec`;
   return del;
 };
@@ -349,7 +363,7 @@ const zoom = (e) => {
   /* sortir de fullscreen et arreter la musique*/
   stop_fullScreen();
   clear_music();
-  alert; /* supprime le "f" si 'lon revient dans la galerie d'image immediatement*/
+  alert(); /* supprime le "f" si 'lon revient dans la galerie d'image immediatement*/
   /* capter la hauteur de l'image dans le viewport  avant de cliquer*/
   if (zoome) yimg = e.target.getBoundingClientRect().top;
   clearInterval(nId);
@@ -388,15 +402,14 @@ const zoom = (e) => {
 /* afficher les années dans box-années et dans le titre année */
 const affiche_date = (entries) => {
   entries.forEach((ent) => {
+    const dataNum = ent.target.dataset.num;
+    const dateElement = cont.querySelector(`[data-num="${dataNum}"]`);
+    if (!dateElement) return;
     if (ent.isIntersecting) {
-      cont
-          .querySelector(`[data-num = "${ent.target.dataset.num}"]`)
-        .classList.add("show-an");
+      dateElement.classList.add("show-an");
       aff_an.textContent = ent.target.dataset.an;
     } else {
-      cont
-          .querySelector(`[data-num = "${ent.target.dataset.num}"]`)
-          ?.classList.remove("show-an");
+      dateElement.classList.remove("show-an");
     }
   });
 };
