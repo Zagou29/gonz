@@ -6,7 +6,7 @@ import { go_fullScreen, stop_fullScreen } from "./xfonctions/fullScreen.js";
 import { navig, ordi_OS } from "./xfonctions/nav_os.js";
 /* Si l'OS est windows, supprimer les barres de defilement */
 // if (ordi_OS().win || ordi_OS().ios) {
-  // document.querySelector(".image").classList.add("scrbar");
+// document.querySelector(".image").classList.add("scrbar");
 // }
 /*  prendre en charge les boxes de VidCript et le sens des dates */
 const val_trans = localStorage.getItem("data"); /* classList venant de Index */
@@ -106,7 +106,6 @@ const scrollImg = (e) => {
     behavior: "instant",
   });
   aff_an.textContent = list_img[e.target.dataset.num].dataset.an;
-  // pos = true;
 };
 const posit_annee = () => {
   cont.addEventListener("click", scrollImg);
@@ -391,13 +390,13 @@ const affiche_date = (entries) => {
   entries.forEach((ent) => {
     if (ent.isIntersecting) {
       cont
-        .querySelector(`[data-num = "${ent.target.dataset.num}"]`)
+          .querySelector(`[data-num = "${ent.target.dataset.num}"]`)
         .classList.add("show-an");
       aff_an.textContent = ent.target.dataset.an;
     } else {
       cont
-        .querySelector(`[data-num = "${ent.target.dataset.num}"]`)
-        ?.classList.remove("show-an");
+          .querySelector(`[data-num = "${ent.target.dataset.num}"]`)
+          ?.classList.remove("show-an");
     }
   });
 };

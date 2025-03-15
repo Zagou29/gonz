@@ -33,7 +33,7 @@ export class Affimg {
         this.#image = new AffItem(obj, this.#asp);
         this.#elt_images.append(this.#image.retourImage);
         vseuil = obj.an;
-      })
+      });
     } else {
       let ind = 0;
       this.#listimg.forEach((obj, index) => {
@@ -55,14 +55,16 @@ export class Affimg {
     if (this.#opt === "photo") {
       this.#listimg.forEach((obj) => {
         this.#lien_date = new DateItem(obj);
-        if (obj.seuil !== "") this.#elt_dates.append(this.#lien_date.retourDateItem);
-      });
-    } else {
-      this.#listimg.forEach((obj) => {
-        this.#lien_date = new DateItem(obj);
-        this.#elt_dates.append(this.#lien_date.retourDateItem);
-      });
-    }
+        obj.seuil !== ""
+          ? this.#elt_dates.append(this.#lien_date.retourDateItem)
+          : "";
+        });
+      } else {
+        this.#listimg.forEach((obj) => {
+          this.#lien_date = new DateItem(obj);
+          this.#elt_dates.append(this.#lien_date.retourDateItem);
+        });
+      }
   }
 
   /* inclure dans les ancres adequates */
@@ -90,8 +92,9 @@ class AffItem {
     this.#el_image.setAttribute("class", this.#asp);
     this.#el_image.dataset.an = this.#imgobj.an;
     this.#el_image.dataset.num = this.#imgobj.num;
-    if (this.#imgobj.seuil !== "")
-      this.#el_image.dataset.seuil = this.#imgobj.seuil;
+    this.#imgobj.seuil !== ""
+      ? (this.#el_image.dataset.seuil = this.#imgobj.seuil)
+      : "";
   }
 
   get retourImage() {
@@ -108,8 +111,9 @@ class DateItem {
     this.#dateElt.dataset.an = this.#dateObj.an;
     this.#dateElt.dataset.num = this.#dateObj.num;
     this.#dateElt.textContent = this.#dateObj.an;
-    this.#dateElt.dataset.seuil =
-      this.#dateObj.seuil !== "" ? this.#dateObj.an : "";
+    this.#dateObj.seuil !== ""
+      ? (this.#dateElt.dataset.seuil = this.#dateObj.an)
+      : "";
   }
 
   get retourDateItem() {
