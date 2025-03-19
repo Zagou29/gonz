@@ -1,4 +1,3 @@
-
 import { mob } from "./xfonctions/nav_os.js";
 import { fetchJSON } from "./xfonctions/api.js";
 import { createElement } from "./xfonctions/dom.js";
@@ -230,7 +229,14 @@ const scrollModule = (() => {
   const dropClose = (e) => {
     if (!isBlockLinks) return; // si pas de bloc ouvert
     const cible = e.target;
-    const ignoreClasses = ["imgRetour","titMenu" ,"vidImg", "lect", "ti_blog","menu"];
+    const ignoreClasses = [
+      "imgRetour",
+      "titMenu",
+      "ti_blog",
+      "vidImg",
+      "menu",
+      "lect",
+    ];
     // Si clic sur un élément ignoré, on ne ferme pas le bloc
     if (
       ignoreClasses.some((cls) => cible.classList.contains(cls)) ||
@@ -247,11 +253,17 @@ const scrollModule = (() => {
   // Écoute du clic sur les menus pour ouvrir/fermer les dropdowns
   menu.addEventListener("click", (e) => {
     const spanChoisi = e.target;
-     const ignoreClasses = [ "envIcon","bloc_img","a1","sousMenuAnn"];
-     if (ignoreClasses.some((cls) => spanChoisi.classList.contains(cls))) {
-       fermerBlockLinks();
-       return;
-     }
+    const ignoreClasses = [
+      "sousMenuBlog",
+      "sousMenuAnn",
+      "bloc_img",
+      "envIcon",
+      "a1",
+    ];
+    if (ignoreClasses.some((cls) => spanChoisi.classList.contains(cls))) {
+      fermerBlockLinks();
+      return;
+    }
     if (!spanChoisi.classList.contains("titMenu")) return;
     const activeMenu = menu.querySelector(".activeMenu");
     const ec_videos = ecVideos.innerHTML;
