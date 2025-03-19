@@ -1,3 +1,4 @@
+
 import { mob } from "./xfonctions/nav_os.js";
 import { fetchJSON } from "./xfonctions/api.js";
 import { createElement } from "./xfonctions/dom.js";
@@ -10,6 +11,8 @@ const menu = document.querySelector(".menu");
 const barBox = menu.querySelector(".barBox");
 const titre = menu.querySelector(".titre");
 const ecVideos = document.querySelector(".ecranVideos");
+const ignoreTags = ["LABEL", "INPUT"];
+let isBlockLinks = false;
 
 // Module pour la gestion du scroll
 const scrollModule = (() => {
@@ -54,10 +57,9 @@ const scrollModule = (() => {
   vidClass.aff_ans(document.querySelector(".years"));
 
   const vidMenu = new MenuVid(list_menus);
-  vidMenu.affBoxes(document.querySelector(".menu_fam"));
-  vidMenu.affBoxes(document.querySelector(".menu_voy"));
-  vidMenu.affBoxes(document.querySelector(".menu_pll"));
-
+  ["menu_fam", "menu_voy", "menu_pll"].forEach((selector) =>
+    vidMenu.affBoxes(document.querySelector(`.${selector}`))
+  );
   // --------- Fonctions utilitaires ---------
 
   /**
@@ -176,21 +178,23 @@ const scrollModule = (() => {
   const aff_Videos = (e) => {
     const activeMenu = menu.querySelector(".activeMenu");
     if (!activeMenu) return;
+    const spanChoisi = e.target;
     const dia_vid = `${typeVid(activeMenu.parentElement)}${
-      e.target.dataset.select
+      spanChoisi.dataset.select
     }`;
-    const year = e.target.dataset.year ? `${e.target.dataset.year}` : "";
+    const year = spanChoisi.dataset.year ? `${spanChoisi.dataset.year}` : "";
     const tempId = mob().mob
       ? "ytFrame"
       : !dia_vid.search(".pll")
       ? "ytFrame"
       : "ytThumb";
-    const aff = afficheLiens(dia_vid, year, tempId);
-    if (e.target.tagName !== "LABEL" && e.target.tagName !== "INPUT") {
+    if (!ignoreTags.includes(spanChoisi.tagName)) {
       activeMenu.parentElement.querySelector(".bloc-links").style.height =
         "0px";
-    }
-    titre.textContent = aff ? e.target.textContent : "";
+    } //
+    const aff = afficheLiens(dia_vid, year, tempId);
+    titre.textContent = aff ? spanChoisi.textContent : "";
+    isBlockLinks = false;
   };
 
   /**
@@ -205,34 +209,37 @@ const scrollModule = (() => {
     window.location.href = "./photos.html";
   };
 
+  const fermerBlockLinks = () => {
+    menu.querySelectorAll(".titMenu").forEach((sp) => {
+      const blocLinks = sp.parentElement.querySelector(".bloc-links");
+      blocLinks.style.height = "0px";
+      blocLinks.removeEventListener("click", aff_Videos);
+      blocLinks.removeEventListener("click", trans);
+      sp.classList.remove("activeMenu");
+    });
+    isBlockLinks = false;
+    ecVideos.innerHTML = "";
+    barBox.innerHTML = "";
+    titre.textContent = "";
+    affEffRetour("-");
+  };
   /**
    * Ferme le menu dropdown si le clic se fait hors du menu principal.
    * @param {Event} e
    */
-  const dropclose = (e) => {
-    const activeMenu = menu.querySelector(".activeMenu");
+  const dropClose = (e) => {
+    if (!isBlockLinks) return; // si pas de bloc ouvert
+    const cible = e.target;
+    const ignoreClasses = ["imgRetour","titMenu" ,"vidImg", "lect", "ti_blog","menu"];
+    // Si clic sur un élément ignoré, on ne ferme pas le bloc
     if (
-      (e.target === ecVideos || e.target === menu) &&
-      !ecVideos.innerHTML &&
-      activeMenu
-    ) {
-      activeMenu.parentElement.querySelector(".bloc-links").style.height =
-        "0px";
-      activeMenu.classList.remove("activeMenu");
-    }
-  };
-
-  /**
-   * Active le menu sélectionné en mettant à jour les classes.
-   * @param {HTMLElement} spanChoisi
-   */
-  const activerMenu = (spanChoisi) => {
-    menu.querySelectorAll(".titMenu").forEach((sp) => {
-      sp.classList.add("nonActif");
-      sp.classList.remove("activeMenu");
-    });
-    spanChoisi.classList.add("activeMenu");
-    spanChoisi.classList.remove("nonActif");
+      ignoreClasses.some((cls) => cible.classList.contains(cls)) ||
+      cible.dataset.select === ".ann" ||
+      "num" in cible.dataset ||
+      ignoreTags.includes(cible.tagName)
+    )
+      return;
+    fermerBlockLinks();
   };
 
   // ----------- Gestion des événements -----------
@@ -240,27 +247,24 @@ const scrollModule = (() => {
   // Écoute du clic sur les menus pour ouvrir/fermer les dropdowns
   menu.addEventListener("click", (e) => {
     const spanChoisi = e.target;
-    if (spanChoisi.classList.contains("titMenu")) {
-      activerMenu(spanChoisi);
-      menu.querySelectorAll(".nonActif").forEach((sp) => {
-        sp.parentElement.querySelector(".bloc-links").style.height = "0px";
-      });
-      const dropCour = spanChoisi.parentElement.querySelector(".bloc-links");
-      if (!dropCour.style.height || dropCour.style.height === "0px") {
-        dropCour.style.height = dropCour.scrollHeight + "px";
-        // Réinitialisation de l'affichage
-        ecVideos.innerHTML = "";
-        barBox.innerHTML = "";
-        titre.textContent = "";
-        affEffRetour("-");
-        dropCour.addEventListener("click", aff_Videos);
-        ecVideos.removeEventListener("click", click_img);
-        dropCour.addEventListener("click", trans);
-      } else {
-        dropCour.style.height = "0px";
-        spanChoisi.classList.remove("activeMenu");
-      }
-    }
+     const ignoreClasses = [ "envIcon","bloc_img","a1","sousMenuAnn"];
+     if (ignoreClasses.some((cls) => spanChoisi.classList.contains(cls))) {
+       fermerBlockLinks();
+       return;
+     }
+    if (!spanChoisi.classList.contains("titMenu")) return;
+    const activeMenu = menu.querySelector(".activeMenu");
+    const ec_videos = ecVideos.innerHTML;
+    fermerBlockLinks();
+    if (activeMenu === spanChoisi && !ec_videos) return; // si pas de videos et même menu
+    const dropCour = spanChoisi.parentElement.querySelector(".bloc-links");
+    dropCour.style.height = dropCour.scrollHeight + "px";
+    isBlockLinks = true;
+    spanChoisi.classList.add("activeMenu");
+    ecVideos.removeEventListener("click", click_img);
+
+    dropCour.addEventListener("click", aff_Videos, { once: false });
+    dropCour.addEventListener("click", trans, { once: true });
   });
-  document.querySelector("body").addEventListener("click", dropclose);
+  document.querySelector("body").addEventListener("click", dropClose);
 })();

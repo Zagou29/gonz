@@ -290,7 +290,7 @@ body {
   visibility: hidden;
 }
 
-#imgRetour {
+.imgRetour {
   height: calc(var(--font-size-title) * 1.2);
   aspect-ratio: 1 / 1;
   border-radius: 50%;
