@@ -4,21 +4,39 @@ import { createElement } from "./xfonctions/dom.js";
 import { Menubox } from "./xfonctions/menubox.js";
 import { MenuVid } from "./xfonctions/menuVid.js";
 import { Affvid } from "./xfonctions/affvid.js";
-
+// Constantes globales pour améliorer la lisibilité
+let isBlockLinks = false;
+const IGNORE_TAGS = ["LABEL", "INPUT"];
+const DROP_IGNORE_CLASSES = [
+  "imgRetour",
+  "titMenu",
+  "ti_blog",
+  "vidImg",
+  "menu",
+  "lect",
+];
+const MENU_IGNORE_CLASSES = [
+  "sousMenuBlog",
+  "sousMenuAnn",
+  "bloc_img",
+  "envIcon",
+  "a1",
+];
 // Cache des éléments DOM principaux
 const menu = document.querySelector(".menu");
 const barBox = menu.querySelector(".barBox");
 const titre = menu.querySelector(".titre");
 const ecVideos = document.querySelector(".ecranVideos");
-const ignoreTags = ["LABEL", "INPUT"];
-let isBlockLinks = false;
 
 // Module pour la gestion du scroll
 const scrollModule = (() => {
-  // Fonction fléchée pour remonter en douceur vers le haut
   const scrollToTop = () => ecVideos.scrollTo({ top: 0, behavior: "smooth" });
   return { scrollToTop };
 })();
+// Fonction utilitaire pour régler la hauteur d'un bloc
+const setHeight = (element, height) => {
+  element.style.height = height;
+};
 
 (async function init() {
   // Charger les menuboxes
@@ -42,7 +60,6 @@ const scrollModule = (() => {
   const vidList = await fetchJSON("./xjson/indexVid.json");
   const menuList = await fetchJSON("./xjson/menusVideos.json");
   vidList.sort((a, b) => (a.annee > b.annee ? 1 : a.annee < b.annee ? -1 : 0));
-
   // Raccorder les vidéos aux menuboxes par les classes (sans le type vidéo)
   const list_menus = vidList.map((item) => {
     const { clas, text } = item;
@@ -50,7 +67,6 @@ const scrollModule = (() => {
     const { groupe, src, detail } = lien;
     return { clas, groupe, text, src, detail };
   });
-
   /* Initialisation des classes d'affichage */
   const vidClass = new Affvid(vidList);
   vidClass.aff_ans(document.querySelector(".years"));
@@ -181,15 +197,14 @@ const scrollModule = (() => {
     //diavid = .voy.amer.usa ou .vid.ann ou .dia.ann ou .ann
     const dia_vid = `${typeVid(activeMenu.parentElement)}${
       spanChoisi.dataset.select
-      }`;
-      const year = spanChoisi.dataset.year ? `${spanChoisi.dataset.year}` : "";
+    }`;
+    const year = spanChoisi.dataset.year ? `${spanChoisi.dataset.year}` : "";
     const tempId =
       mob().mob || dia_vid.includes(".pll") ? "ytFrame" : "ytThumb";
     // ferme les menus, sauf quand on choisi Vieos ou Diapos and Années
-    if (!ignoreTags.includes(spanChoisi.tagName)) {
-      activeMenu.parentElement.querySelector(".bloc-links").style.height =
-        "0px";
-    } //
+    if (!IGNORE_TAGS.includes(spanChoisi.tagName)) {
+      setHeight(activeMenu.parentElement.querySelector(".bloc-links"), "0px");
+    }
     const aff = afficheLiens(dia_vid, year, tempId);
     titre.textContent = aff ? spanChoisi.textContent : "";
     isBlockLinks = false;
@@ -210,10 +225,12 @@ const scrollModule = (() => {
   const fermerBlockLinks = () => {
     menu.querySelectorAll(".titMenu").forEach((sp) => {
       const blocLinks = sp.parentElement.querySelector(".bloc-links");
-      blocLinks.style.height = "0px";
-      blocLinks.removeEventListener("click", aff_Videos);
-      blocLinks.removeEventListener("click", trans);
-      sp.classList.remove("activeMenu");
+      if (blocLinks) {
+        setHeight(blocLinks, "0px");
+        blocLinks.removeEventListener("click", aff_Videos);
+        blocLinks.removeEventListener("click", trans);
+        sp.classList.remove("activeMenu");
+      }
     });
     isBlockLinks = false;
     ecVideos.innerHTML = "";
@@ -228,20 +245,12 @@ const scrollModule = (() => {
   const dropClose = (e) => {
     if (!isBlockLinks) return; // si pas de bloc ouvert
     const cible = e.target;
-    const ignoreClasses = [
-      "imgRetour",
-      "titMenu",
-      "ti_blog",
-      "vidImg",
-      "menu",
-      "lect",
-    ];
     // Si clic sur un élément ignoré, on ne ferme pas le bloc
     if (
-      ignoreClasses.some((cls) => cible.classList.contains(cls)) ||
+      DROP_IGNORE_CLASSES.some((cls) => cible.classList.contains(cls)) ||
       cible.dataset.select === ".ann" ||
       "num" in cible.dataset ||
-      ignoreTags.includes(cible.tagName)
+      IGNORE_TAGS.includes(cible.tagName)
     )
       return;
     fermerBlockLinks();
@@ -252,14 +261,7 @@ const scrollModule = (() => {
   // Écoute du clic sur les menus pour ouvrir/fermer les dropdowns
   menu.addEventListener("click", (e) => {
     const spanChoisi = e.target;
-    const ignoreClasses = [
-      "sousMenuBlog",
-      "sousMenuAnn",
-      "bloc_img",
-      "envIcon",
-      "a1",
-    ];
-    if (ignoreClasses.some((cls) => spanChoisi.classList.contains(cls))) {
+    if (MENU_IGNORE_CLASSES.some((cls) => spanChoisi.classList.contains(cls))) {
       fermerBlockLinks();
       return;
     }
@@ -269,7 +271,8 @@ const scrollModule = (() => {
     fermerBlockLinks();
     if (activeMenu === spanChoisi && !ec_videos) return; // si pas de videos et même menu
     const dropCour = spanChoisi.parentElement.querySelector(".bloc-links");
-    dropCour.style.height = dropCour.scrollHeight + "px";
+    setHeight(dropCour, dropCour.scrollHeight + "px");
+    // dropCour.style.height = dropCour.scrollHeight + "px";
     isBlockLinks = true;
     spanChoisi.classList.add("activeMenu");
     ecVideos.removeEventListener("click", click_img);
