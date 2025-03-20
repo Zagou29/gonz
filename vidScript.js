@@ -178,15 +178,14 @@ const scrollModule = (() => {
     const activeMenu = menu.querySelector(".activeMenu");
     if (!activeMenu) return;
     const spanChoisi = e.target;
+    //diavid = .voy.amer.usa ou .vid.ann ou .dia.ann ou .ann
     const dia_vid = `${typeVid(activeMenu.parentElement)}${
       spanChoisi.dataset.select
-    }`;
-    const year = spanChoisi.dataset.year ? `${spanChoisi.dataset.year}` : "";
-    const tempId = mob().mob
-      ? "ytFrame"
-      : !dia_vid.search(".pll")
-      ? "ytFrame"
-      : "ytThumb";
+      }`;
+      const year = spanChoisi.dataset.year ? `${spanChoisi.dataset.year}` : "";
+    const tempId =
+      mob().mob || dia_vid.includes(".pll") ? "ytFrame" : "ytThumb";
+    // ferme les menus, sauf quand on choisi Vieos ou Diapos and Années
     if (!ignoreTags.includes(spanChoisi.tagName)) {
       activeMenu.parentElement.querySelector(".bloc-links").style.height =
         "0px";
