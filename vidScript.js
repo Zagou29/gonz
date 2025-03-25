@@ -227,8 +227,9 @@ const setHeight = (element, height) => {
       const blocLinks = sp.parentElement.querySelector(".bloc-links");
       if (blocLinks) {
         setHeight(blocLinks, "0px");
-        blocLinks.removeEventListener("click", aff_Videos);
-        blocLinks.removeEventListener("click", trans);
+        blocLinks.querySelector(".ePhotos")
+          ? blocLinks.removeEventListener("click", trans, { once: true })
+          : blocLinks.removeEventListener("click", aff_Videos);
         sp.classList.remove("activeMenu");
       }
     });
@@ -267,18 +268,17 @@ const setHeight = (element, height) => {
     }
     if (!spanChoisi.classList.contains("titMenu")) return;
     const activeMenu = menu.querySelector(".activeMenu");
-    const ec_videos = ecVideos.innerHTML;
     fermerBlockLinks();
-    if (activeMenu === spanChoisi && !ec_videos) return; // si pas de videos et même menu
+    if (activeMenu === spanChoisi && !ecVideos.innerHTML) return; // si pas de videos et même menu
     const dropCour = spanChoisi.parentElement.querySelector(".bloc-links");
     setHeight(dropCour, dropCour.scrollHeight + "px");
     // dropCour.style.height = dropCour.scrollHeight + "px";
     isBlockLinks = true;
     spanChoisi.classList.add("activeMenu");
     ecVideos.removeEventListener("click", click_img);
-
-    dropCour.addEventListener("click", aff_Videos, { once: false });
-    dropCour.addEventListener("click", trans, { once: true });
+    dropCour.querySelector(".ePhotos")
+      ? dropCour.addEventListener("click", trans, { once: true })
+      : dropCour.addEventListener("click", aff_Videos);
   });
   document.querySelector("body").addEventListener("click", dropClose);
 })();
