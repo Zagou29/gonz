@@ -201,6 +201,13 @@ const dep_hor = (box, sens) => {
     audio.currentTime = 0;
   }
 };
+/* positionner l'image à la position récupérée par getBoudingClient Rect().top*/
+const posit_image = (pos) => {
+  window.scrollTo({
+    top: pos,
+    behavior: "instant",
+  });
+};
 const dep_vert = (sens) => {
   window.scrollBy({
     top: list_img[0].getBoundingClientRect().height * sens,
@@ -245,8 +252,11 @@ const av_ar = (image, fl) => {
           break;
         }
         case 1: {
+          // inverser l'aspect, puis capturer la situation verticale des images
           asp = asp === "show" ? "show show_mod" : "show";
+          const pos_img = -boiteImg.getBoundingClientRect().top;
           localStorage.setItem("asp_images", asp);
+          localStorage.setItem("pos_img", pos_img);
           window.location.href = "./photos.html";
           break;
         }
@@ -272,6 +282,7 @@ const av_ar = (image, fl) => {
         /** inverser le sens des images */
         case 5: {
           localStorage.setItem("sens_dates", sens_date === "1" ? "-1" : "1");
+          localStorage.setItem("pos_img", 0);
           window.location.href = "./photos.html";
           break;
         }
@@ -424,6 +435,7 @@ let yimg = 0; /* position depart des images */
 let audio = new Audio(`./audio/audio_${rnd(11)}.mp3`); /* audio */
 let nId; /* initialiser le setInterval pour deplac horiz du diaporama */
 let k = 1; /* k images deroulées par le diaporama */
+let pos_img = localStorage.getItem("pos_img");
 diap.querySelector(".mute").classList.add("eff_fl");
 diap.querySelector(".son").classList.remove("eff_fl");
 aff_an.textContent = list_img[0].dataset.an;
@@ -464,12 +476,14 @@ menu.addEventListener("click", (e) => {
     hamb.classList.remove("open");
     return;
   }
+  // choisir le idmenu et positionner à l'image 0
   localStorage.setItem("data", e.target.dataset.idmenu);
+  localStorage.setItem("pos_img", 0);
   window.location.href = "./photos.html";
 });
+posit_image(pos_img);
 
 /* cliquer sur les images pour les zoomer en horizontal et vice versa */
-
 boiteImg.addEventListener("click", zoom);
 /* ecouter les fleches clavier  de direction et  Retour , F et Space */
 const touches = {
