@@ -225,13 +225,11 @@ const setHeight = (element, height) => {
   const fermerBlockLinks = () => {
     menu.querySelectorAll(".titMenu").forEach((sp) => {
       const blocLinks = sp.parentElement.querySelector(".bloc-links");
-      if (blocLinks) {
-        setHeight(blocLinks, "0px");
-        blocLinks.querySelector(".ePhotos")
-          ? blocLinks.removeEventListener("click", trans, { once: true })
-          : blocLinks.removeEventListener("click", aff_Videos);
-        sp.classList.remove("activeMenu");
-      }
+      setHeight(blocLinks, "0px");
+      blocLinks.querySelector(".ePhotos")
+        ? blocLinks.removeEventListener("click", trans, { once: true })
+        : blocLinks.removeEventListener("click", aff_Videos);
+      sp.classList.remove("activeMenu");
     });
     isBlockLinks = false;
     ecVideos.innerHTML = "";
@@ -276,9 +274,11 @@ const setHeight = (element, height) => {
     isBlockLinks = true;
     spanChoisi.classList.add("activeMenu");
     ecVideos.removeEventListener("click", click_img);
-    dropCour.querySelector(".ePhotos")
-      ? dropCour.addEventListener("click", trans, { once: true })
-      : dropCour.addEventListener("click", aff_Videos);
+    if (dropCour.querySelector(".ePhotos")) {
+      dropCour.addEventListener("click", trans, { once: true });
+    } else if (!dropCour.querySelector(".eBlogs")) {
+      dropCour.addEventListener("click", aff_Videos);
+    }
   });
   document.querySelector("body").addEventListener("click", dropClose);
 })();
