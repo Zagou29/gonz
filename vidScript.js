@@ -173,16 +173,18 @@ const setHeight = (element, height) => {
     if (tempId === "ytThumb") {
       ecVideos.addEventListener("click", click_img);
     }
-    vidClass.affBar(barBox);
-    barBox.addEventListener("click", ecoute_barre);
-
+    //si une seule video, on ne fait rien
     const nbVideos = vidClass.retourVideo.length;
-    if (ecVideos.innerHTML && nbVideos > 1) affEffRetour("+");
-
-    const lect = ecVideos.querySelectorAll(".lect");
-    const options = { root: ecVideos, rootMargin: "0px", threshold: 1 };
-    const observer = new IntersectionObserver(ferme_videos, options);
-    lect.forEach((lecteur) => observer.observe(lecteur));
+    if (ecVideos.innerHTML && nbVideos > 1) {
+      vidClass.affBar(barBox);
+      barBox.addEventListener("click", ecoute_barre);
+      affEffRetour("+");
+      //ecouter les videos pour les arreter en dehors de l'ecran
+      const lect = ecVideos.querySelectorAll(".lect");
+      const options = { root: ecVideos, rootMargin: "0px", threshold: 1 };
+      const observer = new IntersectionObserver(ferme_videos, options);
+      lect.forEach((lecteur) => observer.observe(lecteur));
+    }
     return nbVideos;
   };
 
@@ -205,8 +207,8 @@ const setHeight = (element, height) => {
     if (!IGNORE_TAGS.includes(spanChoisi.tagName)) {
       setHeight(activeMenu.parentElement.querySelector(".bloc-links"), "0px");
     }
-    const aff = afficheLiens(dia_vid, year, tempId);
-    titre.textContent = aff ? spanChoisi.textContent : "";
+    const nbVideos = afficheLiens(dia_vid, year, tempId);
+    titre.textContent = nbVideos ? spanChoisi.textContent : "";
     isBlockLinks = false;
   };
 
@@ -229,6 +231,7 @@ const setHeight = (element, height) => {
       blocLinks.querySelector(".ePhotos")
         ? blocLinks.removeEventListener("click", trans, { once: true })
         : blocLinks.removeEventListener("click", aff_Videos);
+      barBox.removeEventListener("click", ecoute_barre);
       sp.classList.remove("activeMenu");
     });
     isBlockLinks = false;
