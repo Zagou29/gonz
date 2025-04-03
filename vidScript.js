@@ -270,7 +270,7 @@ const setHeight = (element, height) => {
     if (!spanChoisi.classList.contains("titMenu")) return;
     const activeMenu = menu.querySelector(".activeMenu");
     fermerBlockLinks();
-    if (activeMenu === spanChoisi && !ecVideos.innerHTML) return; // si pas de videos et même menu
+   //if (activeMenu === spanChoisi && !ecVideos.innerHTML) return; // si pas de videos et même menu
     const dropCour = spanChoisi.parentElement.querySelector(".bloc-links");
     setHeight(dropCour, dropCour.scrollHeight + "px");
     // dropCour.style.height = dropCour.scrollHeight + "px";
