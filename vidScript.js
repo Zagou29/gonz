@@ -26,6 +26,7 @@ const MENU_IGNORE_CLASSES = [
 const menu = document.querySelector(".menu");
 const barBox = menu.querySelector(".barBox");
 const titre = menu.querySelector(".titre");
+const retour = menu.querySelector(".retour");
 const ecVideos = document.querySelector(".ecranVideos");
 
 // Module pour la gestion du scroll
@@ -110,7 +111,6 @@ const setHeight = (element, height) => {
    * @param {string} sens '+' pour afficher, '-' pour masquer
    */
   const affEffRetour = (sens) => {
-    const retour = menu.querySelector(".retour");
     if (sens === "+") {
       retour.classList.add("show");
       retour.addEventListener("click", scrollModule.scrollToTop);
@@ -128,6 +128,7 @@ const setHeight = (element, height) => {
     entries.forEach((entry) => {
       const dataNum = entry.target.dataset.num;
       const barItem = barBox.querySelector(`[data-num="${dataNum}"]`);
+      if (!barItem) return;
       if (!entry.isIntersecting && entry.intersectionRatio) {
         barItem?.classList.remove("peint");
         const videoImg = entry.target.querySelector(".vidImg");
