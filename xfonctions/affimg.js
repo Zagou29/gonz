@@ -20,7 +20,7 @@ export class Affimg {
    * @param {string} asp - Aspect des images ('show' ou 'show_mod')
    */
   constructor(listimg, opt, asp) {
-    this.#listimg = listimg;
+    this.#listimg = JSON.parse(JSON.stringify(listimg));
     this.#opt = opt;
     this.#asp = asp;
 
@@ -131,6 +131,7 @@ export class Affimg {
   creeimages(ancre_imgs) {
     this.#ancre_imgs = ancre_imgs;
     this.#ancre_imgs.append(this.#elt_images);
+    return this
   }
 
   /**
@@ -140,6 +141,7 @@ export class Affimg {
   creedates(ancres_dates) {
     this.#ancres_dates = ancres_dates;
     this.#ancres_dates.append(this.#elt_dates);
+    return this;
   }
 }
 
