@@ -80,12 +80,12 @@ const switchArrowDirection = () => {
   const updateArrow = document.querySelector(".update");
   const historyArrow = document.querySelector(".history");
 
-  if (sens_date === "1") {
+  if (sens_date === "-1") {
     updateArrow.classList.remove("eff_fl");
     historyArrow.classList.add("eff_fl");
   } else {
-    updateArrow.classList.remove("eff_fl");
-    historyArrow.classList.add("eff_fl");
+    updateArrow.classList.add("eff_fl");
+    historyArrow.classList.remove("eff_fl");
   }
 };
 
