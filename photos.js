@@ -25,7 +25,7 @@ let nId; /* initialiser setInterval ->deplac hor du diapor */
 let k = 1; /* k images deroulées par le diaporama */
 let pos_img = localStorage.getItem("pos_img");
 // choisir le son des diaporamas
-let audio 
+let audio;
 
 /* Selecteurs DOM */
 const domElements = {
@@ -206,6 +206,9 @@ const diaporama = (image, diap_ic) => {
           if (nId === null) break;
           play_pause(0);
           break;
+        case 3:
+          delai = delaiChange(delai, +1);
+          break;
       }
     });
   });
@@ -259,7 +262,7 @@ const av_ar = (image, fl) => {
 /* augmenter, diminuer le delai */
 const delaiChange = (del, sens) => {
   if (!zoome) return del;
-  del = del + PAS_DELAI * sens;
+  del === DELAI_MAX ? (del = DELAI_MIN) : (del = del + PAS_DELAI * sens);
   del = Math.max(DELAI_MIN, del);
   del = Math.min(DELAI_MAX, del);
   domElements.duree.textContent = `${del / 1000} sec`;
@@ -414,7 +417,7 @@ const handleScroll = () => {
 
   lastscroll = currentscroll;
 };
-const debouncedHandleScroll = debounce(handleScroll, 8);//delai à vérifier
+const debouncedHandleScroll = debounce(handleScroll, 8); //delai à vérifier
 
 /* ecouter le menu principal de gauche ------------------------------- */
 const handleMenuClick = (e) => {
@@ -433,12 +436,12 @@ const handleMenuClick = (e) => {
 /* Initialisation ----------------------------*/
 (async () => {
   switchArrowDirection();
- initAudio();
+  initAudio();
   try {
     /** creation des lien_menu et du tableau des ph/spText */
     const menuBoxes = await fetchJSON("./xjson/box.json");
     const boxes = new Menubox(menuBoxes.filter((obj) => obj.menu === "ph"));
-    boxes.apLienMenu(domElements.menu, "-1");//toujours sens chronologique
+    boxes.apLienMenu(domElements.menu, "-1"); //toujours sens chronologique
     tab_titre = boxes.returnBoxes;
 
     /** va charger les objets img */
