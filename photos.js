@@ -2,7 +2,7 @@ import { Affimg } from "./xfonctions/affimg.js";
 import { fetchJSON } from "./xfonctions/api.js";
 import { createElement } from "./xfonctions/dom.js";
 import { Menubox } from "./xfonctions/menubox.js";
-import { go_fullScreen, stop_fullScreen } from "./xfonctions/fullScreen.js";
+import { stop_fullScreen, toggle_fullScreen } from "./xfonctions/fullScreen.js";
 import { navig, ordi_OS } from "./xfonctions/nav_os.js";
 
 /* Constantes pour les valeurs utilisées dans plusieurs endroits */
@@ -304,7 +304,7 @@ const drGa = (
         break;
       /* Toggle Fullscreen */
       case fs:
-        go_fullScreen(document.querySelector(".envel_mod"));
+        toggle_fullScreen(document.querySelector(".envel_mod"));
         break;
       /* barre d'espace => Diaporama */
 
