@@ -68,30 +68,6 @@ const fsAPI = (() => {
 })();
 
 /**
- * Active le mode plein écran pour un élément
- * @param {HTMLElement} elem - Élément à mettre en plein écran
- * @returns {Promise} - Promesse résolue quand le plein écran est activé
- */
-const go_fullScreen = (elem) => {
-  if (!elem) {
-    return Promise.reject(new Error("Aucun élément fourni"));
-  }
-
-  if (!fsAPI.isSupported()) {
-    return Promise.reject(new Error("API plein écran non supportée"));
-  }
-
-  if (fsAPI.element()) {
-    return stop_fullScreen();
-  }
-
-  return fsAPI.request(elem).catch((error) => {
-    console.error("Erreur lors du passage en plein écran:", error);
-    throw error;
-  });
-};
-
-/**
  * Quitte le mode plein écran
  * @returns {Promise} - Promesse résolue quand le plein écran est désactivé
  */
@@ -116,47 +92,14 @@ const toggle_fullScreen = (elem) => {
     return Promise.reject(new Error("Aucun élément fourni"));
   }
 
-  return fsAPI.element() ? stop_fullScreen() : go_fullScreen(elem);
-};
-
-/**
- * Vérifie si le mode plein écran est actuellement actif
- * @returns {Boolean} true si en mode plein écran
- */
-const is_fullScreen = () => Boolean(fsAPI.element());
-
-/**
- * Vérifie si l'API plein écran est supportée par le navigateur
- * @returns {Boolean} true si l'API est supportée
- */
-const is_fullScreenSupported = () => fsAPI.isSupported();
-
-/**
- * Ajoute un écouteur pour les changements d'état plein écran
- * @param {Function} callback - Fonction à appeler lors du changement
- */
-const on_fullScreenChange = (callback) => {
-  if (fsAPI.changeEvent && typeof callback === "function") {
-    document.addEventListener(fsAPI.changeEvent, callback);
+  if (fsAPI.element()) {
+    return stop_fullScreen();
+  } else {
+    return fsAPI.request(elem).catch((error) => {
+      console.error("Erreur lors du passage en plein écran:", error);
+      throw error;
+    });
   }
 };
 
-/**
- * Supprime un écouteur pour les changements d'état plein écran
- * @param {Function} callback - Fonction à supprimer
- */
-const off_fullScreenChange = (callback) => {
-  if (fsAPI.changeEvent && typeof callback === "function") {
-    document.removeEventListener(fsAPI.changeEvent, callback);
-  }
-};
-
-export {
-  go_fullScreen,
-  stop_fullScreen,
-  toggle_fullScreen,
-  is_fullScreen,
-  is_fullScreenSupported,
-  on_fullScreenChange,
-  off_fullScreenChange,
-};
+export { toggle_fullScreen, stop_fullScreen };
