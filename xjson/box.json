@@ -5,22 +5,23 @@
     "href": "",
     "src": "./box_img/pelemele-2.webp",
     "spText": "Années 1900/2000",
-    "divText": "Toutes les photos de la famille de 1900 à ce jour"
-  },{
+    "divText": "Toutes les photos de la famille de 1900 à ce jour."
+  },
+  {
     "menu": "ph",
     "ph": "carious",
     "href": "",
     "src": "./box_img/carious.webp",
     "spText": "Les Carious",
-    "divText": "Les Carious de 1900 à 2008"
+    "divText": "Les Carious de 1900 à 2008."
   },
   {
     "menu": "ph",
     "ph": "a1418",
     "href": "",
     "src": "./box_img/avions.webp",
-    "spText": "Guerre 1418",
-    "divText": "Grand Père était dans l'aviation durant la guerre de 14/18. \n   Il était photographe aerien... "
+    "spText": "Guerre 14-18",
+    "divText": "Grand-Père était dans l'aviation durant la guerre de 14/18 comme photographe aérien..."
   },
   {
     "menu": "ph",
@@ -28,7 +29,7 @@
     "href": "",
     "src": "./box_img/marys.webp",
     "spText": "Les Mary/Achard",
-    "divText": "Les Mary à Nozay . C'était la famille de Maman. \n                  Deux photos de l'usine de notre grand père Achard au Fuilet"
+    "divText": "Les Mary à Nozay. C'était la famille de Maman. Deux photos de l'usine de notre grand-père Achard au Fuilet."
   },
   {
     "menu": "ph",
@@ -36,7 +37,7 @@
     "href": "",
     "src": "./box_img/gonzague2.webp",
     "spText": "Gonzague II",
-    "divText": "Gonzague, enseigne de vaisseau vers 1942. il a passé un an\n                  en écosse avant d'embarquer à St Pierre et Miquelon"
+    "divText": "Gonzague, enseigne de vaisseau vers 1942. Il a passé un an en Écosse avant d'embarquer à St Pierre et Miquelon."
   },
   {
     "menu": "ph",
@@ -44,7 +45,7 @@
     "href": "",
     "src": "./box_img/cousinsus.webp",
     "spText": "Américains",
-    "divText": "Les photos de nos cousins américains, depuis la venue de\n                  Dickie à Lascamps en 1944...jusqu'à 1971..."
+    "divText": "Les photos de nos cousins américains, depuis la venue de Dickie à Lascamps en 1944 jusqu'à 1971..."
   },
   {
     "menu": "ph",
@@ -108,7 +109,7 @@
     "href": "https://zagou29.github.io/",
     "src": "./box_img/annees90.webp",
     "spText": "Zag Vidéos",
-    "divText": "Mon premier site Web, avec des playlists videos"
+    "divText": "Mon premier site Web, avec des playlists vidéos."
   },
   {
     "menu": "bl",
@@ -124,7 +125,7 @@
     "href": "https://marzagou.blogspot.com/",
     "src": "./box_img/famille-23.webp",
     "spText": "Marzablog",
-    "divText": "les videos et diapos à partir de 2008 avec Gonzague et Margot"
+    "divText": "Les vidéos et diapos à partir de 2008 avec Gonzague et Margot."
   },
   {
     "menu": "bl",
@@ -140,7 +141,7 @@
     "href": "https://zagfrsd.blogspot.com/",
     "src": "./box_img/france.webp",
     "spText": "France",
-    "divText": "Toutes nos périgrinations à travers la france depuis 2009"
+    "divText": "Toutes nos périgrinations à travers la France depuis 2009."
   },
   {
     "menu": "bl",

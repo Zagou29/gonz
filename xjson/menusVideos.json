@@ -2,7 +2,7 @@
     {
         "clas": ".fam.1749.ava",
         "menu": "Famille",
-        "groupe": "avant",
+        "groupe": "Avant-guerre",
         "src": "./box_img/grandpere-1917.webp",
         "detail": "Années 1900 à 1949"
     },
@@ -60,7 +60,7 @@
         "menu": "Voyages",
         "groupe": "Amérique",
         "src": "./box_img/usa.webp",
-        "detail": "U.S.A"
+        "detail": "États-Unis"
     },
     {
         "clas": ".voy.amer.mex",
@@ -156,9 +156,9 @@
     {
         "clas": ".pll.voya.amer",
         "menu": "Playlist",
-        "groupe": "Amerique",
+        "groupe": "Amérique",
         "src": "./box_img/mexique-800.webp",
-        "detail": "Voyages Ameriques"
+        "detail": "Voyages Amériques"
     },
     {
         "clas": ".pll.voya.euro",
