@@ -129,7 +129,7 @@ const setHeight = (element, height) => {
       const dataNum = entry.target.dataset.num;
       const barItem = barBox.querySelector(`[data-num="${dataNum}"]`);
       if (!barItem) return;
-      if (!entry.isIntersecting && entry.intersectionRatio) {
+      if (!entry.isIntersecting) {
         barItem?.classList.remove("peint");
         const videoImg = entry.target.querySelector(".vidImg");
         // Arrêter la vidéo en désactivant l'autoplay
@@ -254,8 +254,8 @@ const setHeight = (element, height) => {
       cible.dataset.select === ".ann" ||
       "num" in cible.dataset ||
       IGNORE_TAGS.includes(cible.tagName)
-    )
-      return;
+    ){
+      return;}
     fermerBlockLinks();
   };
 
@@ -264,6 +264,7 @@ const setHeight = (element, height) => {
   // Écoute du clic sur les menus pour ouvrir/fermer les dropdowns
   menu.addEventListener("click", (e) => {
     const spanChoisi = e.target;
+    console.log(spanChoisi)
     if (MENU_IGNORE_CLASSES.some((cls) => spanChoisi.classList.contains(cls))) {
       fermerBlockLinks();
       return;
@@ -281,6 +282,7 @@ const setHeight = (element, height) => {
     if (dropCour.querySelector(".ePhotos")) {
       dropCour.addEventListener("click", trans, { once: true });
     } else if (!dropCour.querySelector(".eBlogs")) {
+      console.log("ici");
       dropCour.addEventListener("click", aff_Videos);
     }
   });
