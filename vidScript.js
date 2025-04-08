@@ -43,7 +43,8 @@ const state = {
 // --------- Fonctions utilitaires ---------
 // Gestion du scroll
 const scrollModule = (() => {
-  const scrollToTop = () => dom.ecVideos.scrollTo({ top: 0, behavior: "smooth" });
+  const scrollToTop = () =>
+    dom.ecVideos.scrollTo({ top: 0, behavior: "smooth" });
   return { scrollToTop };
 })();
 // Régler la hauteur d'un bloc
@@ -149,17 +150,14 @@ const afficheLiens = (param, year, tempId) => {
   }
   //si une seule video, on ne fait rien
   const nbVideos = state.vidClass.retourVideo.length;
+  //deconnecter l'observer
+  state.videoObserver.disconnect();
   if (dom.ecVideos.innerHTML && nbVideos > 1) {
     state.vidClass.affBar(dom.barBox);
     dom.barBox.addEventListener("click", ecoute_barre);
     affEffRetour("+");
-    //ecouter les videos pour les arreter en dehors de l'ecran
-    const options = { root: dom.ecVideos, rootMargin: "0px", threshold: 1 };
-    const videoObserver =
-      state.videoObserver || new IntersectionObserver(ferme_videos, options);
-    state.videoObserver = videoObserver;
     const lect = dom.ecVideos.querySelectorAll(".lect");
-    lect.forEach((lecteur) => videoObserver.observe(lecteur));
+    lect.forEach((lecteur) => state.videoObserver.observe(lecteur));
   }
   return nbVideos;
 };
@@ -172,17 +170,17 @@ const aff_Videos = (e) => {
   const activeMenu = dom.menu.querySelector(".activeMenu");
   if (!activeMenu) return;
   const spanChoisi = e.target;
+  const type = typeVid(activeMenu.parentElement);
   //diavid = .voy.amer.usa ou .vid.ann ou .dia.ann ou .ann
-  const dia_vid = `${typeVid(activeMenu.parentElement)}${
-    spanChoisi.dataset.select
-  }`;
+  const videoType = `${type}${spanChoisi.dataset.select}`;
   const year = spanChoisi.dataset.year ? `${spanChoisi.dataset.year}` : "";
-  const tempId = mob().mob || dia_vid.includes(".pll") ? "ytFrame" : "ytThumb";
+  const tempId =
+    mob().mob || videoType.includes(".pll") ? "ytFrame" : "ytThumb";
   // ferme les menus, sauf quand on choisi Vieos ou Diapos and Années
   if (!IGNORE_TAGS.includes(spanChoisi.tagName)) {
     setHeight(activeMenu.parentElement.querySelector(".bloc-links"), "0px");
   }
-  const nbVideos = afficheLiens(dia_vid, year, tempId);
+  const nbVideos = afficheLiens(videoType, year, tempId);
   dom.titre.textContent = nbVideos ? spanChoisi.textContent : "";
   state.isBlockLinks = false;
 };
@@ -295,7 +293,7 @@ const dropClose = (e) => {
     //fermer les menus si clic en dehors
     dom.body.addEventListener("click", dropClose);
     //créer un premier et unique observer pour les vidéos
-    const options = { 
+    const options = {
       root: dom.ecVideos,
       rootMargin: "0px",
       threshold: 1,

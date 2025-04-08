@@ -56,13 +56,47 @@ const initAudio = () => {
   audio = new Audio(`./audio/audio_${rnd(11)}.mp3`);
 };
 /* Debouncing function */
-function debounce(func, delay) {
+
+function debounce(func, wait, options = {}) {
   let timeout;
+  let lastArgs, lastThis;
+  let result;
+  let lastCallTime;
+
   return function (...args) {
-    const context = this;
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(context, args), delay);
+    const time = Date.now();
+    const isInvoking = shouldInvoke(time);
+
+    lastArgs = args;
+    lastThis = this;
+
+    if (isInvoking) {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+
+      if (options.leading) {
+        result = func.apply(lastThis, lastArgs);
+      } else {
+        timeout = setTimeout(() => {
+          result = func.apply(lastThis, lastArgs);
+        }, wait);
+      }
+    } else if (!timeout && options.trailing) {
+      timeout = setTimeout(() => {
+        result = func.apply(lastThis, lastArgs);
+      }, wait);
+    }
+
+    return result;
   };
+
+  function shouldInvoke(time) {
+    const timeSinceLastCall = time - (lastCallTime || 0);
+    lastCallTime = time;
+    return !lastCallTime || timeSinceLastCall >= wait;
+  }
 }
 /* cherche l'ID venant de index et affecte le titre à */
 /* insere un bouton pour safari + mobile dans photos.html */
@@ -407,17 +441,21 @@ const toggleSon = (sens) => (sens === 1 ? play_pause(0) : play_pause(1));
 let lastscroll = 0;
 const handleScroll = () => {
   const currentscroll = window.scrollY;
+  const cont = domElements.cont; 
   const isScrolling = Math.abs(lastscroll - currentscroll) > 1;
   const isAtExtreme =
     currentscroll === 0 ||
     currentscroll >=
       domElements.boiteImg.clientHeight - window.innerHeight - 10 ||
     lastscroll === 0;
-  domElements.cont.classList.toggle("show_box", isScrolling && !isAtExtreme);
+  cont.classList.toggle("show_box", isScrolling && !isAtExtreme);
 
   lastscroll = currentscroll;
 };
-const debouncedHandleScroll = debounce(handleScroll, 8); //delai à vérifier
+const debouncedHandleScroll = debounce(handleScroll, 10, {
+  leading:false,
+  trailing: true,
+}); //delai à vérifier
 
 /* ecouter le menu principal de gauche ------------------------------- */
 const handleMenuClick = (e) => {
@@ -432,7 +470,26 @@ const handleMenuClick = (e) => {
   localStorage.setItem("pos_img", 0);
   window.location.href = "./photos.html";
 };
-
+const initEventListeners = () => {
+  window.addEventListener("scroll", debouncedHandleScroll);
+  domElements.menu.addEventListener("click", handleMenuClick);
+  domElements.boiteImg.addEventListener("click", zoom);
+  domElements.boiteImg.addEventListener("scroll", showStop);
+  av_ar(domElements.boiteImg, domElements.ret_fl);
+  diaporama(domElements.boiteImg, domElements.diap);
+  drGa(domElements.boiteImg, {
+    gauche: "ArrowLeft",
+    droite: "ArrowRight",
+    haut: "ArrowUp",
+    bas: "ArrowDown",
+    retour: "Enter",
+    fs: "KeyF",
+    bar: "Space",
+    plus: "Slash",
+    moins: "Equal",
+    son: "KeyS",
+  });
+};
 /* Initialisation ----------------------------*/
 (async () => {
   switchArrowDirection();
@@ -480,7 +537,6 @@ const handleMenuClick = (e) => {
     document.body.prepend(alertEl);
     console.error(e);
   }
-
   domElements.mute.classList.add("eff_fl");
   domElements.son.classList.remove("eff_fl");
   domElements.aff_an.textContent = list_img[0].dataset.an;
@@ -500,33 +556,8 @@ const handleMenuClick = (e) => {
     .querySelector(`[data-idmenu="${val_trans}"`)
     .classList.add("active");
   posit_image(pos_img);
-
-  /* ecouter les fleches clavier  de direction et  Retour , F et Space */
-  const touches = {
-    gauche: "ArrowLeft",
-    droite: "ArrowRight",
-    haut: "ArrowUp",
-    bas: "ArrowDown",
-    retour: "Enter",
-    fs: "KeyF",
-    bar: "Space",
-    plus: "Slash",
-    moins: "Equal",
-    son: "KeyS",
-  };
-  drGa(domElements.boiteImg, touches);
-  /** ecouter le hamburger, retour, inverser(image), gauche, doite,(image_mod)*/
-  av_ar(domElements.boiteImg, domElements.ret_fl);
-  /* afficher les icones stop en debut ou fin de image_mod */
-  domElements.boiteImg.addEventListener("scroll", showStop);
-  /* ecouter les icones diapo et son */
-  diaporama(domElements.boiteImg, domElements.diap);
   domElements.duree.textContent = `${delai / 1000} sec`;
+  initEventListeners();
+  
 
-  /* cliquer sur les images pour les zoomer en horizontal et vice versa */
-  domElements.boiteImg.addEventListener("click", zoom);
-  /* ecouter le menu principal de gauche ------------------------------- */
-  domElements.menu.addEventListener("click", handleMenuClick);
-  /* affichage de la colonne timer au scroll------------------------ */
-  window.addEventListener("scroll", debouncedHandleScroll);
 })();
