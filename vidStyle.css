@@ -182,6 +182,7 @@ body {
   backdrop-filter: blur(2px);
   max-height: calc(100vh - var(--menu-height) - 15px);
   z-index: 2;
+  box-shadow: 5px 5px 5px #00000066;
 }
 
 .decal {
