@@ -441,7 +441,7 @@ const toggleSon = (sens) => (sens === 1 ? play_pause(0) : play_pause(1));
 let lastscroll = 0;
 const handleScroll = () => {
   const currentscroll = window.scrollY;
-  const cont = domElements.cont; 
+  const cont = domElements.cont;
   const isScrolling = Math.abs(lastscroll - currentscroll) > 1;
   const isAtExtreme =
     currentscroll === 0 ||
@@ -453,7 +453,7 @@ const handleScroll = () => {
   lastscroll = currentscroll;
 };
 const debouncedHandleScroll = debounce(handleScroll, 10, {
-  leading:false,
+  leading: false,
   trailing: true,
 }); //delai à vérifier
 
@@ -496,13 +496,14 @@ const initEventListeners = () => {
   initAudio();
   try {
     /** creation des lien_menu et du tableau des ph/spText */
-    const menuBoxes = await fetchJSON("./xjson/box.json");
+    const [menuBoxes, listImages] = await Promise.all([
+      fetchJSON("./xjson/box.json"),
+      fetchJSON("./xjson/photoImg.json"),
+    ]);
     const boxes = new Menubox(menuBoxes.filter((obj) => obj.menu === "ph"));
     boxes.apLienMenu(domElements.menu, "-1"); //toujours sens chronologique
     tab_titre = boxes.returnBoxes;
 
-    /** va charger les objets img */
-    const listImages = await fetchJSON("./xjson/photoImg.json");
     /** 1 recent vers vieux, -1 le contraire */
     inverser(listImages, Math.floor(sens_date));
 
@@ -558,6 +559,4 @@ const initEventListeners = () => {
   posit_image(pos_img);
   domElements.duree.textContent = `${delai / 1000} sec`;
   initEventListeners();
-  
-
 })();
