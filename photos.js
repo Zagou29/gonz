@@ -11,10 +11,12 @@ const DELAI_MAX = 4000; // en millisecondes
 const PAS_DELAI = 500; // en millisecondes
 
 /*  prendre en charge les boxes de VidCript et le sens des dates */
-const val_trans = localStorage.getItem("menu")|| "photo"; /* classList venant de Index */
+const val_trans =
+  localStorage.getItem("menu") || "photo"; /* classList venant de Index */
 const sens_date = localStorage.getItem("sens_dates"); /* sens dates */
-let delai = localStorage.getItem("delai")||1500; /* sens dates */
+let delai = localStorage.getItem("delai") || 1500; /* sens dates */
 let asp = localStorage.getItem("asp_images"); /* sens dates */
+let pos_img = localStorage.getItem("pos_img");
 let tab_titre = [];
 let list_img = [];
 let lien_an = [];
@@ -23,7 +25,6 @@ let zoome = false; /* mode 'image' au départ */
 let yimg = 0; /* position depart des images */
 let nId; /* initialiser setInterval ->deplac hor du diapor */
 let k = 1; /* k images deroulées par le diaporama */
-let pos_img = localStorage.getItem("pos_img");
 // choisir le son des diaporamas
 let audio;
 let skip_img;
@@ -115,7 +116,7 @@ const switchArrowDirection = () => {
   const updateArrow = document.querySelector(".update");
   const historyArrow = document.querySelector(".history");
 
-  if (sens_date === -1) {
+  if (sens_date === "-1") {
     updateArrow.classList.remove("eff_fl");
     historyArrow.classList.add("eff_fl");
   } else {
@@ -127,12 +128,11 @@ const switchArrowDirection = () => {
 /** fonction de tri du json entre numb et an */
 const inverser = (liste, sens) => {
   liste.sort((a, b) => {
-    // Trier d'abord par année
+    // Trier d'abord par année, puis src
     if (a.an !== b.an) {
-      return a.an > b.an ? sens * -1 : sens * 1;
+      return (a.an - b.an) * +sens;
     }
-    // Puis par source si les années sont identiques
-    return a.src > b.src ? sens * -1 : a.src < b.src ? sens * 1 : 0;
+    return a.src.localeCompare(b.src) * +sens;
   });
 };
 
@@ -287,7 +287,7 @@ const av_ar = (image, fl) => {
           break;
         /** inverser le sens des images */
         case 5:
-          localStorage.setItem("sens_dates", sens_date === 1 ? -1 : 1);
+          localStorage.setItem("sens_dates", sens_date === "1" ? "-1" : "1");
           localStorage.setItem("pos_img", 0);
           localStorage.setItem("delai", delai);
           window.location.href = "./photos.html";
@@ -509,8 +509,7 @@ const initEventListeners = () => {
     tab_titre = boxes.returnBoxes;
 
     /** 1 recent vers vieux, -1 le contraire */
-    inverser(listImages, Math.floor(sens_date));
-
+    inverser(listImages, sens_date);
     /** si pas le json total, filtrer par val_trans */
     const listchoisie =
       val_trans !== "photo"
@@ -563,5 +562,4 @@ const initEventListeners = () => {
   posit_image(pos_img);
   domElements.duree.textContent = `${delai / 1000} sec`;
   initEventListeners();
-  
 })();
