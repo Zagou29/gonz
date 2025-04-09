@@ -11,13 +11,13 @@ const DELAI_MAX = 4000; // en millisecondes
 const PAS_DELAI = 500; // en millisecondes
 
 /*  prendre en charge les boxes de VidCript et le sens des dates */
-const val_trans = localStorage.getItem("data"); /* classList venant de Index */
+const val_trans = localStorage.getItem("menu")|| "photo"; /* classList venant de Index */
 const sens_date = localStorage.getItem("sens_dates"); /* sens dates */
+let delai = localStorage.getItem("delai")||1500; /* sens dates */
 let asp = localStorage.getItem("asp_images"); /* sens dates */
 let tab_titre = [];
 let list_img = [];
 let lien_an = [];
-let delai = 1500; /* durée base des diapos */
 let sensSon = 1; /* son "on" au départ des diapos*/
 let zoome = false; /* mode 'image' au départ */
 let yimg = 0; /* position depart des images */
@@ -26,6 +26,7 @@ let k = 1; /* k images deroulées par le diaporama */
 let pos_img = localStorage.getItem("pos_img");
 // choisir le son des diaporamas
 let audio;
+let skip_img;
 
 /* Selecteurs DOM */
 const domElements = {
@@ -114,7 +115,7 @@ const switchArrowDirection = () => {
   const updateArrow = document.querySelector(".update");
   const historyArrow = document.querySelector(".history");
 
-  if (sens_date === "-1") {
+  if (sens_date === -1) {
     updateArrow.classList.remove("eff_fl");
     historyArrow.classList.add("eff_fl");
   } else {
@@ -242,6 +243,7 @@ const diaporama = (image, diap_ic) => {
           break;
         case 3:
           delai = delaiChange(delai, +1);
+          console.log(delai);
           break;
       }
     });
@@ -264,6 +266,7 @@ const av_ar = (image, fl) => {
           asp = asp === "show" ? "show show_mod" : "show";
           const pos_img = -domElements.boiteImg.getBoundingClientRect().top;
           localStorage.setItem("asp_images", asp);
+          localStorage.setItem("delai", delai);
           localStorage.setItem("pos_img", pos_img);
           window.location.href = "./photos.html";
           break;
@@ -284,8 +287,9 @@ const av_ar = (image, fl) => {
           break;
         /** inverser le sens des images */
         case 5:
-          localStorage.setItem("sens_dates", sens_date === "1" ? "-1" : "1");
+          localStorage.setItem("sens_dates", sens_date === 1 ? -1 : 1);
           localStorage.setItem("pos_img", 0);
+          localStorage.setItem("delai", delai);
           window.location.href = "./photos.html";
           break;
       }
@@ -466,7 +470,7 @@ const handleMenuClick = (e) => {
     return;
   }
   // choisir le idmenu et positionner à l'image 0
-  localStorage.setItem("data", target.dataset.idmenu);
+  localStorage.setItem("menu", target.dataset.idmenu);
   localStorage.setItem("pos_img", 0);
   window.location.href = "./photos.html";
 };
@@ -518,13 +522,13 @@ const initEventListeners = () => {
     images.creeimages(domElements.boiteImg);
     images.creedates(domElements.cont);
     list_img = [...domElements.boiteImg.querySelectorAll(".show")];
-    /** ne faire apparaitre qu'une date sur 4 pour "photo" */
-    if (val_trans === "photo") {
-      lien_an = [...domElements.cont.querySelectorAll(".liens")];
-      lien_an.forEach((dat, index) => {
-        if (index % 3 !== 0) dat.setAttribute("data-seuil", "");
-      });
-    }
+    /** ne faire apparaitre qu'une date sur 4 pour "photo" et sur 3 pour les autres */
+    lien_an = [...domElements.cont.querySelectorAll(".liens")];
+    val_trans === "photo" ? (skip_img = 3) : (skip_img = 2);
+    lien_an.forEach((dat, index) => {
+      if (index % skip_img !== 0) dat.setAttribute("data-seuil", "");
+    });
+
     /** titre de la page vient du tableau des titres*/
     domElements.val.textContent = tab_titre.find(
       (val) => val.ph === val_trans
@@ -559,4 +563,5 @@ const initEventListeners = () => {
   posit_image(pos_img);
   domElements.duree.textContent = `${delai / 1000} sec`;
   initEventListeners();
+  
 })();

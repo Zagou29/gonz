@@ -32,6 +32,7 @@ export class Affimg {
    * Prépare les éléments d'images
    * @private
    */
+
   #preparerImages() {
     this.#elt_images = new DocumentFragment();
     let n = 0;
@@ -41,12 +42,9 @@ export class Affimg {
     if (this.#listimg.length > 0) {
       this.#listimg[0].seuil = vseuil;
     }
-
-    if (this.#opt === "photo") {
-      this.#preparerImagesPhoto(vseuil);
-    } else {
-      this.#preparerImagesAutres(vseuil);
-    }
+    this.#opt === "photo"
+      ? this.#preparerImagesPhoto(vseuil)
+      : this.#preparerImagesAutres(vseuil);
   }
 
   /**
@@ -65,7 +63,6 @@ export class Affimg {
         obj.num = n;
         obj.seuil = "";
       }
-
       const image = new AffItem(obj, this.#asp);
       this.#elt_images.append(image.retourImage);
       vseuil = obj.an;
@@ -82,17 +79,10 @@ export class Affimg {
     this.#listimg.forEach((obj, index) => {
       if (obj.an !== vseuil) {
         obj.seuil = obj.an;
-        // S'il y a moins de 4 éléments après le précédent non vide, forcer seuil à "",
-        // sinon recaler ind sur l'index de cette ligne
-        if (index - ind < 4 && index - ind > 0) {
-          obj.seuil = "";
-        } else {
-          ind = index;
-        }
+        ind = index;
       } else {
         obj.seuil = "";
       }
-
       obj.num = index;
       const image = new AffItem(obj, this.#asp);
       this.#elt_images.append(image.retourImage);
@@ -131,7 +121,7 @@ export class Affimg {
   creeimages(ancre_imgs) {
     this.#ancre_imgs = ancre_imgs;
     this.#ancre_imgs.append(this.#elt_images);
-    return this
+    return this;
   }
 
   /**
