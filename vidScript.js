@@ -202,7 +202,7 @@ const fermerBlockLinks = () => {
     const blocLinks = sp.parentElement.querySelector(".bloc-links");
     setHeight(blocLinks, "0px");
     blocLinks.querySelector(".ePhotos")
-      ? blocLinks.removeEventListener("click", trans, { once: true })
+      ? blocLinks.removeEventListener("click", trans)
       : blocLinks.removeEventListener("click", aff_Videos);
     dom.barBox.removeEventListener("click", ecoute_barre);
     sp.classList.remove("activeMenu");
@@ -285,7 +285,7 @@ const dropClose = (e) => {
       spanChoisi.classList.add("activeMenu");
       dom.ecVideos.removeEventListener("click", click_img);
       if (dropCour.querySelector(".ePhotos")) {
-        dropCour.addEventListener("click", trans, { once: true });
+        dropCour.addEventListener("click", trans);
       } else if (!dropCour.querySelector(".eBlogs")) {
         dropCour.addEventListener("click", aff_Videos);
       }
