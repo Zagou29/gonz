@@ -247,9 +247,7 @@ const dropClose = (e) => {
     boxes.apBox_Ph(dom.eBlogs, "bl", "1");
 
     /* Charger et trier la liste globale des vidéos */
-    vidList.sort((a, b) =>
-      a.annee > b.annee ? 1 : a.annee < b.annee ? -1 : 0
-    );
+    vidList.sort((a, b) => a.annee - b.annee);
     // Raccorder les vidéos aux menuboxes par les classes (sans le type vidéo)
     const list_menus = vidList.map((item) => {
       const { clas, text } = item;

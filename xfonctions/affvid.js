@@ -151,18 +151,14 @@ export class Affvid {
         obj.clas.includes(this.#classe)
       );
     }
-
-    // Trier par type: vidéos puis diaporamas
-    this.#liste = [
-      ...this.#vidSelect.filter((item) =>
-        item.clas.includes(CONFIG.CLASSES.VIDEO)
-      ),
-      ...this.#vidSelect.filter((item) =>
-        item.clas.includes(CONFIG.CLASSES.DIAPO)
-      ),
-    ];
+    // Trier les vidéos et diaporamas
+    this.#liste = this.#vidSelect.sort((a, b) => {
+      const isVideoA = a.clas.includes(CONFIG.CLASSES.VIDEO);
+      const isVideoB = b.clas.includes(CONFIG.CLASSES.VIDEO);
+      return isVideoB - isVideoA; // Les vidéos avant les diaporamas
+    });
+    console.log(this.#liste);
   }
-
   /**
    * Crée les miniatures pour chaque vidéo
    * @private

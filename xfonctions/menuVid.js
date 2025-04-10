@@ -66,14 +66,14 @@ export class MenuVid {
       return { clas, menu, id_groupe, detail };
     });
     /* enlever tous les doublons de listeatrier et trier : par detail puis groupe*/
-    this.#liensSelect = [
-      ...new Set(this.#listatrier.map((item) => JSON.stringify(item))),
-    ]
-      .map((item) => JSON.parse(item))
-      .sort((a, b) => (a.detail > b.detail ? 1 : a.detail < b.detail ? -1 : 0))
-      .sort((a, b) =>
-        a.id_groupe > b.id_groupe ? 1 : a.id_groupe < b.id_groupe ? -1 : 0
+    this.#liensSelect = Array.from(
+      new Map(this.#listatrier.map((item) => [item.clas, item])).values()
+    ).sort((a, b) => {
+      return (
+        a.id_groupe.localeCompare(b.id_groupe) ||
+        a.detail.localeCompare(b.detail)
       );
+    });
     this.#listElement = new DocumentFragment();
     this.#liensSelect.forEach((boite) => {
       this.#item = this.#boxSelect.filter((it) => it.clas === boite.clas);
@@ -84,7 +84,7 @@ export class MenuVid {
   }
 }
 
- // box=:{"clas": ".dia.voy.asie.vie","groupe": "Asie","text": "2017 Saigon-Da.Nang",
+// box=:{"clas": ".dia.voy.asie.vie","groupe": "Asie","text": "2017 Saigon-Da.Nang",
 // "src": "./box_img/Vietnam-11.jpg","detail": "Vietnam}
 class MenuItem {
   #boxElement;
@@ -110,10 +110,12 @@ class MenuItem {
       this.#boxList[0].groupe;
     this.#boxElement.querySelector(".ti_blog").dataset.select = this.#boxItem;
     this.liste = new DocumentFragment();
-    this.#boxList.sort((a, b) => (a.tv > b.tv ? -1 : a.tv < b.tv ? 1 : 0)).forEach((obj) => {
-      const ligne = new Box_liste(obj);
-      this.liste.append(ligne.returnDetail);
-    });
+    this.#boxList
+      .sort((a, b) => b.tv.localeCompare(a.tv))
+      .forEach((obj) => {
+        const ligne = new Box_liste(obj);
+        this.liste.append(ligne.returnDetail);
+      });
     this.#boxElement.querySelector(".vid_list").append(this.liste);
   }
   get returnBox() {
@@ -129,9 +131,8 @@ class Box_liste {
     this.#detail = detail;
     this.#ligneElement = cloneTemplate("line").firstElementChild;
     this.#ligneElement.textContent = this.#detail.text;
-    this.#ligneElement.classList.add("detail")
-    this.#ligneElement.classList.add(this.#detail.tv)
-  
+    this.#ligneElement.classList.add("detail");
+    this.#ligneElement.classList.add(this.#detail.tv);
   }
   get returnDetail() {
     return this.#ligneElement;
