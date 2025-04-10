@@ -58,48 +58,17 @@ const initAudio = () => {
   audio = new Audio(`./audio/audio_${rnd(11)}.mp3`);
 };
 /* Debouncing function */
-
-function debounce(func, wait, options = {}) {
-  let timeout;
-  let lastArgs, lastThis;
-  let result;
-  let lastCallTime;
-
+function debounce(fn, delay) {
+  let timer = null;
   return function (...args) {
-    const time = Date.now();
-    const isInvoking = shouldInvoke(time);
-
-    lastArgs = args;
-    lastThis = this;
-
-    if (isInvoking) {
-      if (timeout) {
-        clearTimeout(timeout);
-        timeout = null;
-      }
-
-      if (options.leading) {
-        result = func.apply(lastThis, lastArgs);
-      } else {
-        timeout = setTimeout(() => {
-          result = func.apply(lastThis, lastArgs);
-        }, wait);
-      }
-    } else if (!timeout && options.trailing) {
-      timeout = setTimeout(() => {
-        result = func.apply(lastThis, lastArgs);
-      }, wait);
-    }
-
-    return result;
+    const context = this;
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn.apply(context, args);
+    }, delay);
   };
-
-  function shouldInvoke(time) {
-    const timeSinceLastCall = time - (lastCallTime || 0);
-    lastCallTime = time;
-    return !lastCallTime || timeSinceLastCall >= wait;
-  }
 }
+
 /* cherche l'ID venant de index et affecte le titre à */
 /* insere un bouton pour safari + mobile dans photos.html */
 if (navig().safari && ordi_OS().ios && !navig().chromeIos) {
@@ -456,10 +425,7 @@ const handleScroll = () => {
 
   lastscroll = currentscroll;
 };
-const debouncedHandleScroll = debounce(handleScroll, 10, {
-  leading: false,
-  trailing: true,
-}); //delai à vérifier
+const debouncedHandleScroll = debounce(handleScroll, 10); //delai à vérifier
 
 /* ecouter le menu principal de gauche ------------------------------- */
 const handleMenuClick = (e) => {
@@ -471,7 +437,7 @@ const handleMenuClick = (e) => {
   }
   // choisir le idmenu et positionner à l'image 0
   localStorage.setItem("menu", target.dataset.idmenu);
-   localStorage.setItem("sens_dates", "1");
+  localStorage.setItem("sens_dates", "1");
   localStorage.setItem("pos_img", 0);
   window.location.href = "./photos.html";
 };
