@@ -471,6 +471,7 @@ const handleMenuClick = (e) => {
   }
   // choisir le idmenu et positionner à l'image 0
   localStorage.setItem("menu", target.dataset.idmenu);
+   localStorage.setItem("sens_dates", "1");
   localStorage.setItem("pos_img", 0);
   window.location.href = "./photos.html";
 };
