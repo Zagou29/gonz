@@ -20,7 +20,7 @@ export class Affimg {
    * @param {string} asp - Aspect des images ('show' ou 'show_mod')
    */
   constructor(listimg, opt, asp) {
-    this.#listimg = JSON.parse(JSON.stringify(listimg));
+    this.#listimg = listimg;
     this.#opt = opt;
     this.#asp = asp;
 
