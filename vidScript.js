@@ -62,7 +62,7 @@ const typeb = (box1, box2) => {
  * @returns {string}
  */
 const typeVid = (el) => {
-  if(!el) return "";
+  if (!el) return "";
   const adiapo = el.querySelector(SELECTORS.adiapo);
   const avideo = el.querySelector(SELECTORS.avideo);
   return adiapo ? typeb(adiapo, avideo) : "";
@@ -183,19 +183,20 @@ const trans = (e) => {
 };
 
 const fermerBlockLinks = () => {
-  dom.menu.querySelectorAll(".titMenu").forEach((sp) => {
+  const activeMenus = dom.menu.querySelectorAll(".titMenu");
+  activeMenus.forEach((sp) => {
     const blocLinks = sp.parentElement.querySelector(".bloc-links");
+  
     setHeight(blocLinks, "0px");
-    blocLinks.querySelector(SELECTORS.ePhotos)
-      ? blocLinks.removeEventListener("click", trans)
-      : blocLinks.removeEventListener("click", aff_Videos);
+    blocLinks.removeEventListener("click", trans);
+    blocLinks.removeEventListener("click", aff_Videos);
     sp.classList.remove("activeMenu");
   });
-  state.isBlockLinks = false;
   dom.ecVideos.innerHTML = "";
   dom.barBox.innerHTML = "";
   dom.titre.textContent = "";
   affEffRetour("-");
+  state.isBlockLinks = false;
 };
 /**
  * Ferme le menu dropdown si le clic se fait hors du menu principal.
@@ -208,6 +209,23 @@ const dropClose = (e) => {
   ) {
     fermerBlockLinks();
   }
+};
+// Système d'événements centralisé
+const setupEventListeners = () => {
+  // Écouteurs principaux qui restent attachés pendant toute la durée de vie de l'application
+  dom.body.addEventListener("click", dropClose);
+  dom.barBox.addEventListener("click", ecoute_barre);
+  dom.ecVideos.addEventListener("click", click_img);
+};
+
+// Configuration de l'observer
+const setupObserver = () => {
+  const options = {
+    root: dom.ecVideos,
+    rootMargin: "0px",
+    threshold: 1,
+  };
+  state.videoObserver = new IntersectionObserver(ferme_videos, options);
 };
 // ----- IIFE principale -----
 (async function init() {
@@ -244,7 +262,7 @@ const dropClose = (e) => {
 
     // ----------- Gestion des événements -----------
 
-    // Écoute du clic sur les menus pour ouvrir/fermer les dropdowns
+    //Écoute du clic sur les menus pour ouvrir / fermer les dropdowns
     dom.menu.addEventListener("click", (e) => {
       const spanChoisi = e.target;
       if (spanChoisi.classList.contains("titMenu")) {
@@ -253,7 +271,6 @@ const dropClose = (e) => {
         setHeight(dropCour, dropCour.scrollHeight + "px");
         state.isBlockLinks = true;
         spanChoisi.classList.add("activeMenu");
-        // dom.ecVideos.removeEventListener("click", click_img);
         if (dropCour.querySelector(SELECTORS.ePhotos)) {
           dropCour.addEventListener("click", trans);
         } else if (!dropCour.querySelector(SELECTORS.eBlogs)) {
@@ -261,17 +278,10 @@ const dropClose = (e) => {
         }
       }
     });
-    //Ecouter barBox, body pour "menu" et "ecranVideos", et click sur les images
-    dom.body.addEventListener("click", dropClose);
-    dom.barBox.addEventListener("click", ecoute_barre);
-    dom.ecVideos.addEventListener("click", click_img);
-    //créer un premier et unique observer pour les vidéos
-    const options = {
-      root: dom.ecVideos,
-      rootMargin: "0px",
-      threshold: 1,
-    };
-    state.videoObserver = new IntersectionObserver(ferme_videos, options);
+    // Initialiser les événements et l'observer
+    setupEventListeners();
+    setupObserver();
+
   } catch (e) {
     const alertEl = createElement("div", {
       class: "alert alert-danger m-2",
