@@ -6,21 +6,13 @@ import { MenuVid } from "./xfonctions/menuVid.js";
 import { Affvid } from "./xfonctions/affvid.js";
 // Constantes globales pour améliorer la lisibilité
 const IGNORE_TAGS = ["LABEL", "INPUT"];
-const DROP_IGNORE_CLASSES = [
-  "imgRetour",
-  "titMenu",
-  "ti_blog",
-  "vidImg",
-  "menu",
-  "lect",
-];
-const MENU_IGNORE_CLASSES = [
-  "sousMenuBlog",
-  "sousMenuAnn",
-  "bloc_img",
-  "envIcon",
-  "a1",
-];
+const DROP_INCLUDE_CLASSES = ["menu", "ecranVideos"];
+const SELECTORS = {
+  adiapo: "#adiapo",
+  avideo: "#avideo",
+  ePhotos: ".ePhotos",
+  eBlogs: ".eBlogs",
+};
 // Cache des éléments DOM principaux
 const dom = {
   menu: document.querySelector(".menu"),
@@ -59,24 +51,20 @@ const setHeight = (element, height) => {
  * @returns {string} 'non', '' ou la valeur de la case cochée
  */
 const typeb = (box1, box2) => {
-  switch (box1.checked + box2.checked) {
-    case 0:
-      return "non";
-    case 1:
-      return box1.checked ? box1.value : box2.value;
-    case 2:
-      return "";
-  }
+  if (box1.checked && box2.checked) return "";
+  if (box1.checked) return box1.value;
+  if (box2.checked) return box2.value;
+  return "non";
 };
-
 /**
  * Renvoie le type associé au menu (vidéo ou diapos)
  * @param {HTMLElement} el Élément de menu Voy ou Pll
  * @returns {string}
  */
 const typeVid = (el) => {
-  const adiapo = el.querySelector("#adiapo");
-  const avideo = el.querySelector("#avideo");
+  if(!el) return "";
+  const adiapo = el.querySelector(SELECTORS.adiapo);
+  const avideo = el.querySelector(SELECTORS.avideo);
   return adiapo ? typeb(adiapo, avideo) : "";
 };
 
@@ -100,12 +88,13 @@ const affEffRetour = (sens) => {
  */
 const ferme_videos = (entries) => {
   entries.forEach((entry) => {
-    const dataNum = entry.target.dataset.num;
+    const { target, isIntersecting } = entry;
+    const dataNum = target.dataset.num;
     const barItem = dom.barBox.querySelector(`[data-num="${dataNum}"]`);
     if (!barItem) return;
-    if (!entry.isIntersecting) {
+    if (!isIntersecting) {
       barItem.classList.remove("peint");
-      const videoImg = entry.target.querySelector(".vidImg");
+      const videoImg = target.querySelector(".vidImg");
       // Arrêter la vidéo en désactivant l'autoplay
       videoImg.src = videoImg.src.replace("autoplay=1", "autoplay=0");
     } else {
@@ -119,10 +108,11 @@ const ferme_videos = (entries) => {
  * @param {Event} e
  */
 const click_img = (e) => {
-  if (e.target.classList.contains("vidImg")) {
-    const divImg = e.target.parentElement;
-    e.target.remove();
-    state.vidClass.aff_ytFrameR(divImg, e.target.dataset.id);
+  const { target } = e;
+  if (target.classList.contains("vidImg")) {
+    const divImg = target.parentElement;
+    target.remove();
+    state.vidClass.aff_ytFrameR(divImg, target.dataset.id);
   }
 };
 
@@ -145,16 +135,11 @@ const ecoute_barre = (e) => {
 const afficheLiens = (param, year, tempId) => {
   dom.ecVideos.innerHTML = "";
   state.vidClass.affVideos(dom.ecVideos, param, year, tempId);
-  if (tempId === "ytThumb") {
-    dom.ecVideos.addEventListener("click", click_img);
-  }
   //si une seule video, on ne fait rien
   const nbVideos = state.vidClass.retourVideo.length;
-  //deconnecter l'observer
   state.videoObserver.disconnect();
   if (dom.ecVideos.innerHTML && nbVideos > 1) {
     state.vidClass.affBar(dom.barBox);
-    dom.barBox.addEventListener("click", ecoute_barre);
     affEffRetour("+");
     const lect = dom.ecVideos.querySelectorAll(".lect");
     lect.forEach((lecteur) => state.videoObserver.observe(lecteur));
@@ -171,7 +156,7 @@ const aff_Videos = (e) => {
   if (!activeMenu) return;
   const spanChoisi = e.target;
   const type = typeVid(activeMenu.parentElement);
-  //diavid = .voy.amer.usa ou .vid.ann ou .dia.ann ou .ann
+  //videotype = .voy.amer.usa ou .vid.ann ou .dia.ann ou .ann
   const videoType = `${type}${spanChoisi.dataset.select}`;
   const year = spanChoisi.dataset.year ? `${spanChoisi.dataset.year}` : "";
   const tempId =
@@ -201,10 +186,9 @@ const fermerBlockLinks = () => {
   dom.menu.querySelectorAll(".titMenu").forEach((sp) => {
     const blocLinks = sp.parentElement.querySelector(".bloc-links");
     setHeight(blocLinks, "0px");
-    blocLinks.querySelector(".ePhotos")
+    blocLinks.querySelector(SELECTORS.ePhotos)
       ? blocLinks.removeEventListener("click", trans)
       : blocLinks.removeEventListener("click", aff_Videos);
-    dom.barBox.removeEventListener("click", ecoute_barre);
     sp.classList.remove("activeMenu");
   });
   state.isBlockLinks = false;
@@ -218,18 +202,12 @@ const fermerBlockLinks = () => {
  * @param {Event} e
  */
 const dropClose = (e) => {
-  if (!state.isBlockLinks) return; // si pas de bloc ouvert
-  const cible = e.target;
-  // Si clic sur un élément ignoré, on ne ferme pas le bloc
   if (
-    DROP_IGNORE_CLASSES.some((cls) => cible.classList.contains(cls)) ||
-    cible.dataset.select === ".ann" ||
-    "num" in cible.dataset ||
-    IGNORE_TAGS.includes(cible.tagName)
+    state.isBlockLinks &&
+    DROP_INCLUDE_CLASSES.some((cls) => e.target.classList.contains(cls))
   ) {
-    return;
+    fermerBlockLinks();
   }
-  fermerBlockLinks();
 };
 // ----- IIFE principale -----
 (async function init() {
@@ -269,27 +247,24 @@ const dropClose = (e) => {
     // Écoute du clic sur les menus pour ouvrir/fermer les dropdowns
     dom.menu.addEventListener("click", (e) => {
       const spanChoisi = e.target;
-      if (
-        MENU_IGNORE_CLASSES.some((cls) => spanChoisi.classList.contains(cls))
-      ) {
+      if (spanChoisi.classList.contains("titMenu")) {
         fermerBlockLinks();
-        return;
-      }
-      if (!spanChoisi.classList.contains("titMenu")) return;
-      fermerBlockLinks();
-      const dropCour = spanChoisi.parentElement.querySelector(".bloc-links");
-      setHeight(dropCour, dropCour.scrollHeight + "px");
-      state.isBlockLinks = true;
-      spanChoisi.classList.add("activeMenu");
-      dom.ecVideos.removeEventListener("click", click_img);
-      if (dropCour.querySelector(".ePhotos")) {
-        dropCour.addEventListener("click", trans);
-      } else if (!dropCour.querySelector(".eBlogs")) {
-        dropCour.addEventListener("click", aff_Videos);
+        const dropCour = spanChoisi.parentElement.querySelector(".bloc-links");
+        setHeight(dropCour, dropCour.scrollHeight + "px");
+        state.isBlockLinks = true;
+        spanChoisi.classList.add("activeMenu");
+        // dom.ecVideos.removeEventListener("click", click_img);
+        if (dropCour.querySelector(SELECTORS.ePhotos)) {
+          dropCour.addEventListener("click", trans);
+        } else if (!dropCour.querySelector(SELECTORS.eBlogs)) {
+          dropCour.addEventListener("click", aff_Videos);
+        }
       }
     });
-    //fermer les menus si clic en dehors
+    //Ecouter barBox, body pour "menu" et "ecranVideos", et click sur les images
     dom.body.addEventListener("click", dropClose);
+    dom.barBox.addEventListener("click", ecoute_barre);
+    dom.ecVideos.addEventListener("click", click_img);
     //créer un premier et unique observer pour les vidéos
     const options = {
       root: dom.ecVideos,

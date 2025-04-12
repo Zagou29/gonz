@@ -157,7 +157,6 @@ export class Affvid {
       const isVideoB = b.clas.includes(CONFIG.CLASSES.VIDEO);
       return isVideoB - isVideoA; // Les vidéos avant les diaporamas
     });
-    console.log(this.#liste);
   }
   /**
    * Crée les miniatures pour chaque vidéo
