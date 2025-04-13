@@ -25,9 +25,9 @@ const dom = {
   ePhotos: document.querySelector(".ePhotos"),
   eBlogs: document.querySelector(".eBlogs"),
 };
-
+// État de l'application
 const state = {
-  isBlockLinks: false,
+  blockLinks_open: false,
   videoObserver: null,
   vidClass: null,
   vidMenu: null,
@@ -43,7 +43,6 @@ const scrollModule = (() => {
 const setHeight = (element, height) => {
   element.style.height = height;
 };
-
 /**
  * Détermine le type (vidéo/diapo) en fonction de deux checkboxes.
  * @param {HTMLElement} box1
@@ -167,7 +166,7 @@ const aff_Videos = (e) => {
   }
   const nbVideos = afficheLiens(videoType, year, tempId);
   dom.titre.textContent = nbVideos ? spanChoisi.textContent : "";
-  state.isBlockLinks = false;
+  state.blockLinks_open = false;
 };
 
 /**
@@ -183,20 +182,22 @@ const trans = (e) => {
 };
 
 const fermerBlockLinks = () => {
-  const activeMenus = dom.menu.querySelectorAll(".titMenu");
-  activeMenus.forEach((sp) => {
-    const blocLinks = sp.parentElement.querySelector(".bloc-links");
-  
-    setHeight(blocLinks, "0px");
-    blocLinks.removeEventListener("click", trans);
-    blocLinks.removeEventListener("click", aff_Videos);
-    sp.classList.remove("activeMenu");
+  if (!state.blockLinks_open && !dom.ecVideos.innerHTML) return;
+  const menus = dom.menu.querySelectorAll(".titMenu");
+  menus.forEach((sp) => {
+    if (sp.classList.contains("activeMenu")) {
+      const blocLinks = sp.parentElement.querySelector(".bloc-links");
+      setHeight(blocLinks, "0px");
+      blocLinks.removeEventListener("click", trans);
+      blocLinks.removeEventListener("click", aff_Videos);
+      dom.ecVideos.innerHTML = "";
+      dom.barBox.innerHTML = "";
+      dom.titre.textContent = "";
+      affEffRetour("-");
+      state.blockLinks_open = false;
+      sp.classList.remove("activeMenu");
+    }
   });
-  dom.ecVideos.innerHTML = "";
-  dom.barBox.innerHTML = "";
-  dom.titre.textContent = "";
-  affEffRetour("-");
-  state.isBlockLinks = false;
 };
 /**
  * Ferme le menu dropdown si le clic se fait hors du menu principal.
@@ -204,7 +205,7 @@ const fermerBlockLinks = () => {
  */
 const dropClose = (e) => {
   if (
-    state.isBlockLinks &&
+    state.blockLinks_open &&
     DROP_INCLUDE_CLASSES.some((cls) => e.target.classList.contains(cls))
   ) {
     fermerBlockLinks();
@@ -269,7 +270,7 @@ const setupObserver = () => {
         fermerBlockLinks();
         const dropCour = spanChoisi.parentElement.querySelector(".bloc-links");
         setHeight(dropCour, dropCour.scrollHeight + "px");
-        state.isBlockLinks = true;
+        state.blockLinks_open = true;
         spanChoisi.classList.add("activeMenu");
         if (dropCour.querySelector(SELECTORS.ePhotos)) {
           dropCour.addEventListener("click", trans);
@@ -281,7 +282,6 @@ const setupObserver = () => {
     // Initialiser les événements et l'observer
     setupEventListeners();
     setupObserver();
-
   } catch (e) {
     const alertEl = createElement("div", {
       class: "alert alert-danger m-2",

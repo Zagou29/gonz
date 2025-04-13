@@ -11,8 +11,7 @@ const DELAI_MAX = 4000; // en millisecondes
 const PAS_DELAI = 500; // en millisecondes
 
 /*  prendre en charge les boxes de VidCript et le sens des dates */
-const val_trans =
-  localStorage.getItem("menu") || "photo"; /* classList venant de Index */
+const val_trans = localStorage.getItem("menu") || "photo";
 const sens_date = localStorage.getItem("sens_dates"); /* sens dates */
 let delai = localStorage.getItem("delai") || 1500; /* sens dates */
 let asp = localStorage.getItem("asp_images"); /* sens dates */
@@ -25,10 +24,15 @@ let zoome = false; /* mode 'image' au départ */
 let yimg = 0; /* position depart des images */
 let nId; /* initialiser setInterval ->deplac hor du diapor */
 let k = 1; /* k images deroulées par le diaporama */
-// choisir le son des diaporamas
-let audio;
+let audio;// choisir le son des diaporamas
 let skip_img;
-
+const params = {
+  menu: val_trans, // Utiliser la valeur actuelle du menu
+  asp_images: asp,//aspect mages
+  delai: delai,//delai diapos en secondes
+  pos_img: pos_img, // Utiliser la position calculée
+  sens_dates: sens_date, 
+};
 /* Selecteurs DOM */
 const domElements = {
   hamb: document.querySelector(".hamburger"),
@@ -78,8 +82,14 @@ if (navig().safari && ordi_OS().ios && !navig().chromeIos) {
     <span class="material-icons-outlined">cancel</span>
     </button>`
   );
-}
-
+} 
+//parametres à stocker sur localStorage et rediriger vers photos.html
+const setLocalStorageAndRedirect = (params) => {
+  Object.keys(params).forEach((key) => {
+    localStorage.setItem(key, params[key]);
+  });
+  window.location.href = "./photos.html";
+};
 /** switch du sens des fleches d'inversion dates */
 const switchArrowDirection = () => {
   const updateArrow = document.querySelector(".update");
@@ -148,7 +158,6 @@ const showStop = () => {
     domElements.right
   );
 };
-
 /* positionner l'image à la position récupérée par getBoudingClient Rect().top*/
 const posit_image = (pos) => {
   window.scrollTo({
@@ -234,10 +243,11 @@ const av_ar = (image, fl) => {
           // inverser l'aspect, puis capturer la situation verticale des images
           asp = asp === "show" ? "show show_mod" : "show";
           const pos_img = -domElements.boiteImg.getBoundingClientRect().top;
-          localStorage.setItem("asp_images", asp);
-          localStorage.setItem("delai", delai);
-          localStorage.setItem("pos_img", pos_img);
-          window.location.href = "./photos.html";
+          setLocalStorageAndRedirect({
+            asp_images: asp,
+            delai: delai,
+            pos_img: pos_img,
+          });
           break;
         /* fleche gauche*/
         case 2:
@@ -256,10 +266,11 @@ const av_ar = (image, fl) => {
           break;
         /** inverser le sens des images */
         case 5:
-          localStorage.setItem("sens_dates", sens_date === "1" ? "-1" : "1");
-          localStorage.setItem("pos_img", 0);
-          localStorage.setItem("delai", delai);
-          window.location.href = "./photos.html";
+          setLocalStorageAndRedirect({
+            delai: delai,
+            sens_dates: sens_date === "1" ? "-1" : "1",
+            pos_img: 0,
+          });
           break;
       }
     });
@@ -436,10 +447,11 @@ const handleMenuClick = (e) => {
     return;
   }
   // choisir le idmenu et positionner à l'image 0
-  localStorage.setItem("menu", target.dataset.idmenu);
-  localStorage.setItem("sens_dates", "1");
-  localStorage.setItem("pos_img", 0);
-  window.location.href = "./photos.html";
+  setLocalStorageAndRedirect({
+    menu: target.dataset.idmenu,
+    sens_dates: "1",
+    pos_img: 0,
+  });
 };
 const initEventListeners = () => {
   window.addEventListener("scroll", debouncedHandleScroll);
