@@ -112,28 +112,39 @@ class BoxItem {
   #boxItem;
   constructor(box) {
     this.#boxItem = box;
-    this.#boxElement = cloneTemplate(this.#boxItem.menu).firstElementChild;
-    this.#boxElement
-      .querySelector("img")
-      .setAttribute("src", this.#boxItem.src);
-    this.#boxElement
-      .querySelector("img")
-      .setAttribute("alt", this.#boxItem.spText);
-    this.#boxElement.querySelector(".ti_blog").textContent =
-      this.#boxItem.spText;
-    this.#boxElement.querySelector(".texte").classList.add("ph_bl");
-    this.#boxElement.querySelector(".texte").textContent =
-      this.#boxItem.divText;
-    if (this.#boxItem.menu === "ph") {
-      this.#boxElement.querySelector(".ti_blog").dataset.ph = this.#boxItem.ph;
+    const { menu, src, spText, divText, ph, href } = this.#boxItem; // Destructuring for easier access
+    this.#boxElement = cloneTemplate(menu).firstElementChild;
+    const imgElement = this.#boxElement.querySelector("img");
+    const titleElement = this.#boxElement.querySelector(".ti_blog");
+    const textElement = this.#boxElement.querySelector(".texte");
+
+    if (imgElement) { // Check if the element exists before using it
+      imgElement.setAttribute("src", src);
+      imgElement.setAttribute("alt", spText);
+    }
+
+    if (titleElement) { // Check if the element exists
+      titleElement.textContent = spText;
+    }
+
+    if (textElement) { // Check if the element exists
+      textElement.classList.add("ph_bl");
+      textElement.textContent = divText;
+    }
+
+    if (menu === "ph") {
+      if (titleElement) { // Check if the element exists
+        titleElement.dataset.ph = ph;
+      }
     } else {
-      this.#boxElement.setAttribute("href", this.#boxItem.href);
+      this.#boxElement.setAttribute("href", href);
     }
   }
   get returnBox() {
     return this.#boxElement;
   }
 }
+
 
 /** créer un lien_menu pour photo.html */
 class Lien_menu_item {

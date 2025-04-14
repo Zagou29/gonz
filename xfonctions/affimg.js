@@ -5,207 +5,178 @@ import { cloneTemplate } from "./dom.js";
  * @class Affimg
  */
 export class Affimg {
-  #listimg; // Liste des objets img venant de JSON
-  #opt; // Option 'photo' ou non
-  #asp; // show ou show_mod (aspect)
-  #elt_images; // Fragment où charger les img
-  #elt_dates; // Element où charger les liensdates
-  #ancre_imgs; // Boite où charger les images
-  #ancres_dates; // Boite où charger les Li dates
+  #imageList; // Liste des objets img venant de JSON
+  #option; // Option d'affichage ('photo' ou autre)
+  #aspectClass; // show ou show_mod (aspect)
+  #imagesFragment; // Fragment où charger les img
+  #datesFragment; // Fragment où charger les liensdates
+  #imagesContainer; // Boite où charger les images
+  #datesContainer; // Boite où charger les Li dates
 
   /**
    * Crée une nouvelle instance d'Affimg
-   * @param {Array} listimg - Liste des objets images du JSON
-   * @param {string} opt - Option d'affichage ('photo' ou autre)
-   * @param {string} asp - Aspect des images ('show' ou 'show_mod')
+   * @param {Array} imageList - Liste des objets images du JSON
+   * @param {string} option - Option d'affichage ('photo' ou autre)
+   * @param {string} aspectClass - Aspect des images ('show' ou 'show_mod')
    */
-  constructor(listimg, opt, asp) {
-    this.#listimg = listimg;
-    this.#opt = opt;
-    this.#asp = asp;
+  constructor(imageList, option, aspectClass) {
+    this.#imageList = imageList;
+    this.#option = option;
+    this.#aspectClass = aspectClass;
 
-    this.#preparerImages();
-    this.#preparerDates();
+    this.#preparerElements();
   }
 
   /**
-   * Prépare les éléments d'images
+   * Prépare les fragments d'images et de dates
    * @private
    */
-
-  #preparerImages() {
-    this.#elt_images = new DocumentFragment();
-    let n = 0;
+  #preparerElements() {
+    this.#imagesFragment = new DocumentFragment();
+    this.#datesFragment = new DocumentFragment();
     let vseuil = "";
+    let photoIndex = 0; // Index spécifique pour l'option 'photo'
 
-    // S'assurer que le premier élément a une valeur seuil initiale
-    if (this.#listimg.length > 0) {
-      this.#listimg[0].seuil = vseuil;
-    }
-    this.#opt === "photo"
-      ? this.#preparerImagesPhoto(vseuil)
-      : this.#preparerImagesAutres(vseuil);
-  }
+    this.#imageList.forEach((imgData, index) => {
+      const nouvSeuil = imgData.an !== vseuil;
 
-  /**
-   * Prépare les images pour l'option 'photo'
-   * @param {string} vseuil - Valeur seuil initiale
-   * @private
-   */
-  #preparerImagesPhoto(vseuil) {
-    let n = 0;
-    this.#listimg.forEach((obj, index) => {
-      if (obj.an !== vseuil) {
-        obj.seuil = obj.an;
-        obj.num = index;
-        n = index;
-      } else {
-        obj.num = n;
-        obj.seuil = "";
-      }
-      const image = new AffItem(obj, this.#asp);
-      this.#elt_images.append(image.retourImage);
-      vseuil = obj.an;
-    });
-  }
-
-  /**
-   * Prépare les images pour les options autres que 'photo'
-   * @param {string} vseuil - Valeur seuil initiale
-   * @private
-   */
-  #preparerImagesAutres(vseuil) {
-    let ind = 0;
-    this.#listimg.forEach((obj, index) => {
-      if (obj.an !== vseuil) {
-        obj.seuil = obj.an;
-        ind = index;
-      } else {
-        obj.seuil = "";
-      }
-      obj.num = index;
-      const image = new AffItem(obj, this.#asp);
-      this.#elt_images.append(image.retourImage);
-      vseuil = obj.an;
-    });
-  }
-
-  /**
-   * Prépare les éléments de dates
-   * @private
-   */
-  #preparerDates() {
-    this.#elt_dates = new DocumentFragment();
-
-    if (this.#opt === "photo") {
-      // Pour l'option photo, n'ajouter que les éléments avec un seuil non vide
-      this.#listimg.forEach((obj) => {
-        if (obj.seuil !== "") {
-          const lien_date = new DateItem(obj);
-          this.#elt_dates.append(lien_date.retourDateItem);
+      if (nouvSeuil) {
+        imgData.seuil = imgData.an; // Définit le seuil pour cet élément
+        vseuil = imgData.an;
+        if (this.#option === "photo") {
+          photoIndex = index; // Met à jour l'index de référence pour 'photo'
         }
-      });
-    } else {
-      // Pour les autres options, ajouter tous les éléments
-      this.#listimg.forEach((obj) => {
-        const lien_date = new DateItem(obj);
-        this.#elt_dates.append(lien_date.retourDateItem);
-      });
-    }
+      } else {
+        imgData.seuil = ""; // Pas de seuil pour cet élément
+      }
+
+      // Assigne le numéro basé sur l'option
+      imgData.num = this.#option === "photo" ? photoIndex : index;
+
+      // Crée et ajoute l'élément image
+      const imageItem = new AffItem(imgData, this.#aspectClass);
+      this.#imagesFragment.append(imageItem.element);
+
+      // Crée et ajoute l'élément date (conditionnellement pour 'photo')
+      if (this.#option !== "photo" || imgData.seuil !== "") {
+        //si "pas photos"=> un lien un lien pour chaque nouvelle date
+        //si "photos"=> un lien pour chaque seuil non null
+        const dateItem = new DateItem(imgData);
+        this.#datesFragment.append(dateItem.element);
+      }
+    });
   }
 
   /**
    * Injecte les images dans l'élément d'ancrage
-   * @param {HTMLElement} ancre_imgs - L'élément DOM où injecter les images
+   * @param {HTMLElement} imagesContainer - L'élément DOM où injecter les images
+   * @returns {this}
    */
-  creeimages(ancre_imgs) {
-    this.#ancre_imgs = ancre_imgs;
-    this.#ancre_imgs.append(this.#elt_images);
+  creeimages(imagesContainer) {
+    this.#imagesContainer = imagesContainer;
+    // Vider le conteneur avant d'ajouter (optionnel, mais souvent utile)
+    this.#imagesContainer.innerHTML = "";
+    this.#imagesContainer.append(this.#imagesFragment);
     return this;
   }
 
   /**
    * Injecte les dates dans l'élément d'ancrage
-   * @param {HTMLElement} ancres_dates - L'élément DOM où injecter les dates
+   * @param {HTMLElement} datesContainer - L'élément DOM où injecter les dates
+   * @returns {this}
    */
-  creedates(ancres_dates) {
-    this.#ancres_dates = ancres_dates;
-    this.#ancres_dates.append(this.#elt_dates);
+  creedates(datesContainer) {
+    this.#datesContainer = datesContainer;
+    // Vider le conteneur avant d'ajouter (optionnel, mais souvent utile)
+    this.#datesContainer.innerHTML = "";
+    this.#datesContainer.append(this.#datesFragment);
     return this;
+  }
+}
+
+/**
+ * Classe de base pour les éléments créés (Image ou Date)
+ * @class BaseItem
+ */
+class BaseItem {
+  _element;
+  _data;
+
+  /**
+   * @param {Object} data - Objet contenant les données (image ou date)
+   * @param {string} templateId - ID du template HTML à cloner
+   * @param {string} tagName - Nom de la balise de l'élément cloné (ex: 'IMG', 'BUTTON')
+   */
+  constructor(data, templateId, tagName) {
+    this._data = data;
+    const templateContent = cloneTemplate(templateId);
+    // S'assurer que l'élément cloné correspond bien à la balise attendue
+    this._element =
+      templateContent.querySelector(tagName) ||
+      templateContent.firstElementChild;
+    if (!this._element) {
+      throw new Error(
+        `Template "${templateId}" ne contient pas l'élément attendu "${tagName}".`
+      );
+    }
+
+    this._configureElement();
+  }
+
+  /**
+   * Configure les attributs communs et dataset
+   * @protected
+   */
+  _configureElement() {
+    this._element.dataset.an = this._data.an;
+    this._element.dataset.num = this._data.num;
+    if (this._data.seuil !== "") {
+      this._element.dataset.seuil = this._data.seuil;
+    }
+  }
+
+  /**
+   * Retourne l'élément DOM créé
+   * @return {HTMLElement}
+   */
+  get element() {
+    return this._element;
   }
 }
 
 /**
  * Classe pour créer un élément image
  * @class AffItem
+ * @extends BaseItem
  */
-class AffItem {
-  #imgobj;
-  #el_image;
-  #asp;
-
+class AffItem extends BaseItem {
   /**
-   * @param {Object} imgobj - Objet image à afficher
-   * @param {string} asp - Classe CSS à appliquer
+   * @param {Object} imgData - Objet image à afficher
+   * @param {string} aspectClass - Classe CSS à appliquer
    */
-  constructor(imgobj, asp) {
-    this.#imgobj = imgobj;
-    this.#asp = asp;
-    this.#el_image = cloneTemplate("photos").firstElementChild;
-
-    // Configuration de l'élément image
-    this.#el_image.setAttribute("src", this.#imgobj.src);
-    this.#el_image.setAttribute("alt", this.#imgobj.an);
-    this.#el_image.setAttribute("class", this.#asp);
-    this.#el_image.dataset.an = this.#imgobj.an;
-    this.#el_image.dataset.num = this.#imgobj.num;
-
-    // Ajouter l'attribut seuil si nécessaire
-    if (this.#imgobj.seuil !== "") {
-      this.#el_image.dataset.seuil = this.#imgobj.seuil;
-    }
-  }
-
-  /**
-   * Retourne l'élément image créé
-   * @return {HTMLElement}
-   */
-  get retourImage() {
-    return this.#el_image;
+  constructor(imgData, aspectClass) {
+    super(imgData, "photos", "img"); // Utilise le template "photos" et attend une balise <img>
+    this._element.setAttribute("src", this._data.src);
+    this._element.setAttribute("alt", this._data.an); // Utiliser une description plus utile si possible
+    this._element.setAttribute("class", aspectClass);
+    // La configuration commune (dataset) est gérée par le constructeur parent
   }
 }
 
 /**
- * Classe pour créer un élément de date
+ * Classe pour créer un élément de date (lien/bouton)
  * @class DateItem
+ * @extends BaseItem
  */
-class DateItem {
-  #dateObj;
-  #dateElt;
-
+class DateItem extends BaseItem {
   /**
-   * @param {Object} dateObj - Objet contenant les informations de date
+   * @param {Object} dateData - Objet contenant les informations de date
    */
-  constructor(dateObj) {
-    this.#dateObj = dateObj;
-    this.#dateElt = cloneTemplate("liendate").firstElementChild;
-
-    // Configuration de l'élément date
-    this.#dateElt.dataset.an = this.#dateObj.an;
-    this.#dateElt.dataset.num = this.#dateObj.num;
-    this.#dateElt.textContent = this.#dateObj.an;
-
-    // Ajouter l'attribut seuil si nécessaire
-    if (this.#dateObj.seuil !== "") {
-      this.#dateElt.dataset.seuil = this.#dateObj.an;
-    }
-  }
-
-  /**
-   * Retourne l'élément date créé
-   * @return {HTMLElement}
-   */
-  get retourDateItem() {
-    return this.#dateElt;
+  constructor(dateData) {
+    // Supposons que le template "liendate" contient un <button> ou <a>
+    // Ajustez "button" si c'est une autre balise (ex: "a")
+    super(dateData, "liendate", "li");
+    this._element.textContent = this._data.an;
+    // La configuration commune (dataset) est gérée par le constructeur parent
   }
 }
