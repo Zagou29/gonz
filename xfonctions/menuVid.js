@@ -93,22 +93,17 @@ class MenuItem {
   liste;
   constructor(box) {
     this.#boxList = box;
-    this.#boxItem = this.#boxList[0].clas;
     this.#boxElement = cloneTemplate("menuBlocs").firstElementChild;
-    this.#boxElement
-      .querySelector(".blogs")
-      .setAttribute("src", this.#boxList[0].src);
-    this.#boxElement
-      .querySelector(".blogs")
-      .setAttribute("alt", this.#boxList[0].detail);
-    this.#boxElement
-      .querySelector(".blogs")
-      .classList.add(this.#boxList[0].clas.slice(1, 4));
-    this.#boxElement.querySelector(".ti_blog").textContent =
-      this.#boxList[0].detail;
-    this.#boxElement.querySelector(".groupe").textContent =
-      this.#boxList[0].groupe;
-    this.#boxElement.querySelector(".ti_blog").dataset.select = this.#boxItem;
+    const firstItem = this.#boxList[0];
+    this.#boxItem = firstItem.clas;
+    const imgElement = this.#boxElement.querySelector(".blogs");
+    const tiBlogElement = this.#boxElement.querySelector(".ti_blog");
+    imgElement.setAttribute("src", firstItem.src);
+    imgElement.setAttribute("alt", firstItem.detail);
+    imgElement.classList.add(firstItem.clas.slice(1, 4));
+    tiBlogElement.textContent = firstItem.detail;
+    tiBlogElement.dataset.select = this.#boxItem;
+    this.#boxElement.querySelector(".groupe").textContent = firstItem.groupe;
     this.liste = new DocumentFragment();
     this.#boxList
       .sort((a, b) => b.tv.localeCompare(a.tv))
