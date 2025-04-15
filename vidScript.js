@@ -132,7 +132,7 @@ const ecoute_barre = (e) => {
  * @returns {number} Nombre de vidéos affichées
  */
 const afficheLiens = (param, year, tempId) => {
-  dom.ecVideos.innerHTML = "";
+  dom.ecVideos.replaceChildren();
   state.vidClass.affVideos(dom.ecVideos, param, year, tempId);
   //si une seule video, on ne fait rien
   const nbVideos = state.vidClass.retourVideo.length;
@@ -190,8 +190,9 @@ const fermerBlockLinks = () => {
       setHeight(blocLinks, "0px");
       blocLinks.removeEventListener("click", trans);
       blocLinks.removeEventListener("click", aff_Videos);
-      dom.ecVideos.innerHTML = "";
-      dom.barBox.innerHTML = "";
+      dom.ecVideos.replaceChildren()
+      dom.barBox.replaceChildren()
+      
       dom.titre.textContent = "";
       affEffRetour("-");
       state.blockLinks_open = false;
