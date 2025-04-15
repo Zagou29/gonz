@@ -76,7 +76,6 @@ body {
   padding: 1rem 0;
   height: var(--menu-height);
   background-color: var(--color-background);
-  box-shadow: var(--color-shadow-light);
 }
 
 .barBox {
