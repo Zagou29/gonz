@@ -216,12 +216,6 @@ body {
   padding: 0.5rem;
 }
 
-/* Mise en forme des videos */
-.videos {
-  display: none;
-  grid-area: video;
-}
-
 .enveloppe {
   grid-area: main;
   padding: 2px 0 5px 0;
@@ -408,7 +402,6 @@ input:checked + .diaLabel {
   text-shadow: 1px 1px 2px black;
   text-align: center;
 }
-/* A supprimer si pas d'affichage */
 .groupe {
   position: absolute;
   top: -20px;
