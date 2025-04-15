@@ -39,13 +39,6 @@ html {
   display: none;
 }
 
-/* .scrbar {
-  -ms-overflow-style: none;  
-  scrollbar-width: none;   
-} */
-/* .scrbar::-webkit-scrollbar {
-  display: none;
-} */
 
 body {
   color: var(--color-text);
@@ -61,7 +54,6 @@ body {
   grid-template-areas:
     "menu"
     "main";
-  background-repeat: no-repeat;
 }
 
 #zagVideos {
