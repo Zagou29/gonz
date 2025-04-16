@@ -75,7 +75,6 @@ export class Affimg {
   creeimages(imagesContainer) {
     this.#imagesContainer = imagesContainer;
     // Vider le conteneur avant d'ajouter (optionnel, mais souvent utile)
-    this.#imagesContainer.innerHTML = "";
     this.#imagesContainer.append(this.#imagesFragment);
     return this;
   }
@@ -88,7 +87,6 @@ export class Affimg {
   creedates(datesContainer) {
     this.#datesContainer = datesContainer;
     // Vider le conteneur avant d'ajouter (optionnel, mais souvent utile)
-    this.#datesContainer.innerHTML = "";
     this.#datesContainer.append(this.#datesFragment);
     return this;
   }
