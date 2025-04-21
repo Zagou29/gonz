@@ -9,30 +9,36 @@ import { navig, ordi_OS } from "./xfonctions/nav_os.js";
 const DELAI_MIN = 1000; // en millisecondes
 const DELAI_MAX = 4000; // en millisecondes
 const PAS_DELAI = 500; // en millisecondes
-
-/*  prendre en charge les boxes de VidCript et le sens des dates */
-const val_trans = localStorage.getItem("menu") || "photo";
-const sens_date = localStorage.getItem("sens_dates"); /* sens dates */
-let delai = localStorage.getItem("delai") || 1500; /* sens dates */
-let asp = localStorage.getItem("asp_images"); /* sens dates */
-let pos_img = localStorage.getItem("pos_img");
-let tab_titre = [];
-let list_img = [];
-let lien_an = [];
-let sensSon = 1; /* son "on" au départ des diapos*/
-let zoome = false; /* mode 'image' au départ */
-let yimg = 0; /* position depart des images */
-let nId; /* initialiser setInterval ->deplac hor du diapor */
-let k = 1; /* k images deroulées par le diaporama */
-let audio;// choisir le son des diaporamas
-let skip_img;
-const params = {
-  menu: val_trans, // Utiliser la valeur actuelle du menu
-  asp_images: asp,//aspect mages
-  delai: delai,//delai diapos en secondes
-  pos_img: pos_img, // Utiliser la position calculée
-  sens_dates: sens_date, 
+const KEY_CODES = {
+  gauche: "ArrowLeft",
+  droite: "ArrowRight",
+  haut: "ArrowUp",
+  bas: "ArrowDown",
+  retour: "Enter",
+  fs: "KeyF",
+  space: "Space",
+  plus: "Slash",
+  moins: "Equal",
+  son: "KeyS",
 };
+const stats = {
+  val_trans: localStorage.getItem("menu") || "photo",
+  delai: localStorage.getItem("delai") || 1500,
+  asp: localStorage.getItem("asp_images"),
+  pos_img: localStorage.getItem("pos_img"),
+  sens_date: localStorage.getItem("sens_dates"),
+  tab_titre: [],
+  list_img: [],
+  lien_an: [],
+  sensSon: 1,
+  zoome: false,
+  yimg: 0,
+  nId: null,
+  k: 1,
+  audio: null,
+  skip_img: null,
+};
+
 /* Selecteurs DOM */
 const domElements = {
   hamb: document.querySelector(".hamburger"),
@@ -59,7 +65,7 @@ const domElements = {
 /* Initialisation de l'audio */
 const initAudio = () => {
   const rnd = (max) => Math.floor(Math.random() * max) + 1;
-  audio = new Audio(`./audio/audio_${rnd(11)}.mp3`);
+  stats.audio = new Audio(`./audio/audio_${rnd(11)}.mp3`);
 };
 /* Debouncing function */
 function debounce(fn, delay) {
@@ -82,11 +88,11 @@ if (navig().safari && ordi_OS().ios && !navig().chromeIos) {
     <span class="material-icons-outlined">cancel</span>
     </button>`
   );
-} 
+}
 //parametres à stocker sur localStorage et rediriger vers photos.html
-const setLocalStorageAndRedirect = (params) => {
-  Object.keys(params).forEach((key) => {
-    localStorage.setItem(key, params[key]);
+const setLocalStorageAndRedirect = (par) => {
+  Object.keys(par).forEach((key) => {
+    localStorage.setItem(key, par[key]);
   });
   window.location.href = "./photos.html";
 };
@@ -95,7 +101,7 @@ const switchArrowDirection = () => {
   const updateArrow = document.querySelector(".update");
   const historyArrow = document.querySelector(".history");
 
-  if (sens_date === "-1") {
+  if (stats.sens_date === "-1") {
     updateArrow.classList.remove("eff_fl");
     historyArrow.classList.add("eff_fl");
   } else {
@@ -118,7 +124,7 @@ const inverser = (liste, sens) => {
 /* On/off de la musique et afficher les icones sons */
 const play_pause = (sens) => {
   const shouldPlay = sens === 1;
-  audio[shouldPlay ? "play" : "pause"]();
+  stats.audio[shouldPlay ? "play" : "pause"]();
   domElements.mute.classList.toggle("eff_fl", shouldPlay);
   domElements.son.classList.toggle("eff_fl", !shouldPlay);
   return sens;
@@ -126,10 +132,10 @@ const play_pause = (sens) => {
 
 /* arreter la musique  et remettre à son on*/
 const clear_music = () => {
-  clearInterval(nId);
-  nId = null;
-  audio.currentTime = 0;
-  audio.pause();
+  clearInterval(stats.nId);
+  stats.nId = null;
+  stats.audio.currentTime = 0;
+  stats.audio.pause();
   domElements.mute.classList.add("eff_fl");
   domElements.son.classList.remove("eff_fl");
   domElements.diap.classList.remove("diapo_on");
@@ -172,31 +178,31 @@ const dep_hor = (box, sens) => {
     left: box.offsetWidth * sens,
     behavior: "instant",
   });
-  k++;
+  stats.k++;
   /* boucle audio */
-  if (k % Math.floor(audio.duration / 1.5) === 0) {
-    audio.currentTime = 0;
+  if (stats.k % Math.floor(stats.audio.duration / 1.5) === 0) {
+    stats.audio.currentTime = 0;
   }
 };
 /* deplacement relatif vertical des images */
 const dep_vert = (sens) => {
   window.scrollBy({
-    top: list_img[0].getBoundingClientRect().height * sens,
+    top: stats.list_img[0].getBoundingClientRect().height * sens,
     behavior: "instant",
   });
 };
 /* toggle lancer / arreter diapos et icone diapo si l'image n'est pas la dernière*/
 const toggleDiapo = (image) => {
   if (
-    list_img.length - 1 >
-    -list_img[0].getBoundingClientRect().x / image.offsetWidth
+    stats.list_img.length - 1 >
+    -stats.list_img[0].getBoundingClientRect().x / image.offsetWidth
   ) {
     domElements.diap.classList.toggle("diapo_on");
-    if (!nId && zoome) {
-      nId = setInterval(() => {
+    if (!stats.nId && stats.zoome) {
+      stats.nId = setInterval(() => {
         dep_hor(image, 1);
-      }, delai);
-      audio.play();
+      }, stats.delai);
+      stats.audio.play();
     } else {
       clear_music();
     }
@@ -206,22 +212,21 @@ const toggleDiapo = (image) => {
 const diaporama = (image, diap_ic) => {
   diap_ic.querySelectorAll("*").forEach((el, index) => {
     el.addEventListener("click", (e) => {
-      e.preventDefault();
+      // e.preventDefault();
       switch (index) {
         case 0:
           toggleDiapo(image);
           break;
         case 1:
-          if (nId === null) break;
+          if (stats.nId === null) break;
           play_pause(1);
           break;
         case 2:
-          if (nId === null) break;
+          if (stats.nId === null) break;
           play_pause(0);
           break;
         case 3:
-          delai = delaiChange(delai, +1);
-          console.log(delai);
+          stats.delai = delaiChange(stats.delai, +1);
           break;
       }
     });
@@ -232,7 +237,7 @@ const diaporama = (image, diap_ic) => {
 const av_ar = (image, fl) => {
   fl.forEach((el, index) => {
     el.addEventListener("click", (e) => {
-      e.preventDefault();
+      // e.preventDefault();
       switch (index) {
         /** hamburger boxes dates */
         case 0:
@@ -241,12 +246,12 @@ const av_ar = (image, fl) => {
           break;
         case 1:
           // inverser l'aspect, puis capturer la situation verticale des images
-          asp = asp === "show" ? "show show_mod" : "show";
-          const pos_img = -domElements.boiteImg.getBoundingClientRect().top;
+          stats.asp = stats.asp === "show" ? "show show_mod" : "show";
+          const position = -domElements.boiteImg.getBoundingClientRect().top;
           setLocalStorageAndRedirect({
-            asp_images: asp,
-            delai: delai,
-            pos_img: pos_img,
+            asp: stats.asp,
+            delai: stats.delai,
+            pos_img: position,
           });
           break;
         /* fleche gauche*/
@@ -267,8 +272,8 @@ const av_ar = (image, fl) => {
         /** inverser le sens des images */
         case 5:
           setLocalStorageAndRedirect({
-            delai: delai,
-            sens_dates: sens_date === "1" ? "-1" : "1",
+            delai: stats.delai,
+            sens_date: stats.sens_date === "1" ? "-1" : "1",
             pos_img: 0,
           });
           break;
@@ -279,7 +284,7 @@ const av_ar = (image, fl) => {
 
 /* augmenter, diminuer le delai */
 const delaiChange = (del, sens) => {
-  if (!zoome) return del;
+  if (!stats.zoome) return del;
   del === DELAI_MAX ? (del = DELAI_MIN) : (del = del + PAS_DELAI * sens);
   del = Math.max(DELAI_MIN, del);
   del = Math.min(DELAI_MAX, del);
@@ -293,7 +298,7 @@ const drGa = (
   { gauche, droite, haut, bas, retour, fs, bar, plus, moins, son }
 ) => {
   document.addEventListener("keydown", (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     /* image de droite ou image de gauche */
     switch (e.code) {
       /* aller à position gauche de l'image- largeur de l'image*/
@@ -313,7 +318,7 @@ const drGa = (
         break;
       /* retour à Index.html ou au mur d'images*/
       case retour:
-        if (zoome) {
+        if (stats.zoome) {
           zoom(e);
         } else {
           localStorage.clear();
@@ -326,17 +331,17 @@ const drGa = (
         break;
       /* barre d'espace => Diaporama */
 
-      case bar:
+      case space:
         toggleDiapo(image);
         break;
       case plus:
-        delai = delaiChange(delai, +1);
+        stats.delai = delaiChange(delai, +1);
         break;
       case moins:
-        delai = delaiChange(delai, -1);
+        stats.delai = delaiChange(delai, -1);
         break;
       case son:
-        if (nId) sensSon = toggleSon(sensSon);
+        if (stats.nId) stats.sensSon = toggleSon(stats.sensSon);
     }
   });
 };
@@ -349,15 +354,15 @@ const zoom = (e) => {
   /** si on clique sur une des icones fleches, ou image vide sort de cet ecouteur */
   if (e.target.matches(".bloc") || e.target.matches(".image")) return;
 
-  zoome = !zoome;
+  stats.zoome = !stats.zoome;
   /* sortir de fullscreen et arreter la musique*/
   stop_fullScreen();
   clear_music();
   alert(); /* supprime le "f" si 'lon revient dans la galerie d'image immediatement*/
   /* capter la hauteur de l'image dans le viewport  avant de cliquer*/
-  if (zoome) yimg = e.target.getBoundingClientRect().top;
-  clearInterval(nId);
-  nId = null;
+  if (stats.zoome) stats.yimg = e.target.getBoundingClientRect().top;
+  clearInterval(stats.nId);
+  stats.nId = null;
   /* ramener toutes les images en plein ecran et defilement horizontal */
   domElements.boiteImg.classList.toggle("image_mod");
   domElements.fix_fond.classList.toggle("envel_mod");
@@ -369,7 +374,7 @@ const zoom = (e) => {
   domElements.showMod.classList.toggle("invis");
   domElements.fl_foot.forEach((fl) => fl.classList.toggle("eff_fl"));
   /* ------ gestion du cas ou l'ecran est en class "".image_mod" */
-  if (zoome) {
+  if (stats.zoome) {
     /* aller sur l'image sur laquelle on a cliqué */
     domElements.boiteImg.scrollTo({ left: e.target.offsetLeft });
     /* refermer hamb et menu de gauche */
@@ -382,7 +387,7 @@ const zoom = (e) => {
   } else {
     domElements.full.classList.remove("showfl");
     window.scrollTo({
-      top: e.target.offsetTop - yimg,
+      top: e.target.offsetTop - stats.yimg,
       behavior: "instant",
     });
   }
@@ -408,10 +413,11 @@ const affiche_date = (entries) => {
 /*  fonction pour placer l'image verticalement selon l'année*/
 const scrollImg = (e) => {
   window.scrollTo({
-    top: list_img[e.target.dataset.num].offsetTop,
+    top: stats.list_img[e.target.dataset.num].offsetTop,
     behavior: "instant",
   });
-  domElements.aff_an.textContent = list_img[e.target.dataset.num].dataset.an;
+  domElements.aff_an.textContent =
+    stats.list_img[e.target.dataset.num].dataset.an;
 };
 
 const posit_annee = () => {
@@ -448,8 +454,8 @@ const handleMenuClick = (e) => {
   }
   // choisir le idmenu et positionner à l'image 0
   setLocalStorageAndRedirect({
-    menu: target.dataset.idmenu,
-    sens_dates: "1",
+    val_trans: target.dataset.idmenu,
+    sens_date: "1",
     pos_img: 0,
   });
 };
@@ -460,18 +466,7 @@ const initEventListeners = () => {
   domElements.boiteImg.addEventListener("scroll", showStop);
   av_ar(domElements.boiteImg, domElements.ret_fl);
   diaporama(domElements.boiteImg, domElements.diap);
-  drGa(domElements.boiteImg, {
-    gauche: "ArrowLeft",
-    droite: "ArrowRight",
-    haut: "ArrowUp",
-    bas: "ArrowDown",
-    retour: "Enter",
-    fs: "KeyF",
-    bar: "Space",
-    plus: "Slash",
-    moins: "Equal",
-    son: "KeyS",
-  });
+  drGa(domElements.boiteImg, KEY_CODES);
 };
 /* Initialisation ----------------------------*/
 (async () => {
@@ -485,31 +480,31 @@ const initEventListeners = () => {
     ]);
     const boxes = new Menubox(menuBoxes.filter((obj) => obj.menu === "ph"));
     boxes.apLienMenu(domElements.menu, "-1"); //toujours sens chronologique
-    tab_titre = boxes.returnBoxes;
+    stats.tab_titre = boxes.returnBoxes;
 
     /** 1 recent vers vieux, -1 le contraire */
-    inverser(listImages, sens_date);
+    inverser(listImages, stats.sens_date);
     /** si pas le json total, filtrer par val_trans */
     const listchoisie =
-      val_trans !== "photo"
-        ? listImages.filter((obj) => obj.class === val_trans)
+      stats.val_trans !== "photo"
+        ? listImages.filter((obj) => obj.class === stats.val_trans)
         : listImages;
 
     /** charger dans la classe, créer les liens img et les liens dates */
-    const images = new Affimg(listchoisie, val_trans, asp);
+    const images = new Affimg(listchoisie, stats.val_trans, stats.asp);
     images.creeimages(domElements.boiteImg);
     images.creedates(domElements.cont);
-    list_img = [...domElements.boiteImg.querySelectorAll(".show")];
+    stats.list_img = [...domElements.boiteImg.querySelectorAll(".show")];
     /** ne faire apparaitre qu'une date sur 4 pour "photo" et sur 3 pour les autres */
-    lien_an = [...domElements.cont.querySelectorAll(".liens")];
-    val_trans === "photo" ? (skip_img = 3) : (skip_img = 2);
-    lien_an.forEach((dat, index) => {
-      if (index % skip_img !== 0) dat.setAttribute("data-seuil", "");
+    stats.lien_an = [...domElements.cont.querySelectorAll(".liens")];
+    stats.val_trans === "photo" ? (stats.skip_img = 3) : (stats.skip_img = 2);
+    stats.lien_an.forEach((dat, index) => {
+      if (index % stats.skip_img !== 0) dat.setAttribute("data-seuil", "");
     });
 
     /** titre de la page vient du tableau des titres*/
-    domElements.val.textContent = tab_titre.find(
-      (val) => val.ph === val_trans
+    domElements.val.textContent = stats.tab_titre.find(
+      (val) => val.ph === stats.val_trans
     ).spText;
   } catch (e) {
     const alertEl = createElement("div", {
@@ -522,7 +517,7 @@ const initEventListeners = () => {
   }
   domElements.mute.classList.add("eff_fl");
   domElements.son.classList.remove("eff_fl");
-  domElements.aff_an.textContent = list_img[0].dataset.an;
+  domElements.aff_an.textContent = stats.list_img[0].dataset.an;
 
   /* un observer pour afficher les dates dans la timeline verticale */
   let options = {
@@ -531,14 +526,14 @@ const initEventListeners = () => {
     threshold: 0,
   };
   const guette = new IntersectionObserver(affiche_date, options);
-  list_img.forEach((img) => guette.observe(img));
+  stats.list_img.forEach((img) => guette.observe(img));
 
   /* positionner à l'année choisie sur le coté droit------------------- */
   posit_annee();
   domElements.menu
-    .querySelector(`[data-idmenu="${val_trans}"`)
+    .querySelector(`[data-idmenu="${stats.val_trans}"`)
     .classList.add("active");
-  posit_image(pos_img);
-  domElements.duree.textContent = `${delai / 1000} sec`;
+  posit_image(stats.pos_img);
+  domElements.duree.textContent = `${stats.delai / 1000} sec`;
   initEventListeners();
 })();
