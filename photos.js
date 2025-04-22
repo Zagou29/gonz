@@ -16,7 +16,7 @@ const KEY_CODES = {
   bas: "ArrowDown",
   retour: "Enter",
   fs: "KeyF",
-  space: "Space",
+  bar: "Space",
   plus: "Slash",
   moins: "Equal",
   son: "KeyS",
@@ -331,14 +331,14 @@ const drGa = (
         break;
       /* barre d'espace => Diaporama */
 
-      case space:
+      case bar:
         toggleDiapo(image);
         break;
       case plus:
-        stats.delai = delaiChange(delai, +1);
+        stats.delai = delaiChange(stats.delai, +1);
         break;
       case moins:
-        stats.delai = delaiChange(delai, -1);
+        stats.delai = delaiChange(stats.delai, -1);
         break;
       case son:
         if (stats.nId) stats.sensSon = toggleSon(stats.sensSon);
