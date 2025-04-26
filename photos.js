@@ -22,7 +22,7 @@ const KEY_CODES = {
   son: "KeyS",
 };
 const stats = {
-  val_trans: localStorage.getItem("menu") || "photo",
+  val_trans: localStorage.getItem("val_trans") || "photo",
   delai: localStorage.getItem("delai") || 1500,
   asp: localStorage.getItem("asp_images"),
   pos_img: localStorage.getItem("pos_img"),
@@ -249,7 +249,7 @@ const av_ar = (image, fl) => {
           stats.asp = stats.asp === "show" ? "show show_mod" : "show";
           const position = -domElements.boiteImg.getBoundingClientRect().top;
           setLocalStorageAndRedirect({
-            asp: stats.asp,
+            asp_images: stats.asp,
             delai: stats.delai,
             pos_img: position,
           });
@@ -273,7 +273,7 @@ const av_ar = (image, fl) => {
         case 5:
           setLocalStorageAndRedirect({
             delai: stats.delai,
-            sens_date: stats.sens_date === "1" ? "-1" : "1",
+            sens_dates: stats.sens_date === "1" ? "-1" : "1",
             pos_img: 0,
           });
           break;
@@ -455,7 +455,7 @@ const handleMenuClick = (e) => {
   // choisir le idmenu et positionner à l'image 0
   setLocalStorageAndRedirect({
     val_trans: target.dataset.idmenu,
-    sens_date: "1",
+    sens_dates: "1",
     pos_img: 0,
   });
 };

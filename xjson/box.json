@@ -41,7 +41,7 @@
   },
   {
     "menu": "ph",
-    "ph": "cous",
+    "ph": "amer",
     "href": "",
     "src": "./box_img/cousinsus.webp",
     "spText": "Américains",
@@ -49,7 +49,7 @@
   },
   {
     "menu": "ph",
-    "ph": "a0070",
+    "ph": "a0069",
     "href": "",
     "src": "./box_img/enfants.webp",
     "spText": "Années 00/60",
@@ -57,7 +57,7 @@
   },
   {
     "menu": "ph",
-    "ph": "a708",
+    "ph": "a7079",
     "href": "",
     "src": "./box_img/annees70.webp",
     "spText": "Années 1970",
@@ -65,7 +65,7 @@
   },
   {
     "menu": "ph",
-    "ph": "a80",
+    "ph": "a8089",
     "href": "",
     "src": "./box_img/annees80.webp",
     "spText": "Années 1980",
@@ -73,7 +73,7 @@
   },
   {
     "menu": "ph",
-    "ph": "a90",
+    "ph": "a9099",
     "href": "",
     "src": "./box_img/annees90.webp",
     "spText": "Années 1990",
