@@ -12,6 +12,7 @@ const SELECTORS = {
   avideo: "#avideo",
   ePhotos: ".ePhotos",
   eBlogs: ".eBlogs",
+  blocLinks: ".bloc-links",
 };
 // Cache des éléments DOM principaux
 const dom = {
@@ -132,10 +133,11 @@ const ecoute_barre = (e) => {
  * @returns {number} Nombre de vidéos affichées
  */
 const afficheLiens = (param, year, tempId) => {
+  if (!param || !state.vidClass) return 0;
   dom.ecVideos.replaceChildren();
   state.vidClass.affVideos(dom.ecVideos, param, year, tempId);
   //si une seule video, on ne fait rien
-  const nbVideos = state.vidClass.retourVideo.length;
+  const nbVideos = state.vidClass.retourVideo.length || 0;
   state.videoObserver.disconnect();
   if (dom.ecVideos.innerHTML && nbVideos > 1) {
     state.vidClass.affBar(dom.barBox);
@@ -162,7 +164,10 @@ const aff_Videos = (e) => {
     mob().mob || videoType.includes(".pll") ? "ytFrame" : "ytThumb";
   // ferme les menus, sauf quand on choisi Vieos ou Diapos and Années
   if (!IGNORE_TAGS.includes(spanChoisi.tagName)) {
-    setHeight(activeMenu.parentElement.querySelector(".bloc-links"), "0px");
+    setHeight(
+      activeMenu.parentElement.querySelector(SELECTORS.blocLinks),
+      "0px"
+    );
   }
   const nbVideos = afficheLiens(videoType, year, tempId);
   dom.titre.textContent = nbVideos ? spanChoisi.textContent : "";
@@ -180,19 +185,21 @@ const trans = (e) => {
   localStorage.setItem("asp_images", "show");
   window.location.href = "./photos.html";
 };
-
+const cleanupEventListeners = (element) => {
+  element.removeEventListener("click", trans);
+  element.removeEventListener("click", aff_Videos);
+};
 const fermerBlockLinks = () => {
   if (!state.blockLinks_open && !dom.ecVideos.innerHTML) return;
   const menus = dom.menu.querySelectorAll(".titMenu");
   menus.forEach((sp) => {
     if (sp.classList.contains("activeMenu")) {
-      const blocLinks = sp.parentElement.querySelector(".bloc-links");
-      setHeight(blocLinks, "0px");
-      blocLinks.removeEventListener("click", trans);
-      blocLinks.removeEventListener("click", aff_Videos);
-      dom.ecVideos.replaceChildren()
-      dom.barBox.replaceChildren()
-      
+      const bloclinks = sp.parentElement.querySelector(SELECTORS.blocLinks);
+      setHeight(bloclinks, "0px");
+      cleanupEventListeners(bloclinks);
+      dom.ecVideos.replaceChildren();
+      dom.barBox.replaceChildren();
+
       dom.titre.textContent = "";
       affEffRetour("-");
       state.blockLinks_open = false;
@@ -261,7 +268,14 @@ const setupObserver = () => {
     ["menu_fam", "menu_voy", "menu_pll"].forEach((selector) =>
       state.vidMenu.affBoxes(document.querySelector(`.${selector}`))
     );
-
+   
+    const attachEventToDropdown = (dropCour) => {
+      if (dropCour.querySelector(SELECTORS.ePhotos)) {
+        dropCour.addEventListener("click", trans);
+      } else if (!dropCour.querySelector(SELECTORS.eBlogs)) {
+        dropCour.addEventListener("click", aff_Videos);
+      }
+    };
     // ----------- Gestion des événements -----------
 
     //Écoute du clic sur les menus pour ouvrir / fermer les dropdowns
@@ -269,15 +283,14 @@ const setupObserver = () => {
       const spanChoisi = e.target;
       if (spanChoisi.classList.contains("titMenu")) {
         fermerBlockLinks();
-        const dropCour = spanChoisi.parentElement.querySelector(".bloc-links");
+        const dropCour = spanChoisi.parentElement.querySelector(
+          SELECTORS.blocLinks
+        );
         setHeight(dropCour, dropCour.scrollHeight + "px");
         state.blockLinks_open = true;
         spanChoisi.classList.add("activeMenu");
-        if (dropCour.querySelector(SELECTORS.ePhotos)) {
-          dropCour.addEventListener("click", trans);
-        } else if (!dropCour.querySelector(SELECTORS.eBlogs)) {
-          dropCour.addEventListener("click", aff_Videos);
-        }
+        attachEventToDropdown (dropCour)
+        
       }
     });
     // Initialiser les événements et l'observer
