@@ -38,6 +38,21 @@ const stats = {
   audio: null,
   skip_img: null,
 };
+const MENU_ACTIONS = {
+  HAMBURGER: 0,
+  RATIO: 1,
+  ARROW_LEFT: 2,
+  ARROW_RIGHT: 3,
+  RETURN: 4,
+  INVERT: 5,
+};
+
+const DIAPO_ACTIONS = {
+  TOGGLE_DIAPO: 0,
+  PLAY: 1,
+  PAUSE: 2,
+  SPEED_UP: 3,
+};
 
 /* Selecteurs DOM */
 const domElements = {
@@ -66,6 +81,11 @@ const domElements = {
 const initAudio = () => {
   const rnd = (max) => Math.floor(Math.random() * max) + 1;
   stats.audio = new Audio(`./audio/audio_${rnd(11)}.mp3`);
+  // Gestion propre de la boucle
+  stats.audio.addEventListener("ended", () => {
+    stats.audio.currentTime = 0;
+    stats.audio.play();
+  });
 };
 /* Debouncing function */
 function debounce(fn, delay) {
@@ -179,10 +199,6 @@ const dep_hor = (box, sens) => {
     behavior: "instant",
   });
   stats.k++;
-  /* boucle audio */
-  if (stats.k % Math.floor(stats.audio.duration / 1.5) === 0) {
-    stats.audio.currentTime = 0;
-  }
 };
 /* deplacement relatif vertical des images */
 const dep_vert = (sens) => {
@@ -214,24 +230,24 @@ const diaporama = (image, diap_ic) => {
     el.addEventListener("click", (e) => {
       // e.preventDefault();
       switch (index) {
-        case 0:
+        case DIAPO_ACTIONS.TOGGLE_DIAPO:
           toggleDiapo(image);
           break;
-        case 1:
+        case DIAPO_ACTIONS.PLAY:
           if (stats.nId === null) break;
           play_pause(1);
           break;
-        case 2:
+        case DIAPO_ACTIONS.PAUSE:
           if (stats.nId === null) break;
           play_pause(0);
           break;
-        case 3:
+        case DIAPO_ACTIONS.SPEED_UP:
           stats.delai = delaiChange(stats.delai, +1);
           break;
       }
     });
   });
-};
+}; 
 
 /* ---utilisation des icones menu, ratio, retour, et inverser image*/
 const av_ar = (image, fl) => {
@@ -240,11 +256,11 @@ const av_ar = (image, fl) => {
       // e.preventDefault();
       switch (index) {
         /** hamburger boxes dates */
-        case 0:
+        case MENU_ACTIONS.HAMBURGER:
           domElements.hamb.classList.toggle("open");
           domElements.menu.classList.toggle("open");
           break;
-        case 1:
+        case MENU_ACTIONS.RATIO:
           // inverser l'aspect, puis capturer la situation verticale des images
           stats.asp = stats.asp === "show" ? "show show_mod" : "show";
           const position = -domElements.boiteImg.getBoundingClientRect().top;
@@ -255,22 +271,22 @@ const av_ar = (image, fl) => {
           });
           break;
         /* fleche gauche*/
-        case 2:
+        case MENU_ACTIONS.ARROW_LEFT:
           clear_music();
           dep_hor(image, -1);
           break;
         /* fleche droite */
-        case 3:
+        case MENU_ACTIONS.ARROW_RIGHT:
           clear_music();
           dep_hor(image, 1);
           break;
         /* retour*/
-        case 4:
+        case MENU_ACTIONS.RETURN:
           localStorage.clear();
           window.location = "./index.html";
           break;
         /** inverser le sens des images */
-        case 5:
+        case MENU_ACTIONS.INVERT:
           setLocalStorageAndRedirect({
             delai: stats.delai,
             sens_dates: stats.sens_date === "1" ? "-1" : "1",
@@ -281,7 +297,6 @@ const av_ar = (image, fl) => {
     });
   });
 };
-
 /* augmenter, diminuer le delai */
 const delaiChange = (del, sens) => {
   if (!stats.zoome) return del;
