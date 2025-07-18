@@ -247,10 +247,11 @@ const diaporama = (image, diap_ic) => {
       }
     });
   });
-}; 
+};
 
 /* ---utilisation des icones menu, ratio, retour, et inverser image*/
 const av_ar = (image, fl) => {
+
   fl.forEach((el, index) => {
     el.addEventListener("click", (e) => {
       // e.preventDefault();
@@ -263,11 +264,10 @@ const av_ar = (image, fl) => {
         case MENU_ACTIONS.RATIO:
           // inverser l'aspect, puis capturer la situation verticale des images
           stats.asp = stats.asp === "show" ? "show show_mod" : "show";
-          const position = -domElements.boiteImg.getBoundingClientRect().top;
           setLocalStorageAndRedirect({
             asp_images: stats.asp,
             delai: stats.delai,
-            pos_img: position,
+            pos_img: -domElements.boiteImg.getBoundingClientRect().top,
           });
           break;
         /* fleche gauche*/
@@ -366,46 +366,60 @@ const alert = () => domElements.full.classList.remove("showfl");
 /* Zoom quand on clicke sur une image en changeant les classes */
 /* quand on arrive sur l'ecran Photo, */
 const zoom = (e) => {
-  /** si on clique sur une des icones fleches, ou image vide sort de cet ecouteur */
-  if (e.target.matches(".bloc") || e.target.matches(".image")) return;
-
+  if (shouldExitZoom(e)) return;
   stats.zoome = !stats.zoome;
-  /* sortir de fullscreen et arreter la musique*/
+  //zoome=true 
+  handleZoomToggle(e);
+  updateZoomUI(e);
+};
+
+const shouldExitZoom = (e) => {
+  return e.target.matches(".bloc") || e.target.matches(".image");
+};
+
+const handleZoomToggle = (e) => {
   stop_fullScreen();
   clear_music();
-  alert(); /* supprime le "f" si 'lon revient dans la galerie d'image immediatement*/
-  /* capter la hauteur de l'image dans le viewport  avant de cliquer*/
-  if (stats.zoome) stats.yimg = e.target.getBoundingClientRect().top;
-  clearInterval(stats.nId);
-  stats.nId = null;
-  /* ramener toutes les images en plein ecran et defilement horizontal */
+  alert();
+  if (stats.zoome) {
+     // Zoom activé;
+    stats.yimg = e.target.getBoundingClientRect().top;
+    clearInterval(stats.nId);
+    stats.nId = null;
+  }
+};
+
+const updateZoomUI = (e) => {
   domElements.boiteImg.classList.toggle("image_mod");
   domElements.fix_fond.classList.toggle("envel_mod");
-  /* montrer les fleches droite et gauche et diapo/son si zoome = true*/
   domElements.fleches.forEach((fl) => fl.classList.toggle("show_grid"));
   domElements.diap.classList.toggle("show_grid");
-  /* effacer hamb &, retour & inverser*/
   domElements.hamb.classList.toggle("invis");
   domElements.showMod.classList.toggle("invis");
   domElements.fl_foot.forEach((fl) => fl.classList.toggle("eff_fl"));
-  /* ------ gestion du cas ou l'ecran est en class "".image_mod" */
+
   if (stats.zoome) {
-    /* aller sur l'image sur laquelle on a cliqué */
-    domElements.boiteImg.scrollTo({ left: e.target.offsetLeft });
-    /* refermer hamb et menu de gauche */
-    domElements.hamb.classList.remove("open");
-    domElements.menu.classList.remove("open");
-    domElements.diap.classList.remove("diapo_on");
-    /* montrer la fleche f pour fullscreen , puis effacer en 4s*/
-    domElements.full.classList.add("showfl");
-    setTimeout(alert, 4000);
+    handleZoomIn(e);
   } else {
-    domElements.full.classList.remove("showfl");
-    window.scrollTo({
-      top: e.target.offsetTop - stats.yimg,
-      behavior: "instant",
-    });
+    handleZoomOut(e);
   }
+};
+
+const handleZoomIn = (e) => {
+  domElements.boiteImg.scrollTo({ left: e.target.offsetLeft });
+  domElements.hamb.classList.remove("open");
+  domElements.menu.classList.remove("open");
+  domElements.diap.classList.remove("diapo_on");
+  domElements.full.classList.add("showfl");
+  setTimeout(alert, 4000);
+};
+
+const handleZoomOut = (e) => {
+  domElements.full.classList.remove("showfl");
+  window.scrollTo({
+    top: e.target.offsetTop - stats.yimg,
+    behavior: "instant",
+  });
 };
 
 /* afficher les années dans box-années et dans le titre année */
@@ -475,10 +489,26 @@ const handleMenuClick = (e) => {
   });
 };
 const initEventListeners = () => {
+  initScrollListeners();
+  initMenuListeners();
+  initImageListeners();
+  initKeyboardListeners();
+};
+
+const initScrollListeners = () => {
   window.addEventListener("scroll", debouncedHandleScroll);
-  domElements.menu.addEventListener("click", handleMenuClick);
-  domElements.boiteImg.addEventListener("click", zoom);
   domElements.boiteImg.addEventListener("scroll", showStop);
+};
+
+const initMenuListeners = () => {
+  domElements.menu.addEventListener("click", handleMenuClick);
+};
+
+const initImageListeners = () => {
+  domElements.boiteImg.addEventListener("click", zoom);
+};
+
+const initKeyboardListeners = () => {
   av_ar(domElements.boiteImg, domElements.ret_fl);
   diaporama(domElements.boiteImg, domElements.diap);
   drGa(domElements.boiteImg, KEY_CODES);
