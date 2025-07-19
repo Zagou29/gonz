@@ -251,7 +251,6 @@ const diaporama = (image, diap_ic) => {
 
 /* ---utilisation des icones menu, ratio, retour, et inverser image*/
 const av_ar = (image, fl) => {
-
   fl.forEach((el, index) => {
     el.addEventListener("click", (e) => {
       // e.preventDefault();
@@ -368,7 +367,7 @@ const alert = () => domElements.full.classList.remove("showfl");
 const zoom = (e) => {
   if (shouldExitZoom(e)) return;
   stats.zoome = !stats.zoome;
-  //zoome=true 
+  //zoome=true
   handleZoomToggle(e);
   updateZoomUI(e);
 };
@@ -382,7 +381,7 @@ const handleZoomToggle = (e) => {
   clear_music();
   alert();
   if (stats.zoome) {
-     // Zoom activé;
+    // Zoom activé;
     stats.yimg = e.target.getBoundingClientRect().top;
     clearInterval(stats.nId);
     stats.nId = null;
@@ -412,16 +411,20 @@ const handleZoomIn = (e) => {
   domElements.diap.classList.remove("diapo_on");
   domElements.full.classList.add("showfl");
   setTimeout(alert, 4000);
+  domElements.boiteImg.addEventListener("wheel", stopDiapo);
 };
 
 const handleZoomOut = (e) => {
   domElements.full.classList.remove("showfl");
+  domElements.boiteImg.removeEventListener("wheel", stopDiapo);
   window.scrollTo({
     top: e.target.offsetTop - stats.yimg,
     behavior: "instant",
   });
 };
-
+const stopDiapo = (e) => {
+  clear_music();
+};
 /* afficher les années dans box-années et dans le titre année */
 const affiche_date = (entries) => {
   entries.forEach((ent) => {
