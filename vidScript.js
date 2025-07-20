@@ -248,7 +248,7 @@ const setupObserver = () => {
     ]);
     const boxes = new Menubox(menuBoxesData);
     // Créer les boxes de Photos puis Blogs
-    boxes.apBox_Ph(dom.ePhotos, "ph", "1");
+    boxes.apBox_Ph(dom.ePhotos, "ph", "-1");
     boxes.apBox_Ph(dom.eBlogs, "bl", "1");
 
     /* Charger et trier la liste globale des vidéos */

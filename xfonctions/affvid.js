@@ -87,7 +87,6 @@ export class Affvid {
   #ratioI;
   /** @type {number} - Ratio du conteneur */
   #ratioW;
- 
 
   /**
    * Initialise le gestionnaire de vidéos
@@ -302,25 +301,52 @@ export class Affvid {
       return [0, 0]; // Valeurs par défaut en cas d'erreur
     }
 
-    // Récupérer les dimensions du conteneur avec marges
-    this.#wl = conteneur.clientWidth - CONFIG.DIMENSIONS.MARGE_LARGEUR;
-    this.#wh = conteneur.clientHeight - CONFIG.DIMENSIONS.MARGE_HAUTEUR;
+    const dimensions = this.#getContainerDimensions(conteneur);
+    const ratioImage = this.#getImageRatio(video);
 
-    // Définir le ratio de l'image selon le format (4:3 ou 16:9)
-    this.#ratioI =
-      video.ec === CONFIG.FORMATS.FORMAT_4_3
-        ? CONFIG.FORMATS.RATIO_4_3
-        : CONFIG.FORMATS.RATIO_16_9;
+    return this.#calculateOptimalDimensions(dimensions, ratioImage);
+  }
 
-    // Ratio du conteneur
-    this.#ratioW = this.#wl / this.#wh;
+  /**
+   * Récupère les dimensions du conteneur avec marges
+   * @param {HTMLElement} conteneur - Conteneur parent
+   * @returns {{width: number, height: number}} Dimensions du conteneur
+   * @private
+   */
+  #getContainerDimensions(conteneur) {
+    return {
+      width: conteneur.clientWidth - CONFIG.DIMENSIONS.MARGE_LARGEUR,
+      height: conteneur.clientHeight - CONFIG.DIMENSIONS.MARGE_HAUTEUR,
+    };
+  }
+  
 
-    // Si le ratio du conteneur est plus grand que celui de l'image,
-    // on ajuste la largeur en fonction de la hauteur, sinon l'inverse
-    if (this.#ratioW > this.#ratioI) {
-      return [Math.floor(this.#wh * this.#ratioI), this.#wh];
+  /**
+   * Détermine le ratio de l'image selon le format
+   * @param {VideoItem} video - Objet vidéo
+   * @returns {number} Ratio de l'image
+   * @private
+   */
+  #getImageRatio(video) {
+    return video.ec === CONFIG.FORMATS.FORMAT_4_3
+      ? CONFIG.FORMATS.RATIO_4_3
+      : CONFIG.FORMATS.RATIO_16_9;
+  }
+
+  /**
+   * Calcule les dimensions optimales selon le ratio
+   * @param {{width: number, height: number}} dimensions - Dimensions du conteneur
+   * @param {number} ratioImage - Ratio de l'image
+   * @returns {[number, number]} Dimensions optimales [largeur, hauteur]
+   * @private
+   */
+  #calculateOptimalDimensions(dimensions, ratioImage) {
+    const ratioContainer = dimensions.width / dimensions.height;
+
+    if (ratioContainer > ratioImage) {
+      return [Math.floor(dimensions.height * ratioImage), dimensions.height];
     } else {
-      return [this.#wl, Math.floor(this.#wl / this.#ratioI)];
+      return [dimensions.width, Math.floor(dimensions.width / ratioImage)];
     }
   }
 }
