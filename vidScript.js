@@ -3,7 +3,7 @@ import { fetchJSON } from "./xfonctions/api.js";
 import { createElement } from "./xfonctions/dom.js";
 import { Menubox } from "./xfonctions/menubox.js";
 import { MenuVid } from "./xfonctions/menuVid.js";
-import { Affvid } from "./xfonctions/affvid.js";
+import { Affvid } from "./xfonctions/affvid_refact.js";
 // Constantes globales pour améliorer la lisibilité
 const IGNORE_TAGS = ["LABEL", "INPUT"];
 const DROP_INCLUDE_CLASSES = ["menu", "ecranVideos"];
@@ -247,7 +247,7 @@ const setupObserver = () => {
       fetchJSON("./xjson/menusVideos.json"),
     ]);
     const boxes = new Menubox(menuBoxesData);
-    // Créer les boxes de Photos puis Blogs
+    // afficher les menus boxes de Photos puis Blogs
     boxes.apBox_Ph(dom.ePhotos, "ph", "-1");
     boxes.apBox_Ph(dom.eBlogs, "bl", "1");
 
@@ -262,13 +262,15 @@ const setupObserver = () => {
     });
     /* Initialisation des classes d'affichage */
     state.vidClass = new Affvid(vidList);
-    state.vidClass.aff_ans(dom.years);
-
+    /* afficher les boites menus fam, voy, pll */
     state.vidMenu = new MenuVid(list_menus);
     ["menu_fam", "menu_voy", "menu_pll"].forEach((selector) =>
       state.vidMenu.affBoxes(document.querySelector(`.${selector}`))
     );
-   
+    /* afficher les boites menus années */
+    state.vidClass.aff_ans(dom.years);
+
+    /* clic sur un menu: si ephotos => trans si pas eblogs => affiche videos, sinon clic sur href de blogs */
     const attachEventToDropdown = (dropCour) => {
       if (dropCour.querySelector(SELECTORS.ePhotos)) {
         dropCour.addEventListener("click", trans);
@@ -289,8 +291,7 @@ const setupObserver = () => {
         setHeight(dropCour, dropCour.scrollHeight + "px");
         state.blockLinks_open = true;
         spanChoisi.classList.add("activeMenu");
-        attachEventToDropdown (dropCour)
-        
+        attachEventToDropdown(dropCour);
       }
     });
     // Initialiser les événements et l'observer
