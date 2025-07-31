@@ -1,0 +1,102 @@
+/* Containers dropdown pour les sous menus */
+.dropdown {
+  position: absolute;
+  border-radius: 5px;
+  overflow: auto;
+  top: calc(var(--menu-height) + 2px);
+  cursor: default;
+  font-size: var(--font-size-dropdown);
+  background-color: rgba(238, 235, 227, 0.5);
+  backdrop-filter: blur(2px);
+  max-height: calc(100vh - var(--menu-height) - 15px);
+  z-index: 2;
+  box-shadow: 5px 5px 5px #00000066;
+}
+
+.decal {
+  left: 1rem;
+  width: calc(100vw - 2rem);
+}
+
+
+.bloc-links {
+  display: flex;
+  height: 0;
+  transition: height var(--transition-duration) ease-in-out;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+}
+
+.bloc-links li {
+  padding: 2px 5px;
+  list-style-type: none;
+  width: auto;
+}
+
+.bloc-links li:hover {
+  cursor: pointer;
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+/* Sous menus des dropdown */
+.sousMenuAnn {
+  display: grid;
+  grid-template-areas:
+    "a1 a1"
+    "ba ba";
+  padding: 1rem;
+}
+
+.sousMenuBlog {
+  padding: 0.5rem;
+}
+
+.sousMenuVoy > ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.checkB {
+  display: flex;
+  justify-content: space-around;
+}
+
+.a1 {
+  grid-area: a1;
+  text-align: center;
+}
+
+.ba {
+  grid-area: ba;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+/* Border les sous menus */
+.sousMenuAnn :is(ul, .checkB) {
+  border: 1px dotted var(--color-text-light);
+}
+
+label {
+  color: var(--color-text-light);
+}
+
+label:hover {
+  cursor: pointer;
+  text-shadow: 1px 1px white;
+}
+
+input {
+  display: none;
+}
+
+input:checked + .vidLabel {
+  color: hsl(240, 100%, 56%);
+}
+
+input:checked + .diaLabel {
+  color: hsl(0, 100%, 56%);
+}

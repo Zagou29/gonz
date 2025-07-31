@@ -1,0 +1,24 @@
+/* Variables CSS */
+:root {
+  --color-primary: blue;
+  --color-secondary: red;
+  --color-background: #f4f4f4;
+  --color-text: black;
+  --color-text-light: rgba(128, 128, 128, 0.8);
+  --color-highlight: gold;
+  --color-shadow: rgba(81, 81, 81, 0.479);
+  --color-shadow-light: rgba(255, 255, 255, 0.7);
+  --color-background-vid: hsla(240, 100%, 75%, 0.4);
+  --color-background-dia: hsla(0, 100%, 75%, 0.4);
+  --font-size-small: 0.7rem;
+  --font-size-medium: 1rem;
+  --font-size-large: 3rem;
+  --font-size-title: clamp(0.9rem, 2.5vw, 2rem);
+  --font-size-subtitle: clamp(1.1rem, 1.3vw, 1.4rem);
+  --font-size-dropdown: clamp(0.8rem, 1.3vw, 1.3rem);
+  --font-size-blog: clamp(0.9rem, 1vw, 1.3rem);
+  --menu-height: calc(var(--font-size-title) + 2.4rem);
+  --menu-height-mobile: calc(var(--font-size-title) + 4rem);
+  --title-offset: calc(1.2rem + var(--font-size-title));
+  --transition-duration: 0.3s;
+}

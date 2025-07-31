@@ -1,0 +1,29 @@
+/* Media queries pour responsive design */
+@media screen and (max-width: 700px) {
+  .titre {
+    position: absolute;
+    top: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .menu {
+    height: var(--menu-height-mobile);
+  }
+
+  .dropdown {
+    top: var(--menu-height-mobile);
+  }
+
+  .envIcon {
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  }
+
+  .texte {
+    display: none;
+  }
+
+  .decalR {
+    right: 5px;
+  }
+}

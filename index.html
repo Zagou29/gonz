@@ -10,9 +10,27 @@
   <meta name="description" content="Toutes les vidéos de Zagou">
   <link rel="preconnect" href="https://www.youtube.com">
   <link rel="shortcut icon" href="./box_img/Zag_icon.png" type="image/x-icon">
-  <link rel="stylesheet" href="./vidStyle.css">
-  <!-- Préchargement des ressources critiques -->
-  <link rel="preload" href="./vidStyle.css" as="style">
+
+  <!-- CSS critique - chargement immédiat -->
+  <link rel="preload" href="./css/variables.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="./css/layout.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="./css/menu.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+  <!-- CSS non-critique - chargement différé -->
+  <link rel="stylesheet" href="./css/dropdown.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="./css/video.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="./css/blog.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="./css/responsive.css" media="print" onload="this.media='all'">
+
+  <!-- Fallback pour navigateurs sans JS -->
+  <noscript>
+    <link rel="stylesheet" href="./css/dropdown.css">
+    <link rel="stylesheet" href="./css/video.css">
+    <link rel="stylesheet" href="./css/blog.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+  </noscript>
+
+  <!-- Préchargement du script -->
   <link rel="preload" href="./vidScript.js" as="script" crossorigin>
   <!-- Chargement du script principal en tant que module -->
   <script type="module" src="./vidScript.js"></script>
@@ -107,7 +125,7 @@
     </div>
     <!-- Bouton Retour et titre des sélections -->
     <button class="retour" title="Retour en haut">
-      <img class="imgRetour"  src="./box_img/retour.png" alt="Flèche retour en haut">
+      <img class="imgRetour" src="./box_img/retour.png" alt="Flèche retour en haut">
     </button>
     <span class="titre"> </span>
     <ul class="barBox">

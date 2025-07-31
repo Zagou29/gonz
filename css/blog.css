@@ -1,0 +1,95 @@
+/* Mise en forme des icones Blog */
+.envIcon {
+  display: grid;
+  gap: 0.2rem;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+
+.bloc_img {
+  display: grid;
+  padding: 0.2rem;
+  text-decoration: none;
+  aspect-ratio: 1/1;
+  font-size: var(--font-size-blog);
+  color: var(--color-highlight);
+}
+
+.texte,
+.blogs,
+.ti_blog,
+.vid_list {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+.blogs {
+  width: 100%;
+  border-radius: 10%;
+  aspect-ratio: 1 / 1;
+}
+
+.ti_blog {
+  padding-top: 1rem;
+  text-align: center;
+  text-shadow: 1px 1px 2px black;
+}
+
+.vid_list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.texte {
+  border-radius: 0px 0px 25px 25px;
+  padding: 5px;
+  opacity: 0;
+  align-self: end;
+}
+
+.ph_bl {
+  display: unset;
+  text-shadow: 1px 1px 2px black;
+  text-align: center;
+}
+
+.groupe {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  text-shadow: 1px 1px 2px black;
+}
+
+.bloc_img:hover .blogs {
+  box-shadow: 5px 5px 5px grey;
+}
+
+.detail {
+  font-size: var(--font-size-small);
+}
+
+.detail.vid {
+  color: var(--color-primary);
+}
+
+.detail.dia {
+  color: var(--color-secondary);
+}
+
+.bloc_img:hover .ti_blog {
+  cursor: pointer;
+  z-index: 2;
+}
+
+.bloc_img:hover .texte {
+  opacity: 1;
+  transition: opacity var(--transition-duration) ease-in-out;
+  background-color: hsla(0, 100%, 100%, 0.3);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.bloc_img:hover .ph_bl {
+  background-color: unset;
+}
