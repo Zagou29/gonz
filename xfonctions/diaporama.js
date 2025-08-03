@@ -17,7 +17,14 @@ export class DiaporamaManager {
       this.domElements.diap.classList.toggle("diapo_on");
       if (!this.stats.nId && this.stats.zoome) {
         this.stats.nId = setInterval(() => {
-          this.navigationManager.depHor(image, 1);
+          // Essayer de passer à l'image suivante
+          const canContinue = this.navigationManager.depHor(image, 1);
+
+          // Si on ne peut plus avancer (dernière image), arrêter le diaporama
+          if (!canContinue) {
+            this.clearMusic();
+            
+          }
         }, this.stats.delai);
         this.audioManager.audio.play();
       } else {

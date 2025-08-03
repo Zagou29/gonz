@@ -8,11 +8,23 @@ export class NavigationManager {
 
   /* deplacement relatif horiz des images */
   depHor(box, sens) {
+    const currentScrollLeft = box.scrollLeft;
+    const maxScrollLeft = box.scrollWidth - box.offsetWidth;
+
+    // Vérifier si on peut encore faire défiler
+    if (sens > 0 && currentScrollLeft >= maxScrollLeft) {
+      return false; // On est déjà à la fin, impossible d'aller plus loin
+    }
+    if (sens < 0 && currentScrollLeft <= 0) {
+      return false; // On est déjà au début, impossible d'aller plus loin
+    }
+
     box.scrollBy({
       left: box.offsetWidth * sens,
       behavior: "instant",
     });
     this.stats.k++;
+    return true; // Déplacement effectué avec succès
   }
 
   /* deplacement relatif vertical des images */
