@@ -81,10 +81,12 @@ export class EventManager {
     document.addEventListener("keydown", (e) => {
       switch (e.code) {
         case KEY_CODES.gauche:
+          e.preventDefault();
           this.diaporamaManager.clearMusic();
           this.navigationManager.depHor(image, -1);
           break;
         case KEY_CODES.droite:
+          e.preventDefault(); 
           this.diaporamaManager.clearMusic();
           this.navigationManager.depHor(image, 1);
           break;
@@ -146,14 +148,41 @@ export class EventManager {
 
   initEventListeners() {
     let lastscroll = 0;
+    let isManualScroll = false;
     const debouncedHandleScroll = this.uiManager.debounce(() => {
       lastscroll = this.uiManager.handleScroll(lastscroll);
     }, 10);
 
     window.addEventListener("scroll", debouncedHandleScroll);
-    this.domElements.boiteImg.addEventListener("scroll", () =>
-      this.navigationManager.showStop()
-    );
+
+    // Détecter le début d'un scroll manuel (touchstart/mousedown)
+    this.domElements.boiteImg.addEventListener("touchstart", () => {
+      isManualScroll = true;
+    });
+    this.domElements.boiteImg.addEventListener("mousedown", () => {
+      isManualScroll = true;
+    });
+
+    this.domElements.boiteImg.addEventListener("scroll", () => {
+      this.navigationManager.showStop();
+      // Arrêter le diaporama seulement si c'est un scroll manuel
+      if (isManualScroll && this.stats.nId) {
+        this.diaporamaManager.clearMusic();
+      }
+    });
+
+    // Réinitialiser le flag après un délai
+    this.domElements.boiteImg.addEventListener("touchend", () => {
+      setTimeout(() => {
+        isManualScroll = false;
+      }, 100);
+    });
+    this.domElements.boiteImg.addEventListener("mouseup", () => {
+      setTimeout(() => {
+        isManualScroll = false;
+      }, 100);
+    });
+
     this.domElements.menu.addEventListener("click", (e) =>
       this.handleMenuClick(e)
     );
