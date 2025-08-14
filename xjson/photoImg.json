@@ -7751,6 +7751,11 @@
     },
     {
         "class": "gonz",
+        "src": "./images/gz42-03-1942.jpg",
+        "an": "1942"
+    },
+    {
+        "class": "gonz",
         "src": "./images/gz42-04-1942.jpg",
         "an": "1942"
     },
@@ -8793,10 +8798,15 @@
         "class": "marys",
         "src": "./images/marys-01.jpg",
         "an": "1930"
-    },
+    }, 
     {
         "class": "marys",
         "src": "./images/marys-02.jpg",
+        "an": "1930"
+    },
+    {
+        "class": "marys",
+        "src": "./images/marys-03.jpg",
         "an": "1930"
     },
     {
