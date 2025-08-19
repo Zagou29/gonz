@@ -10,15 +10,12 @@ export class DiaporamaManager {
 
   /* toggle lancer / arreter diapos et icone diapo */
   toggleDiapo(image) {
-    // Protection contre double déclenchement sur iPadOS/Safari mobile
     if (
       this.stats.list_img.length - 1 >
       -this.stats.list_img[0].getBoundingClientRect().x / image.offsetWidth
     ) {
-      // Si le diaporama est déjà lancé, ne rien faire
-      if (this.stats.nId) return;
       this.domElements.diap.classList.toggle("diapo_on");
-      if (this.stats.zoome) {
+      if (!this.stats.nId && this.stats.zoome) {
         this.stats.nId = setInterval(() => {
           // Essayer de passer à l'image suivante
           const canContinue = this.navigationManager.depHor(image, 1);
