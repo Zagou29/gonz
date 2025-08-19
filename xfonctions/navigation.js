@@ -18,10 +18,23 @@ export class NavigationManager {
     if (sens < 0 && currentScrollLeft <= 0) {
       return false; // On est déjà au début, impossible d'aller plus loin
     }
-    box.scrollBy({
-      left: box.offsetWidth * sens,
+
+    // Utiliser scrollTo avec position absolue pour éviter les problèmes de double scroll sur iPadOS
+    const currentPosition = box.scrollLeft;
+    const imageWidth =
+      this.stats.list_img && this.stats.list_img[0]
+        ? this.stats.list_img[0].offsetWidth
+        : box.offsetWidth;
+    const newPosition = currentPosition + imageWidth * sens;
+
+    // S'assurer que la nouvelle position est dans les limites
+    const clampedPosition = Math.max(0, Math.min(newPosition, maxScrollLeft));
+
+    box.scrollTo({
+      left: clampedPosition,
       behavior: "instant",
     });
+
     this.stats.k++;
     return true; // Déplacement effectué avec succès
   }
