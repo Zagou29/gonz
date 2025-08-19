@@ -18,19 +18,8 @@ export class NavigationManager {
     if (sens < 0 && currentScrollLeft <= 0) {
       return false; // On est déjà au début, impossible d'aller plus loin
     }
-
-    // Calculer la largeur d'une image pour un défilement précis
-    let scrollDistance;
-    if (this.stats.list_img && this.stats.list_img[0]) {
-      // Utiliser la largeur d'une image pour être plus précis
-      scrollDistance = this.stats.list_img[0].offsetWidth;
-    } else {
-      // Fallback vers la largeur du container
-      scrollDistance = box.offsetWidth;
-    }
-
     box.scrollBy({
-      left: scrollDistance * sens,
+      left: box.offsetWidth * sens,
       behavior: "instant",
     });
     this.stats.k++;
