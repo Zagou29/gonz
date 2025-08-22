@@ -1,8 +1,7 @@
 # gonz
 Toutes les vidéos et photos de Zag Family et Margot, avec interface graphique
-Fini le 9 Avril 2022
-30 Dec 2024 : 
-20 Playlistes Diapos,   20 Playlists Videos,    40 Playlists
-24 Diapos Famille,      60 Diapos Voyage,       84 Diapos
-48 Videos Famille,      65 Videos Voyage,      111 Videos
-237 Videos en tout
+Initialisation 9 Avril 2023
+Création avec dernières versions le 20 Aout 2025
+Photos : 2196 dans dossier images
+Playlists 42 : Famille :8, Voyage 28 , Amis: 4, Musées 2
+Videos.   247: Famille :80,Voyage 125, Playlists 42
