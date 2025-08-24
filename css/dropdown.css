@@ -18,7 +18,6 @@
   width: calc(100vw - 2rem);
 }
 
-
 .bloc-links {
   display: flex;
   height: 0;
@@ -41,62 +40,13 @@
 }
 
 /* Sous menus des dropdown */
-.sousMenuAnn {
-  display: grid;
-  grid-template-areas:
-    "a1 a1"
-    "ba ba";
-  padding: 1rem;
-}
 
 .sousMenuBlog {
   padding: 0.5rem;
 }
 
-.sousMenuVoy > ul {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.checkB {
-  display: flex;
-  justify-content: space-around;
-}
-
-.a1 {
-  grid-area: a1;
-  text-align: center;
-}
-
-.ba {
-  grid-area: ba;
+.years {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-}
-
-/* Border les sous menus */
-.sousMenuAnn :is(ul, .checkB) {
-  border: 1px dotted var(--color-text-light);
-}
-
-label {
-  color: var(--color-text-light);
-}
-
-label:hover {
-  cursor: pointer;
-  text-shadow: 1px 1px white;
-}
-
-input {
-  display: none;
-}
-
-input:checked + .vidLabel {
-  color: hsl(240, 100%, 56%);
-}
-
-input:checked + .diaLabel {
-  color: hsl(0, 100%, 56%);
+  padding:1rem;
 }

@@ -6,7 +6,7 @@ import { cloneTemplate } from "./dom.js";
  */
 export class Affimg {
   #imageList; // Liste des objets img venant de JSON
-  #option; // Option d'affichage ('photo' ou autre)
+  #val_trans; // Option d'affichage ('photo' ou autre)
   #aspectClass; // show ou show_mod (aspect)
   #imagesFragment; // Fragment où charger les img
   #datesFragment; // Fragment où charger les liensdates
@@ -16,12 +16,12 @@ export class Affimg {
   /**
    * Crée une nouvelle instance d'Affimg
    * @param {Array} imageList - Liste des objets images du JSON
-   * @param {string} option - Option d'affichage ('photo' ou autre)
+   * @param {string} val_trans - Option d'affichage ('photo' ou autre)
    * @param {string} aspectClass - Aspect des images ('show' ou 'show_mod')
    */
-  constructor(imageList, option, aspectClass) {
+  constructor(imageList, val_trans, aspectClass) {
     this.#imageList = imageList;
-    this.#option = option;
+    this.#val_trans = val_trans;
     this.#aspectClass = aspectClass;
 
     this.#preparerElements();
@@ -43,7 +43,7 @@ export class Affimg {
       if (nouvSeuil) {
         imgData.seuil = imgData.an; // Définit le seuil pour cet élément
         vseuil = imgData.an;
-        if (this.#option === "photo") {
+        if (this.#val_trans === "photo") {
           photoIndex = index; // Met à jour l'index de référence pour 'photo'
         }
       } else {
@@ -51,14 +51,14 @@ export class Affimg {
       }
 
       // Assigne le numéro basé sur l'option
-      imgData.num = this.#option === "photo" ? photoIndex : index;
+      imgData.num = this.#val_trans === "photo" ? photoIndex : index;
 
       // Crée et ajoute l'élément image
       const imageItem = new AffItem(imgData, this.#aspectClass);
       this.#imagesFragment.append(imageItem.element);
 
       // Crée et ajoute l'élément date (conditionnellement pour 'photo')
-      if (this.#option !== "photo" || imgData.seuil !== "") {
+      if (this.#val_trans !== "photo" || imgData.seuil !== "") {
         //si "pas photos"=> un lien un lien pour chaque nouvelle date
         //si "photos"=> un lien pour chaque seuil non null
         const dateItem = new DateItem(imgData);
